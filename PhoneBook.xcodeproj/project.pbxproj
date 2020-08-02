@@ -9,19 +9,27 @@
 /* Begin PBXBuildFile section */
 		2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8124D3081100759AE9 /* AppDelegate.swift */; };
 		2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8324D3081100759AE9 /* SceneDelegate.swift */; };
-		2234FE8624D3081100759AE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8524D3081100759AE9 /* ViewController.swift */; };
+		2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8524D3081100759AE9 /* ContactsViewController.swift */; };
 		2234FE8B24D3081200759AE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2234FE8A24D3081200759AE9 /* Assets.xcassets */; };
 		2234FE8E24D3081200759AE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2234FE8C24D3081200759AE9 /* LaunchScreen.storyboard */; };
+		2234FEC024D4935000759AE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEBF24D4935000759AE9 /* Contact.swift */; };
+		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
+		2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC524D6F0BA00759AE9 /* StorageService.swift */; };
+		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2234FE7E24D3081100759AE9 /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2234FE8124D3081100759AE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2234FE8324D3081100759AE9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2234FE8524D3081100759AE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2234FE8524D3081100759AE9 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		2234FE8A24D3081200759AE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2234FE8D24D3081200759AE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2234FE8F24D3081200759AE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2234FEBF24D4935000759AE9 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		2234FEC524D6F0BA00759AE9 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +64,56 @@
 			children = (
 				2234FE8124D3081100759AE9 /* AppDelegate.swift */,
 				2234FE8324D3081100759AE9 /* SceneDelegate.swift */,
-				2234FE8524D3081100759AE9 /* ViewController.swift */,
+				2234FEC924D714D100759AE9 /* Services */,
+				2234FEB924D4312900759AE9 /* ContactsModule */,
 				2234FE8A24D3081200759AE9 /* Assets.xcassets */,
 				2234FE8C24D3081200759AE9 /* LaunchScreen.storyboard */,
 				2234FE8F24D3081200759AE9 /* Info.plist */,
 			);
 			path = PhoneBook;
+			sourceTree = "<group>";
+		};
+		2234FEB924D4312900759AE9 /* ContactsModule */ = {
+			isa = PBXGroup;
+			children = (
+				2234FEC124D4935500759AE9 /* Model */,
+				2234FEBA24D4313F00759AE9 /* View */,
+				2234FEC424D58CD700759AE9 /* ViewModel */,
+			);
+			path = ContactsModule;
+			sourceTree = "<group>";
+		};
+		2234FEBA24D4313F00759AE9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2234FE8524D3081100759AE9 /* ContactsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2234FEC124D4935500759AE9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2234FEBF24D4935000759AE9 /* Contact.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2234FEC424D58CD700759AE9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2234FEC924D714D100759AE9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2234FEC524D6F0BA00759AE9 /* StorageService.swift */,
+				2234FEC724D702A500759AE9 /* ContactsService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +186,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2234FE8624D3081100759AE9 /* ViewController.swift in Sources */,
+				2234FEC024D4935000759AE9 /* Contact.swift in Sources */,
+				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
+				2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */,
+				2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */,
+				2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */,
 				2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */,
 				2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */,
 			);
