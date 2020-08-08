@@ -60,9 +60,11 @@ class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let phoneNumber = viewModel.contacts[indexPath.section][indexPath.row].phoneNumber.removeWhitespaces()
+        let contact = viewModel.getContact(at: indexPath)
+        let phoneNumber = contact.phoneNumber.removeWhitespaces()
         if let url = URL(string: "tel://\(phoneNumber)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            viewModel?.addToRecent(contact: contact)
         }
     }
 }
@@ -70,29 +72,21 @@ extension ContactsViewController: UITableViewDelegate {
 extension ContactsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.contacts.count
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let title = viewModel.contacts[section].first?.fullName.first?.uppercased() {
-            return title
-        }
-        return ""
+        return viewModel.titleForHeaderInSection(section: section)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.contacts[section].count
+        return viewModel.numberOfRowsInSection(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = viewModel.contacts[indexPath.section][indexPath.row].fullName
+        let contact = viewModel.getContact(at: indexPath)
+        cell.textLabel?.text = contact.fullName
         return cell
-    }
-}
-
-extension String {
-    func removeWhitespaces() -> String {
-        return components(separatedBy: .whitespaces).joined()
     }
 }

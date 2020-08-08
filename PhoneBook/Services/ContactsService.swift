@@ -11,27 +11,25 @@ import Contacts
 
 class ContactsService {
     
-    public static let shared = ContactsService()
-    
-    private let contactStrore = CNContactStore()
-    
-    private init() { }
-    
-    public func fetchContactsData(completion: @escaping ([[Contact]]) -> Void) {
+    private var contacts = [Contact]()
+        
+    private let contactStore = CNContactStore()
+        
+    public func fetchContactsData(completion: @escaping ([Contact]) -> Void) {
         
         var contacts = [Contact]()
         
-        contactStrore.requestAccess(for: .contacts) { (access, error) in
+        contactStore.requestAccess(for: .contacts) { (access, error) in
             
             if access {
                 do {
-                    try self.contactStrore.enumerateContacts(with: self.fetchRequest) { (contact, mutablePointer) in
+                    try self.contactStore.enumerateContacts(with: self.fetchRequest) { (contact, mutablePointer) in
                         let contact = Contact(fullName: "\(contact.givenName) \(contact.familyName)",
                             phoneNumber: contact.phoneNumbers.first?.value.stringValue ?? "")
                         contacts.append(contact)
                     }
                     
-                    completion(self.convertToTwoDimensional(array: contacts))
+                    completion(contacts)
                     
                 } catch (let error) {
                     print(error)
@@ -40,26 +38,12 @@ class ContactsService {
         }
     }
     
-    private func convertToTwoDimensional(array: [Contact]) -> [[Contact]] {
-        var result = [[Contact]]()
-        var uniqueCharacters = Set<Character>()
-        var index = 0
-        
-        array.forEach { contact in
-            if let character = contact.fullName.first {
-                uniqueCharacters.insert(character)
-            }
-        }
-        
-        uniqueCharacters.sorted().forEach { uniqueCharacter in
-            let contacts = array.filter { contact in
-                guard let character = contact.fullName.first else { return false }
-                return uniqueCharacter == character
-            }
-            result.insert(contacts, at: index)
-            index += 1
-        }
-        return result
+    public func add(contact: Contact) {
+        contacts.insert(contact, at: 0)
+    }
+    
+    public func getContacts() -> [Contact] {
+        return contacts
     }
     
     private var keysToFetch: [CNKeyDescriptor] {
