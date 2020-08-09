@@ -15,10 +15,13 @@ protocol ContactsViewModelProtocol {
     func numberOfRowsInSection(section: Int) -> Int
     func titleForHeaderInSection(section: Int) -> String
     func numberOfSections() -> Int
+    func reverse(isAlpabetic: Bool)
     func addToRecent(contact: Contact)
 }
 
 class ContactsViewModel: ContactsViewModelProtocol {
+    
+    private var isAlpabetic = true
     
     public var updateTableView: (() -> Void)?
     
@@ -87,5 +90,13 @@ class ContactsViewModel: ContactsViewModelProtocol {
             }
         }
         return characters
+    }
+    
+    public func reverse(isAlpabetic: Bool) {
+        if isAlpabetic != self.isAlpabetic {
+            contacts.reverse()
+            updateTableView?()
+            self.isAlpabetic = !self.isAlpabetic
+        }
     }
 }

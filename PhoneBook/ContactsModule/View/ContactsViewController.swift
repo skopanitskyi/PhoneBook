@@ -12,6 +12,8 @@ class ContactsViewController: UIViewController {
     
     private let reuseIdentifier = "Cell"
     
+    private let filteredContacts = FilteredContactsViewController()
+    
     public var viewModel: ContactsViewModelProtocol!
     
     private var tableView: UITableView = {
@@ -25,6 +27,13 @@ class ContactsViewController: UIViewController {
         return searchController
     }()
     
+    private var sortingButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Sort", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
@@ -33,7 +42,7 @@ class ContactsViewController: UIViewController {
     }
     
     private func loadData() {
-        viewModel?.fetchContactsData()
+        viewModel.fetchContactsData()
         viewModel.updateTableView = { [weak self] in
             self?.tableView.reloadData()
         }
@@ -42,7 +51,10 @@ class ContactsViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         title = "Contacts"
+        searchController.searchBar.delegate = self
         navigationController?.navigationBar.prefersLargeTitles = true
+        sortingButton.addTarget(self, action: #selector(sortingButtonTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
         navigationItem.searchController = searchController
     }
     
@@ -56,6 +68,25 @@ class ContactsViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
+    
+    @objc private func sortingButtonTapped() {
+        let alertController = UIAlertController(title: "Sort contacts", message: "Choose", preferredStyle: .actionSheet)
+        
+        let alertAction1 = UIAlertAction(title: "Z-A", style: .default) { _ in
+            self.viewModel.reverse(isAlpabetic: false)
+        }
+        let alertAction = UIAlertAction(title: "A-Z", style: .default) { _ in
+            self.viewModel.reverse(isAlpabetic: true)
+        }
+        
+        let alertAction2 = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(alertAction)
+        alertController.addAction(alertAction1)
+        alertController.addAction(alertAction2)
+        alertController.pruneNegativeWidthConstraints()
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension ContactsViewController: UITableViewDelegate {
@@ -64,7 +95,7 @@ extension ContactsViewController: UITableViewDelegate {
         let phoneNumber = contact.phoneNumber.removeWhitespaces()
         if let url = URL(string: "tel://\(phoneNumber)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            viewModel?.addToRecent(contact: contact)
+            viewModel.addToRecent(contact: contact)
         }
     }
 }
@@ -88,5 +119,22 @@ extension ContactsViewController: UITableViewDataSource {
         let contact = viewModel.getContact(at: indexPath)
         cell.textLabel?.text = contact.fullName
         return cell
+    }
+}
+
+extension ContactsViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if view.subviews.count == 1 {
+            addChild(filteredContacts)
+            view.addSubview(filteredContacts.view)
+            filteredContacts.didMove(toParent: self)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        filteredContacts.willMove(toParent: nil)
+        filteredContacts.view.removeFromSuperview()
+        filteredContacts.removeFromParent()
     }
 }
