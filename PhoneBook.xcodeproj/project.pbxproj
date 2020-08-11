@@ -16,6 +16,7 @@
 		22228C9C24DEDBA800C3293B /* RecentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228C9B24DEDBA800C3293B /* RecentViewModel.swift */; };
 		22228C9F24E0655900C3293B /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228C9E24E0655900C3293B /* AlertController.swift */; };
 		22228CA324E07D3700C3293B /* FilteredContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228CA224E07D3700C3293B /* FilteredContactsViewController.swift */; };
+		22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228CA424E18EB900C3293B /* FilteredContactsViewModel.swift */; };
 		2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8124D3081100759AE9 /* AppDelegate.swift */; };
 		2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8324D3081100759AE9 /* SceneDelegate.swift */; };
 		2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8524D3081100759AE9 /* ContactsViewController.swift */; };
@@ -37,6 +38,7 @@
 		22228C9B24DEDBA800C3293B /* RecentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewModel.swift; sourceTree = "<group>"; };
 		22228C9E24E0655900C3293B /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		22228CA224E07D3700C3293B /* FilteredContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredContactsViewController.swift; sourceTree = "<group>"; };
+		22228CA424E18EB900C3293B /* FilteredContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredContactsViewModel.swift; sourceTree = "<group>"; };
 		2234FE7E24D3081100759AE9 /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2234FE8124D3081100759AE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2234FE8324D3081100759AE9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */,
+				22228CA424E18EB900C3293B /* FilteredContactsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
+				22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */,
 				2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */,
 				22228C9C24DEDBA800C3293B /* RecentViewModel.swift in Sources */,
 				2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */,

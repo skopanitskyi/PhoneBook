@@ -6,7 +6,7 @@
 //  Copyright © 2020 Копаницкий Сергей. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ContactsViewModelProtocol {
     var updateTableView:(() -> Void)? { get set }
@@ -15,13 +15,15 @@ protocol ContactsViewModelProtocol {
     func numberOfRowsInSection(section: Int) -> Int
     func titleForHeaderInSection(section: Int) -> String
     func numberOfSections() -> Int
-    func reverse(isAlpabetic: Bool)
+    func reverse(isAscending: Bool)
     func addToRecent(contact: Contact)
+    func getFilteredContacts(name: String) -> [Contact]
+    func makeCall(at indexPath: IndexPath)
 }
 
 class ContactsViewModel: ContactsViewModelProtocol {
     
-    private var isAlpabetic = true
+    private var isAscending = true
     
     public var updateTableView: (() -> Void)?
     
@@ -92,11 +94,32 @@ class ContactsViewModel: ContactsViewModelProtocol {
         return characters
     }
     
-    public func reverse(isAlpabetic: Bool) {
-        if isAlpabetic != self.isAlpabetic {
+    public func reverse(isAscending: Bool) {
+        if isAscending != self.isAscending {
             contacts.reverse()
             updateTableView?()
-            self.isAlpabetic = !self.isAlpabetic
+            self.isAscending = !self.isAscending
+        }
+    }
+    
+    public func getFilteredContacts(name: String) -> [Contact] {
+        
+        var filteredContacts = [Contact]()
+        
+        for contact in contacts {
+            contact.filter { $0.fullName.contains(name) }.forEach { filteredContact in
+                filteredContacts.append(filteredContact)
+            }
+        }
+        return filteredContacts
+    }
+    
+    public func makeCall(at indexPath: IndexPath) {
+        let contact = getContact(at: indexPath)
+        let phoneNumber = contact.phoneNumber.removeWhitespaces()
+        if let url = URL(string: "tel://\(phoneNumber)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            addToRecent(contact: contact)
         }
     }
 }

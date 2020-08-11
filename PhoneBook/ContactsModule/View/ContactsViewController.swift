@@ -12,8 +12,6 @@ class ContactsViewController: UIViewController {
     
     private let reuseIdentifier = "Cell"
     
-    private let filteredContacts = FilteredContactsViewController()
-    
     public var viewModel: ContactsViewModelProtocol!
     
     private var tableView: UITableView = {
@@ -23,7 +21,9 @@ class ContactsViewController: UIViewController {
     }()
     
     private var searchController: UISearchController = {
-        let searchController = UISearchController()
+        let filteredController = FilteredContactsViewController()
+        filteredController.viewModel = FilteredContactsViewModel()
+        let searchController = UISearchController(searchResultsController: filteredController)
         return searchController
     }()
     
@@ -51,7 +51,7 @@ class ContactsViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         title = "Contacts"
-        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
         navigationController?.navigationBar.prefersLargeTitles = true
         sortingButton.addTarget(self, action: #selector(sortingButtonTapped), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
@@ -72,18 +72,20 @@ class ContactsViewController: UIViewController {
     @objc private func sortingButtonTapped() {
         let alertController = UIAlertController(title: "Sort contacts", message: "Choose", preferredStyle: .actionSheet)
         
-        let alertAction1 = UIAlertAction(title: "Z-A", style: .default) { _ in
-            self.viewModel.reverse(isAlpabetic: false)
-        }
-        let alertAction = UIAlertAction(title: "A-Z", style: .default) { _ in
-            self.viewModel.reverse(isAlpabetic: true)
+        let ascending = UIAlertAction(title: "A-Z", style: .default) { _ in
+            self.viewModel.reverse(isAscending: true)
         }
         
-        let alertAction2 = UIAlertAction(title: "Cancel", style: .cancel)
+        let descending = UIAlertAction(title: "Z-A", style: .default) { _ in
+            self.viewModel.reverse(isAscending: false)
+        }
         
-        alertController.addAction(alertAction)
-        alertController.addAction(alertAction1)
-        alertController.addAction(alertAction2)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(ascending)
+        alertController.addAction(descending)
+        alertController.addAction(cancel)
+        
         alertController.pruneNegativeWidthConstraints()
         present(alertController, animated: true, completion: nil)
     }
@@ -91,12 +93,7 @@ class ContactsViewController: UIViewController {
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let contact = viewModel.getContact(at: indexPath)
-        let phoneNumber = contact.phoneNumber.removeWhitespaces()
-        if let url = URL(string: "tel://\(phoneNumber)") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            viewModel.addToRecent(contact: contact)
-        }
+        viewModel.makeCall(at: indexPath)
     }
 }
 
@@ -122,19 +119,13 @@ extension ContactsViewController: UITableViewDataSource {
     }
 }
 
-extension ContactsViewController: UISearchBarDelegate {
+extension ContactsViewController: UISearchResultsUpdating {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if view.subviews.count == 1 {
-            addChild(filteredContacts)
-            view.addSubview(filteredContacts.view)
-            filteredContacts.didMove(toParent: self)
+    func updateSearchResults(for searchController: UISearchController) {
+        if let resultsController = searchController.searchResultsController as? FilteredContactsViewController {
+            guard let name = searchController.searchBar.text else { return }
+            let contacts = viewModel.getFilteredContacts(name: name)
+            resultsController.viewModel.set(contacts: contacts)
         }
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        filteredContacts.willMove(toParent: nil)
-        filteredContacts.view.removeFromSuperview()
-        filteredContacts.removeFromParent()
     }
 }
