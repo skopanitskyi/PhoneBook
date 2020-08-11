@@ -29,7 +29,7 @@ class ContactsViewController: UIViewController {
     
     private var sortingButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Sort", for: .normal)
+        button.setTitle("Contacts.ButtonTitle".localized, for: .normal)
         button.setTitleColor(.black, for: .normal)
         return button
     }()
@@ -50,7 +50,7 @@ class ContactsViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .white
-        title = "Contacts"
+        title = "Contacts.Title".localized
         searchController.searchResultsUpdater = self
         navigationController?.navigationBar.prefersLargeTitles = true
         sortingButton.addTarget(self, action: #selector(sortingButtonTapped), for: .touchUpInside)
@@ -70,17 +70,17 @@ class ContactsViewController: UIViewController {
     }
     
     @objc private func sortingButtonTapped() {
-        let alertController = UIAlertController(title: "Sort contacts", message: "Choose", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Contacts.AlertTitile".localized, message: "Contacts.AlertMessage".localized, preferredStyle: .actionSheet)
         
-        let ascending = UIAlertAction(title: "A-Z", style: .default) { _ in
+        let ascending = UIAlertAction(title: "Contacts.AllertAscending".localized, style: .default) { _ in
             self.viewModel.reverse(isAscending: true)
         }
         
-        let descending = UIAlertAction(title: "Z-A", style: .default) { _ in
+        let descending = UIAlertAction(title: "Contacts.AllertDescending".localized, style: .default) { _ in
             self.viewModel.reverse(isAscending: false)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancel = UIAlertAction(title: "Common.Cancel".localized, style: .cancel)
         
         alertController.addAction(ascending)
         alertController.addAction(descending)

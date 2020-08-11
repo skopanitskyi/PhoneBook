@@ -22,7 +22,7 @@ class RecentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Recents"
+        title = "Recents.Title".localized
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()

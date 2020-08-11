@@ -9,7 +9,12 @@
 import Foundation
 
 extension String {
+    
     func removeWhitespaces() -> String {
         return components(separatedBy: .whitespaces).joined()
+    }
+    
+    var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
 }
