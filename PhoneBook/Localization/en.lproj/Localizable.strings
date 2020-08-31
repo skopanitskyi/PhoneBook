@@ -21,4 +21,13 @@
 
 
 // Recents
-"Recents.Title" = "Recents";
+"Recents.Title" = "Recent";
+
+
+// Favorites
+"Favorites.Title" = "Favorites";
+
+// Profile
+"Profile.Title" = "Profile";
+
+

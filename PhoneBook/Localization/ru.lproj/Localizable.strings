@@ -20,3 +20,9 @@
 
 // Recents
 "Recents.Title" = "Недавние";
+
+// Favorites
+"Favorites.Title" = "Избранные";
+
+// Profile
+"Profile.Title" = "Профиль";

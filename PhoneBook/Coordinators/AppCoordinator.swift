@@ -16,15 +16,26 @@ class AppCoordinator: Coordinator {
     
     private let window: UIWindow
     private var navigationController: UINavigationController
-    private let contactsService = ContactsService()
+    private let contactsService: ContactsService
+    private var tabBarCoordinator: TabBarCoordinator?
     
     init(window: UIWindow) {
         self.window = window
         navigationController = UINavigationController()
+        contactsService = ContactsService()
     }
     
     public func start() {
-        let tabBarCoordinator = TabBarCoordinator(window: window, contactsService: contactsService)
-        tabBarCoordinator.start()
+        tabBarCoordinator = TabBarCoordinator(window: window, contactsService: contactsService)
+        tabBarCoordinator?.start()
+    }
+    
+    public func showScreen(_ name: String) {
+        let deeplinkService = DeeplinkService(appCoordinator: self)
+        deeplinkService.showScreen(name)
+    }
+    
+    public func getTabBarCoordinator() -> TabBarCoordinator? {
+        return tabBarCoordinator
     }
 }

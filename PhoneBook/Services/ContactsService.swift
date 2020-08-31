@@ -11,7 +11,7 @@ import Contacts
 
 class ContactsService {
     
-    private var contacts = [Contact]()
+    private var contacts = [Contact]() // FIXME: remove array from service
         
     private let contactStore = CNContactStore()
         

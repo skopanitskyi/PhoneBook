@@ -6,5 +6,9 @@
   Copyright © 2020 Копаницкий Сергей. All rights reserved.
 */
 
-CFBundleDisplayName = "Контакты";
+CFBundleDisplayName = "Телефонная книга";
 NSContactsUsageDescription = "Приложению нужен доступ к контактам для корректной работы";
+"ShortcutItem.Profile" = "Профиль";
+"ShortcutItem.Favorites" = "Избранные";
+"ShortcutItem.Recent" = "Недавние";
+"ShortcutItem.Contacts" = "Контакты";
