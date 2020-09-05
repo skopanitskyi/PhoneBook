@@ -29,8 +29,7 @@ class ContactsViewController: UIViewController {
     
     private var sortingButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Contacts.ButtonTitle".localized, for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setImage(UIImage(named: "I"), for: .normal)
         return button
     }()
     
@@ -73,10 +72,12 @@ class ContactsViewController: UIViewController {
         let alertController = UIAlertController(title: "Contacts.AlertTitile".localized, message: "Contacts.AlertMessage".localized, preferredStyle: .actionSheet)
         
         let ascending = UIAlertAction(title: "Contacts.AllertAscending".localized, style: .default) { _ in
+            self.sortingButton.setImage(UIImage(named: "I"), for: .normal)
             self.viewModel.reverse(isAscending: true)
         }
         
         let descending = UIAlertAction(title: "Contacts.AllertDescending".localized, style: .default) { _ in
+            self.sortingButton.setImage(UIImage(named: "I1"), for: .normal)
             self.viewModel.reverse(isAscending: false)
         }
         

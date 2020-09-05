@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbauth2</string>
+	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -44,7 +50,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0</string>
 	<key>CFBundleIcons</key>
 	<dict/>
 	<key>CFBundleExecutable</key>
@@ -81,16 +87,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLIconFile</key>
-			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app</string>
+				<string>fb361659278200313</string>
 			</array>
-			<key>CFBundleURLName</key>
-			<string></string>
 		</dict>
 	</array>
 	<key>CFBundlePackageType</key>
@@ -110,7 +110,17 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<key>FacebookAppID</key>
+	<string>361659278200313</string>
+	<key>FacebookDisplayName</key>
+	<string>PhoneBook</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<string>TRUE</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<string>TRUE</string>
+
+
+
+<key>LSApplicationQueriesSchemes</key> <array> <string>fbapi</string> <string>fbapi20130214</string> <string>fbapi20130410</string> <string>fbapi20130702</string> <string>fbapi20131010</string> <string>fbapi20131219</string> <string>fbapi20140410</string> <string>fbapi20140116</string> <string>fbapi20150313</string> <string>fbapi20150629</string> <string>fbapi20160328</string> <string>fbauth</string> <string>fb-messenger-share-api</string> <string>fbauth2</string> <string>fbshareextension</string> </array>
 </dict>
 </plist>

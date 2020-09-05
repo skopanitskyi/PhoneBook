@@ -19,7 +19,8 @@
 
 
 // Recents
-"Recents.Title" = "Недавние";
+"Recent.Title" = "Недавние";
+"Recent.LeftButton.Delete" = "Удалить";
 
 // Favorites
 "Favorites.Title" = "Избранные";

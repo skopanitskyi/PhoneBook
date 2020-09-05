@@ -10,6 +10,8 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
     
+    var row = ["0", "1", "2", "3", "4", "5"]
+    
     public var viewModel: FavoritesViewModelProtocol?
     
     private let reuseIdentifier = "Cell"
@@ -24,11 +26,16 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTableView()
-        title = "Favorites"
+        title = "Favorites.Title".localized
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = editButtonItem
-
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "I2"),
+                                                           style: .plain,
+                                                           target: self,
+                                                           action: #selector(showContacts))
     }
+    
+    
     
     private func setupTableView() {
         view.addSubview(tableView)
@@ -42,8 +49,12 @@ class FavoritesViewController: UIViewController {
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: true)
+        super.setEditing(editing, animated: animated)
         tableView.setEditing(editing, animated: true)
+    }
+    
+    @objc private func showContacts() {
+        print("Contacts")
     }
 }
 
@@ -53,17 +64,27 @@ extension FavoritesViewController: UITableViewDelegate {
 
 extension FavoritesViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        row.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = row.remove(at: sourceIndexPath.row)
+        row.insert(item, at: destinationIndexPath.row)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return row.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

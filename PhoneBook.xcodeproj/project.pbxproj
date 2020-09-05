@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,11 +30,23 @@
 		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
 		2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC524D6F0BA00759AE9 /* StorageService.swift */; };
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
+		22743F08250148E800098122 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22743F07250148E800098122 /* GoogleService-Info.plist */; };
+		22743F0A250160C700098122 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22743F09250160C700098122 /* LoginViewController.swift */; };
 		228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */; };
 		228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA224F40931003B4432 /* ProfileViewController.swift */; };
 		228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA424F40949003B4432 /* ProfileViewModel.swift */; };
 		228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA624F40982003B4432 /* ProfileCoordinator.swift */; };
+		22EC883225026415009E079A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883125026415009E079A /* LoginViewModel.swift */; };
+		22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC8834250284A1009E079A /* SignUpViewController.swift */; };
+		22EC883725029698009E079A /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EC883625029698009E079A /* Login.storyboard */; };
+		22EC88392502B339009E079A /* SignUp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EC88382502B339009E079A /* SignUp.storyboard */; };
+		22EC883C25039AED009E079A /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883B25039AED009E079A /* AuthenticationCoordinator.swift */; };
+		22EC883E25039B04009E079A /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883D25039B04009E079A /* RegistrationCoordinator.swift */; };
+		22EC884025039F7B009E079A /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883F25039F7B009E079A /* LoginCoordinator.swift */; };
+		22EC88422503A8B0009E079A /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC88412503A8B0009E079A /* SignUpCoordinator.swift */; };
+		22EC884625040C40009E079A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC884525040C40009E079A /* SignUpViewModel.swift */; };
 		22FFB9CA24FCEF11002E4625 /* DeeplinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */; };
+		C5ECAE258DBA21FC5EFF92DF /* libPods-PhoneBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADDFB5BB7CC96A99E551697 /* libPods-PhoneBook.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,12 +76,26 @@
 		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		2234FEC524D6F0BA00759AE9 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
+		22743F07250148E800098122 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		22743F09250160C700098122 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		228E4EA224F40931003B4432 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		228E4EA424F40949003B4432 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		228E4EA624F40982003B4432 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		228E4EC024F41B56003B4432 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/serhii/Desktop/PhoneBook/PhoneBook/Info.plist; sourceTree = "<absolute>"; };
+		22EC883125026415009E079A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		22EC8834250284A1009E079A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		22EC883625029698009E079A /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		22EC88382502B339009E079A /* SignUp.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignUp.storyboard; sourceTree = "<group>"; };
+		22EC883B25039AED009E079A /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
+		22EC883D25039B04009E079A /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
+		22EC883F25039F7B009E079A /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		22EC88412503A8B0009E079A /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
+		22EC884525040C40009E079A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkService.swift; sourceTree = "<group>"; };
+		2821AD833363D2B1C929876A /* Pods-PhoneBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.release.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.release.xcconfig"; sourceTree = "<group>"; };
+		6DE9211B3FA3A280D4031C3E /* Pods-PhoneBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.debug.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.debug.xcconfig"; sourceTree = "<group>"; };
+		8ADDFB5BB7CC96A99E551697 /* libPods-PhoneBook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhoneBook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5ECAE258DBA21FC5EFF92DF /* libPods-PhoneBook.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +135,8 @@
 				2234FEB924D4312900759AE9 /* ContactsModule */,
 				2218602024F407D000E159A1 /* FavoritesModule */,
 				228E4EA824F409B6003B4432 /* ProfileModule */,
+				22EC8833250265BE009E079A /* LogInModule */,
+				22EC883A2502B355009E079A /* SignUpModule */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -127,6 +156,8 @@
 			children = (
 				22228C8D24DEAD5400C3293B /* AppCoordinator.swift */,
 				22228C8F24DEB11300C3293B /* TabBarCoordinator.swift */,
+				22EC883B25039AED009E079A /* AuthenticationCoordinator.swift */,
+				22EC883D25039B04009E079A /* RegistrationCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -178,6 +209,8 @@
 			children = (
 				2234FE8024D3081100759AE9 /* PhoneBook */,
 				2234FE7F24D3081100759AE9 /* Products */,
+				A20C6E77413E0E699E84A2C4 /* Pods */,
+				F8AE5114B3DBAD2C38A1B1F8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,6 +234,7 @@
 				22228CC624E2F39800C3293B /* Localization */,
 				2234FE8C24D3081200759AE9 /* LaunchScreen.storyboard */,
 				22228CA624E2DE8800C3293B /* Assets.xcassets */,
+				22743F07250148E800098122 /* GoogleService-Info.plist */,
 				228E4EC024F41B56003B4432 /* Info.plist */,
 			);
 			path = PhoneBook;
@@ -311,6 +345,45 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		22EC8833250265BE009E079A /* LogInModule */ = {
+			isa = PBXGroup;
+			children = (
+				22743F09250160C700098122 /* LoginViewController.swift */,
+				22EC883125026415009E079A /* LoginViewModel.swift */,
+				22EC883625029698009E079A /* Login.storyboard */,
+				22EC883F25039F7B009E079A /* LoginCoordinator.swift */,
+			);
+			path = LogInModule;
+			sourceTree = "<group>";
+		};
+		22EC883A2502B355009E079A /* SignUpModule */ = {
+			isa = PBXGroup;
+			children = (
+				22EC8834250284A1009E079A /* SignUpViewController.swift */,
+				22EC88382502B339009E079A /* SignUp.storyboard */,
+				22EC88412503A8B0009E079A /* SignUpCoordinator.swift */,
+				22EC884525040C40009E079A /* SignUpViewModel.swift */,
+			);
+			path = SignUpModule;
+			sourceTree = "<group>";
+		};
+		A20C6E77413E0E699E84A2C4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6DE9211B3FA3A280D4031C3E /* Pods-PhoneBook.debug.xcconfig */,
+				2821AD833363D2B1C929876A /* Pods-PhoneBook.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F8AE5114B3DBAD2C38A1B1F8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8ADDFB5BB7CC96A99E551697 /* libPods-PhoneBook.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -318,9 +391,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2234FE9224D3081200759AE9 /* Build configuration list for PBXNativeTarget "PhoneBook" */;
 			buildPhases = (
+				F18E7AA1F5D24EDEDCC87388 /* [CP] Check Pods Manifest.lock */,
 				2234FE7A24D3081100759AE9 /* Sources */,
 				2234FE7B24D3081100759AE9 /* Frameworks */,
 				2234FE7C24D3081100759AE9 /* Resources */,
+				547D1E36525331431F71AB77 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -372,12 +447,57 @@
 			files = (
 				22228CA724E2DE8800C3293B /* Assets.xcassets in Resources */,
 				22228CC224E2E6E800C3293B /* InfoPlist.strings in Resources */,
+				22EC883725029698009E079A /* Login.storyboard in Resources */,
+				22EC88392502B339009E079A /* SignUp.storyboard in Resources */,
+				22743F08250148E800098122 /* GoogleService-Info.plist in Resources */,
 				22228CBB24E2E48700C3293B /* Localizable.strings in Resources */,
 				2234FE8E24D3081200759AE9 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		547D1E36525331431F71AB77 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PhoneBook/Pods-PhoneBook-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PhoneBook/Pods-PhoneBook-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PhoneBook/Pods-PhoneBook-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F18E7AA1F5D24EDEDCC87388 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PhoneBook-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2234FE7A24D3081100759AE9 /* Sources */ = {
@@ -386,17 +506,24 @@
 			files = (
 				2234FEC024D4935000759AE9 /* Contact.swift in Sources */,
 				22228C9F24E0655900C3293B /* AlertController.swift in Sources */,
+				22EC883E25039B04009E079A /* RegistrationCoordinator.swift in Sources */,
+				22EC883C25039AED009E079A /* AuthenticationCoordinator.swift in Sources */,
 				22228C9724DED0C300C3293B /* String.swift in Sources */,
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
 				2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */,
+				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
+				22EC883225026415009E079A /* LoginViewModel.swift in Sources */,
+				22EC884025039F7B009E079A /* LoginCoordinator.swift in Sources */,
 				22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */,
 				2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */,
 				22228C9C24DEDBA800C3293B /* RecentViewModel.swift in Sources */,
 				2218601B24F4070F00E159A1 /* FavoritesViewController.swift in Sources */,
+				22EC88422503A8B0009E079A /* SignUpCoordinator.swift in Sources */,
 				2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */,
+				22743F0A250160C700098122 /* LoginViewController.swift in Sources */,
 				22FFB9CA24FCEF11002E4625 /* DeeplinkService.swift in Sources */,
 				228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */,
 				2216D31A24D990490007255D /* RecentViewController.swift in Sources */,
@@ -407,6 +534,7 @@
 				228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */,
 				228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */,
 				2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */,
+				22EC884625040C40009E079A /* SignUpViewModel.swift in Sources */,
 				2218601D24F4076100E159A1 /* FavoritesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,6 +689,7 @@
 		};
 		2234FE9324D3081200759AE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DE9211B3FA3A280D4031C3E /* Pods-PhoneBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -580,6 +709,7 @@
 		};
 		2234FE9424D3081200759AE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2821AD833363D2B1C929876A /* Pods-PhoneBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

@@ -17,7 +17,7 @@ class RecentCoordinator: TabBarItemCoordinator {
     init(contactsService: ContactsService) {
         self.contactsService = contactsService
         navigationController = UINavigationController()
-        tabBarItem = UITabBarItem(title: "Recents.Title".localized, image: UIImage(named: "recent"), tag: 1)
+        tabBarItem = UITabBarItem(title: "Recent.Title".localized, image: UIImage(named: "recent"), tag: 1)
         navigationController.tabBarItem = tabBarItem
     }
     

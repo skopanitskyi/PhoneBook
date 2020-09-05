@@ -20,9 +20,9 @@
 "Contacts.AllertDescending" = "Z-A";
 
 
-// Recents
-"Recents.Title" = "Recent";
-
+// Recent
+"Recent.Title" = "Recent";
+"Recent.LeftButton.Delete" = "Delete";
 
 // Favorites
 "Favorites.Title" = "Favorites";

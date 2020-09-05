@@ -15,19 +15,18 @@ protocol Coordinator {
 class AppCoordinator: Coordinator {
     
     private let window: UIWindow
-    private var navigationController: UINavigationController
     private let contactsService: ContactsService
     private var tabBarCoordinator: TabBarCoordinator?
+    private var authenticationCoordinator: AuthenticationCoordinator?
     
     init(window: UIWindow) {
         self.window = window
-        navigationController = UINavigationController()
         contactsService = ContactsService()
     }
     
     public func start() {
-        tabBarCoordinator = TabBarCoordinator(window: window, contactsService: contactsService)
-        tabBarCoordinator?.start()
+        authenticationCoordinator = AuthenticationCoordinator(window: window, appCoordinator: self)
+        authenticationCoordinator?.start()
     }
     
     public func showScreen(_ name: String) {
