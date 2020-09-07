@@ -32,10 +32,15 @@
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
 		22743F08250148E800098122 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22743F07250148E800098122 /* GoogleService-Info.plist */; };
 		22743F0A250160C700098122 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22743F09250160C700098122 /* LoginViewController.swift */; };
+		227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227ACBBF2504E0E300739484 /* SignUpModel.swift */; };
+		227ACBC22505314900739484 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227ACBC12505314900739484 /* FirebaseService.swift */; };
 		228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */; };
 		228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA224F40931003B4432 /* ProfileViewController.swift */; };
 		228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA424F40949003B4432 /* ProfileViewModel.swift */; };
 		228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA624F40982003B4432 /* ProfileCoordinator.swift */; };
+		22A0123825067DFF00396E63 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A0123725067DFF00396E63 /* Profile.storyboard */; };
+		22A0123D250685D000396E63 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A0123C250685D000396E63 /* AuthResult.swift */; };
+		22A012402506866100396E63 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A0123F2506866100396E63 /* AuthError.swift */; };
 		22EC883225026415009E079A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883125026415009E079A /* LoginViewModel.swift */; };
 		22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC8834250284A1009E079A /* SignUpViewController.swift */; };
 		22EC883725029698009E079A /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EC883625029698009E079A /* Login.storyboard */; };
@@ -78,11 +83,16 @@
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		22743F07250148E800098122 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22743F09250160C700098122 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		227ACBBF2504E0E300739484 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		227ACBC12505314900739484 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCoordinator.swift; sourceTree = "<group>"; };
 		228E4EA224F40931003B4432 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		228E4EA424F40949003B4432 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		228E4EA624F40982003B4432 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		228E4EC024F41B56003B4432 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/serhii/Desktop/PhoneBook/PhoneBook/Info.plist; sourceTree = "<absolute>"; };
+		22A0123725067DFF00396E63 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		22A0123C250685D000396E63 /* AuthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResult.swift; sourceTree = "<group>"; };
+		22A0123F2506866100396E63 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		22EC883125026415009E079A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		22EC8834250284A1009E079A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		22EC883625029698009E079A /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -227,6 +237,7 @@
 			children = (
 				2234FE8124D3081100759AE9 /* AppDelegate.swift */,
 				2234FE8324D3081100759AE9 /* SceneDelegate.swift */,
+				22A0123E250685DC00396E63 /* Helpers */,
 				22228C9824DED0CB00C3293B /* Extensions */,
 				2234FEC924D714D100759AE9 /* Services */,
 				22228C9124DEB11A00C3293B /* Coordinators */,
@@ -283,6 +294,7 @@
 				2234FEC524D6F0BA00759AE9 /* StorageService.swift */,
 				2234FEC724D702A500759AE9 /* ContactsService.swift */,
 				22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */,
+				227ACBC12505314900739484 /* FirebaseService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -325,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				228E4EA224F40931003B4432 /* ProfileViewController.swift */,
+				22A0123725067DFF00396E63 /* Profile.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -345,6 +358,15 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		22A0123E250685DC00396E63 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				22A0123C250685D000396E63 /* AuthResult.swift */,
+				22A0123F2506866100396E63 /* AuthError.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		22EC8833250265BE009E079A /* LogInModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +385,7 @@
 				22EC88382502B339009E079A /* SignUp.storyboard */,
 				22EC88412503A8B0009E079A /* SignUpCoordinator.swift */,
 				22EC884525040C40009E079A /* SignUpViewModel.swift */,
+				227ACBBF2504E0E300739484 /* SignUpModel.swift */,
 			);
 			path = SignUpModule;
 			sourceTree = "<group>";
@@ -447,6 +470,7 @@
 			files = (
 				22228CA724E2DE8800C3293B /* Assets.xcassets in Resources */,
 				22228CC224E2E6E800C3293B /* InfoPlist.strings in Resources */,
+				22A0123825067DFF00396E63 /* Profile.storyboard in Resources */,
 				22EC883725029698009E079A /* Login.storyboard in Resources */,
 				22EC88392502B339009E079A /* SignUp.storyboard in Resources */,
 				22743F08250148E800098122 /* GoogleService-Info.plist in Resources */,
@@ -505,10 +529,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2234FEC024D4935000759AE9 /* Contact.swift in Sources */,
+				22A0123D250685D000396E63 /* AuthResult.swift in Sources */,
 				22228C9F24E0655900C3293B /* AlertController.swift in Sources */,
 				22EC883E25039B04009E079A /* RegistrationCoordinator.swift in Sources */,
 				22EC883C25039AED009E079A /* AuthenticationCoordinator.swift in Sources */,
 				22228C9724DED0C300C3293B /* String.swift in Sources */,
+				22A012402506866100396E63 /* AuthError.swift in Sources */,
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
 				2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */,
@@ -516,6 +542,7 @@
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
 				22EC883225026415009E079A /* LoginViewModel.swift in Sources */,
+				227ACBC22505314900739484 /* FirebaseService.swift in Sources */,
 				22EC884025039F7B009E079A /* LoginCoordinator.swift in Sources */,
 				22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */,
 				2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */,
@@ -534,6 +561,7 @@
 				228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */,
 				228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */,
 				2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */,
+				227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */,
 				22EC884625040C40009E079A /* SignUpViewModel.swift in Sources */,
 				2218601D24F4076100E159A1 /* FavoritesViewModel.swift in Sources */,
 			);
@@ -622,7 +650,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -677,7 +705,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -27,8 +27,11 @@ class LoginCoordinator: Coordinator {
         navigationController?.setViewControllers([loginController], animated: false)
     }
     
-    
     public func signUp() {
         authenticationCoordinator?.signUp()
+    }
+    
+    public func userDidLogIn() {
+        authenticationCoordinator?.userDidLogIn()
     }
 }

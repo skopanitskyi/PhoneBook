@@ -25,7 +25,19 @@ class SignUpViewController: UITableViewController {
     }
     
     @IBAction func registrationTapped(_ sender: Any) {
-        viewModel?.registration()
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        let name = nameTextField.text
+        let surname = surnameTextField.text
+        let city = cityTextField.text
+        let street = streetTextField.text
+        
+        viewModel?.signUp(email: email,
+                          password: password,
+                          name: name,
+                          surname: surname,
+                          city: city,
+                          street: street)
     }
     
     @IBAction func hideKeyboard(_ sender: Any) {

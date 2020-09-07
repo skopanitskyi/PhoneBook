@@ -33,4 +33,12 @@ class AuthenticationCoordinator: Coordinator {
         let registrationCoordinator = RegistrationCoordinator(navigationController: navigationController, authenticationCoordinator: self)
         registrationCoordinator.start()
     }
+    
+    public func userDidSignUp() {
+        appCoordinator?.startApp()
+    }
+    
+    public func userDidLogIn() {
+        appCoordinator?.startApp()
+    }
 }

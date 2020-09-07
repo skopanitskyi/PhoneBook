@@ -24,4 +24,8 @@ class RegistrationCoordinator: Coordinator {
         let signUpCoordinator = SignUpCoordinator(navigationController: navigationController, registrationCoordinator: self)
         signUpCoordinator.start()
     }
+    
+    public func userDidSignUp() {
+        authenticationCoordinator?.userDidSignUp()
+    }
 }

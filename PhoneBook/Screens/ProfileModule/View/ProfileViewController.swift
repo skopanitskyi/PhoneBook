@@ -7,13 +7,22 @@
 //
 
 import UIKit
+import MapKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UITableViewController {
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var streetLabel: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
     
     public var viewModel: ProfileViewModelProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+    }
+    
+    @IBAction func logOutTapped(_ sender: Any) {
+        
     }
 }

@@ -37,4 +37,11 @@ class AppCoordinator: Coordinator {
     public func getTabBarCoordinator() -> TabBarCoordinator? {
         return tabBarCoordinator
     }
+    
+    public func startApp() {
+        tabBarCoordinator = TabBarCoordinator(window: window, contactsService: contactsService)
+        tabBarCoordinator?.start()
+        
+        authenticationCoordinator = nil
+    }
 }

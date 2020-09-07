@@ -11,7 +11,7 @@ import UIKit
 class SignUpCoordinator: Coordinator {
     
     private let navigationController: UINavigationController
-    private weak var registrationCoordinator: RegistrationCoordinator?
+    private let registrationCoordinator: RegistrationCoordinator
     
     init(navigationController: UINavigationController, registrationCoordinator: RegistrationCoordinator) {
         self.navigationController = navigationController
@@ -21,8 +21,12 @@ class SignUpCoordinator: Coordinator {
     public func start() {
         let signUpController = UIStoryboard(name: "SignUp",
                                             bundle: nil).instantiateViewController(withIdentifier: "SignUp") as! SignUpViewController
-        let signUpViewModel = SignUpViewModel()
+        let signUpViewModel = SignUpViewModel(signUpCoordinator: self)
         signUpController.viewModel = signUpViewModel
         navigationController.pushViewController(signUpController, animated: true)
+    }
+    
+    public func userDidSignUp() {
+        registrationCoordinator.userDidSignUp()
     }
 }

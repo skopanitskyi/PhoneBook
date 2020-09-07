@@ -41,7 +41,6 @@ class LoginViewController: UITableViewController {
     
     @IBAction func signUpButtonTapped(_ sender: Any) {
         viewModel?.signUp()
-        
     }
     
     @IBAction func hideKeyboard(_ sender: Any) {
