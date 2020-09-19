@@ -15,13 +15,13 @@ protocol Coordinator {
 class AppCoordinator: Coordinator {
     
     private let window: UIWindow
-    private let contactsService: ContactsService
+    private let firebaseService: FirebaseService
     private var tabBarCoordinator: TabBarCoordinator?
     private var authenticationCoordinator: AuthenticationCoordinator?
     
     init(window: UIWindow) {
         self.window = window
-        contactsService = ContactsService()
+        firebaseService = FirebaseService()
     }
     
     public func start() {
@@ -39,9 +39,14 @@ class AppCoordinator: Coordinator {
     }
     
     public func startApp() {
-        tabBarCoordinator = TabBarCoordinator(window: window, contactsService: contactsService)
+        tabBarCoordinator = TabBarCoordinator(window: window, firebaseService: firebaseService, appCoordinator: self)
         tabBarCoordinator?.start()
         
         authenticationCoordinator = nil
+    }
+    
+    public func logout() {
+        start()
+        tabBarCoordinator = nil
     }
 }

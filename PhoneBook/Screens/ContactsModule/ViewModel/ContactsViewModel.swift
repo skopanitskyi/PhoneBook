@@ -16,7 +16,6 @@ protocol ContactsViewModelProtocol {
     func titleForHeaderInSection(section: Int) -> String
     func numberOfSections() -> Int
     func reverse(isAscending: Bool)
-    func addToRecent(contact: Contact)
     func getFilteredContacts(name: String) -> [Contact]
     func makeCall(at indexPath: IndexPath)
 }
@@ -29,29 +28,25 @@ class ContactsViewModel: ContactsViewModelProtocol {
     
     private var contacts = [[Contact]]()
     
-    private let contactsService: ContactsService
+    private let firebaseService: FirebaseService
     
-    init(contactsService: ContactsService) {
-        self.contactsService = contactsService
+    private let coordinator: ContactsCoordinator
+        
+    init(firebaseService: FirebaseService, coordinator: ContactsCoordinator) {
+        self.firebaseService = firebaseService
+        self.coordinator = coordinator
     }
     
     public func fetchContactsData() {
-        if !StorageService.fileExists(StorageService.fileName, in: .documents) {
-            contactsService.fetchContactsData { [weak self] contacts in
-                DispatchQueue.main.async {
-                    self?.createTwoDimensional(array: contacts)
-                    self?.updateTableView?()
-                    StorageService.store(self?.contacts, to: .documents, as: StorageService.fileName)
-                }
+        firebaseService.g() { result in
+            switch result {
+            case .success(let contacts):
+                self.createTwoDimensional(array: contacts)
+                self.updateTableView?()
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-        } else {
-            contacts = StorageService.retrieve(StorageService.fileName, from: .documents, as: [[Contact]].self)
-            updateTableView?()
         }
-    }
-    
-    public func addToRecent(contact: Contact) {
-        contactsService.add(contact: contact)
     }
     
     public func getContact(at indexPath: IndexPath) -> Contact {
@@ -119,7 +114,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
         let phoneNumber = contact.phoneNumber.removeWhitespaces()
         if let url = URL(string: "tel://\(phoneNumber)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            addToRecent(contact: contact)
+            
         }
     }
 }

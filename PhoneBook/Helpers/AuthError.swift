@@ -15,6 +15,7 @@ enum AuthError {
     case failedToLogin
     case failedToSignIn
     case failedToAddData
+    case failedToSignOut
     case unknownError
 }
 
@@ -33,6 +34,8 @@ extension AuthError: LocalizedError {
             return NSLocalizedString("Не удалсь зарегистрировать пользователя", comment: "")
         case .failedToAddData:
             return NSLocalizedString("Не удалось сохранить данные", comment: "")
+        case .failedToSignOut:
+            return NSLocalizedString("Не удалось выйти из аккаунта", comment: "")
         case .unknownError:
             return NSLocalizedString("Неизвестная ошибка", comment: "")
         }

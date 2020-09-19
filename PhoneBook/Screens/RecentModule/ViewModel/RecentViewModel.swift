@@ -15,17 +15,19 @@ protocol RecentViewModelProtocol {
 
 class RecentViewModel: RecentViewModelProtocol {
     
-    private let contactsService: ContactsService
+    private var contacts = [Contact]()
     
-    init(contactsService: ContactsService) {
-        self.contactsService = contactsService
+    private let firebaseService: FirebaseService
+    
+    init(firebaseService: FirebaseService) {
+        self.firebaseService = firebaseService
     }
     
     public func numberOfRowsInSection() -> Int {
-       return contactsService.getContacts().count
+       return contacts.count
     }
-    
+
     public func getContactName(at index: Int) -> String {
-        return contactsService.getContacts()[index].fullName
+        return contacts[index].fullName
     }
 }

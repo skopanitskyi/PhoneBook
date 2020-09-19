@@ -12,19 +12,19 @@ class ContactsCoordinator: TabBarItemCoordinator {
     
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
-    private let contactsService: ContactsService
+    private let firebaseService: FirebaseService
     
-    init( contactsService: ContactsService) {
+    init(firebaseService: FirebaseService) {
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Contacts.Title".localized, image: UIImage(named: "contacts"), tag: 0)
         navigationController.tabBarItem = tabBarItem
-        self.contactsService = contactsService
+        self.firebaseService = firebaseService
     }
     
     
-    func start() {
+  public func start() {
         let viewController = ContactsViewController()
-        let viewModel = ContactsViewModel(contactsService: contactsService)
+        let viewModel = ContactsViewModel(firebaseService: firebaseService, coordinator: self)
         viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)
     }

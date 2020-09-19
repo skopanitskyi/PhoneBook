@@ -23,26 +23,28 @@ protocol TabBarItemCoordinator {
 class TabBarCoordinator: Coordinator {
     
     private var window: UIWindow
-    private let contactsService: ContactsService
+    private let firebaseService: FirebaseService
     private let tabBarController: UITabBarController
-    private var tabBarCoordinators: [TabBarItemCoordinator]
+    private weak var appCoordinator: AppCoordinator?
+    private var tabBarCoordinators: [TabBarItemCoordinator] = []
     
-    init(window: UIWindow, contactsService: ContactsService) {
+    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator) {
         self.window = window
-        self.contactsService = contactsService
+        self.firebaseService = firebaseService
+        self.appCoordinator = appCoordinator
         tabBarController = UITabBarController()
         
         
-        let contactCoordinator = ContactsCoordinator(contactsService: contactsService)
+        let contactCoordinator = ContactsCoordinator(firebaseService: firebaseService)
         contactCoordinator.start()
         
-        let recentCoordinator = RecentCoordinator(contactsService: contactsService)
+        let recentCoordinator = RecentCoordinator(firebaseService: firebaseService)
         recentCoordinator.start()
         
         let favoritesCoordinator = FavoritesCoordinator()
         favoritesCoordinator.start()
         
-        let profileCoordinator = ProfileCoordinator()
+        let profileCoordinator = ProfileCoordinator(firebaseService: firebaseService, coordinator: self)
         profileCoordinator.start()
         
         tabBarController.viewControllers = [contactCoordinator.navigationController,
@@ -71,4 +73,11 @@ class TabBarCoordinator: Coordinator {
         }
         return nil
     }
+    
+    public func logout() {
+        appCoordinator?.logout()
+    }
 }
+
+
+

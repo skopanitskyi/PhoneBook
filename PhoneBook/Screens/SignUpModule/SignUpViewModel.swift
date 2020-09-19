@@ -41,7 +41,9 @@ class SignUpViewModel: SignUpViewModelProtocol {
                 case .success:
                     self.signUpCoordinator.userDidSignUp()
                 case .failure(let error):
-                    print(error.errorDescription)
+                    if let error = error.errorDescription {
+                        print(error)
+                    }
                 }
             }
         }

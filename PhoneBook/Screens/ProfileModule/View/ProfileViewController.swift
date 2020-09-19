@@ -22,7 +22,7 @@ class ProfileViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    @IBAction func logOutTapped(_ sender: Any) {
-        
+    @IBAction func logoutTapped(_ sender: Any) {
+        viewModel?.logout()
     }
 }

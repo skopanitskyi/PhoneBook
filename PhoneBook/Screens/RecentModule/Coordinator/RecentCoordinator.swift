@@ -10,20 +10,20 @@ import UIKit
 
 class RecentCoordinator: TabBarItemCoordinator {
     
-    private let contactsService: ContactsService
+    private let firebaseService: FirebaseService
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
     
-    init(contactsService: ContactsService) {
-        self.contactsService = contactsService
+    init(firebaseService: FirebaseService) {
+        self.firebaseService = firebaseService
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Recent.Title".localized, image: UIImage(named: "recent"), tag: 1)
         navigationController.tabBarItem = tabBarItem
     }
     
-    func start() {
+   public func start() {
         let viewController = RecentViewController()
-        let viewModel = RecentViewModel(contactsService: contactsService)
+        let viewModel = RecentViewModel(firebaseService: firebaseService)
         viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)
     }

@@ -9,9 +9,18 @@
 import Foundation
 
 protocol ProfileViewModelProtocol {
-    
+    func logout()
 }
 
 class ProfileViewModel: ProfileViewModelProtocol {
     
+    private let coordinator: ProfileCoordinator
+    
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+    }
+    
+    public func logout() {
+        coordinator.logout()
+    }
 }

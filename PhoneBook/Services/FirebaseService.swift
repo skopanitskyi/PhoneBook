@@ -14,7 +14,7 @@ class FirebaseService {
     
     private let auth = Auth.auth()
     private let loginManager = LoginManager()
-    private let firestore = Firestore.firestore()
+    private let firestore = Firestore.firestore().collection("users")
     
     public func signUp(model: SignUpModel, completion: @escaping (AuthResult) -> Void) {
         
@@ -52,8 +52,8 @@ class FirebaseService {
                 completion(.failure(.cancelled))
             case .success(_ , _, let token):
                 let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
-                self.logInWith(credential: credential) { completio in
-                    completion(completio)
+                self.logInWith(credential: credential) { result in
+                    completion(result)
                 }
             }
         }
@@ -81,7 +81,7 @@ class FirebaseService {
     }
     
     private func addData(data: [String : Any], completion: @escaping (AuthResult) -> Void) {
-        firestore.collection("users").addDocument(data: data) { error in
+        firestore.addDocument(data: data) { error in
             if let _ = error {
                 completion(.failure(.failedToAddData))
                 return
@@ -92,36 +92,59 @@ class FirebaseService {
     
     private func getData(model: SignUpModel, uid: String) -> [String : Any] {
         
-        var contacts = [[String : String]]()
+        var contacts = [[String : Any]]()
         
         getContacts { contact in
             contacts = contact
         }
         
         let docData: [String : Any] = [
-            "name": model.name,
-            "surname": model.surname,
-            "city": model.city,
-            "street": model.street,
+            "name": model.name!,
+            "surname": model.surname!,
+            "city": model.city!,
+            "street": model.street!,
             "uid": uid,
             "contacts": contacts,
-            "recent" : [[String : String]](),
-            "favorites" : [[String : String]]()
+            "recent" : [[String : Any]](),
         ]
         return docData
     }
     
-    private func getContacts(completion: @escaping ([[String : String]]) -> Void) {
-        var contactS = [[String : String]]()
+    private func getContacts(completion: @escaping ([[String : Any]]) -> Void) {
+        var contacts = [[String : Any]]()
         
-        ContactsService().fetchContactsData { contacts in
-            contacts.forEach { contact in
-                contactS.append(["name" : contact.fullName,
+        ContactsService().fetchContactsData { result in
+            result.forEach { contact in
+                contacts.append(["name" : contact.fullName,
                                  "phone" : contact.phoneNumber,
-                                 "city" : "",
-                                 "street": ""])
+                                 "city" : contact.city,
+                                 "isFavorite" : contact.isFavorite,
+                                 "street": contact.street])
             }
-            completion(contactS)
+            completion(contacts)
+        }
+    }
+    
+    public func g(completion: @escaping (Result<[Contact], Error>) -> Void) {
+        firestore.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            let document = querySnapshot?.documents.first?.data()["contacts"] as! [[String : String]]
+            let contacts = document.compactMap { documet -> Contact in
+                Contact(fullName: documet["name"]!, phoneNumber: documet["phone"]!, city: documet["city"]! , street: documet["street"]!)
+            }
+            completion(.success(contacts))
+        }
+    }
+    
+    public func signOut(completion: (AuthResult) -> Void) {
+        do {
+            try auth.signOut()
+            completion(.success)
+        } catch {
+            completion(.failure(.failedToSignOut))
         }
     }
 }
