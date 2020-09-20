@@ -10,11 +10,15 @@ import UIKit
 
 class ContactsCoordinator: TabBarItemCoordinator {
     
+    private let coordinator: TabBarCoordinator
+    private let firebaseService: FirebaseService
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
-    private let firebaseService: FirebaseService
+
     
-    init(firebaseService: FirebaseService) {
+    
+    init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
+        self.coordinator = coordinator
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Contacts.Title".localized, image: UIImage(named: "contacts"), tag: 0)
         navigationController.tabBarItem = tabBarItem
@@ -22,10 +26,13 @@ class ContactsCoordinator: TabBarItemCoordinator {
     }
     
     
-  public func start() {
-        let viewController = ContactsViewController()
-        let viewModel = ContactsViewModel(firebaseService: firebaseService, coordinator: self)
-        viewController.viewModel = viewModel
-        navigationController.pushViewController(viewController, animated: true)
+    public func start() {
+        let contactsViewController = ScreensFactory.makeContactsScreen(coordinator: self,
+                                                                       firebaseService: firebaseService)
+        navigationController.pushViewController(contactsViewController, animated: true)
+    }
+    
+    public func addToRecent(contact: Contact) {
+        coordinator.addToRecent(contact: contact)
     }
 }

@@ -20,10 +20,7 @@ class LoginCoordinator: Coordinator {
     
     
     public func start() {
-        let loginController = UIStoryboard(name: "Login",
-                                           bundle: nil).instantiateViewController(withIdentifier: "Login") as! LoginViewController
-        let loginViewModel = LoginViewModel(loginCoordinator: self)
-        loginController.viewModel = loginViewModel
+        let loginController = ScreensFactory.makeLoginScreen(coordinator: self)
         navigationController?.setViewControllers([loginController], animated: false)
     }
     

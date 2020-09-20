@@ -11,6 +11,7 @@ import UIKit
 class RecentCoordinator: TabBarItemCoordinator {
     
     private let firebaseService: FirebaseService
+    private var recentViewController: RecentViewController?
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
     
@@ -21,10 +22,15 @@ class RecentCoordinator: TabBarItemCoordinator {
         navigationController.tabBarItem = tabBarItem
     }
     
-   public func start() {
-        let viewController = RecentViewController()
-        let viewModel = RecentViewModel(firebaseService: firebaseService)
-        viewController.viewModel = viewModel
-        navigationController.pushViewController(viewController, animated: true)
+    public func start() {
+        recentViewController = ScreensFactory.makeRecentScreen(firebaseService: firebaseService)
+        navigationController.pushViewController(recentViewController!, animated: true)
+    }
+}
+
+extension RecentCoordinator: A {
+    
+    func addToRecent(contact: Contact) {
+        recentViewController?.viewModel.addToRecent(contact: contact)
     }
 }

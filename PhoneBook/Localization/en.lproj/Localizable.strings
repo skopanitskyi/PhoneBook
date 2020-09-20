@@ -30,4 +30,39 @@
 // Profile
 "Profile.Title" = "Profile";
 
+// Authentication errors
+"AuthenticationErrors.FieldsNotFilled" = "Fill in all fields";
+"AuthenticationErrors.Canceled" = "Authorization was canceled";
+"AuthenticationErrors.FailedToCreateUser" = "Failed to create user";
+"AuthenticationErrors.FailedToLogin" = "Failed to log in";
+"AuthenticationErrors.FailedToSignIn" = "User registration failed";
+"AuthenticationErrors.FailedToSaveData" = "Failed to save data";
+"AuthenticationErrors.FailedToSignOut" = "Failed to log out";
+"AuthenticationErrors.FailedToUpdateData" = "Failed to update data";
+"AuthenticationErrors.UnknownError" = "Unknown error";
 
+// Authentication
+"Authentication.Titile" = "Log in";
+"Authentication.ApplicationName" = "Phone Book";
+"Authentication.EmailTextField.Placeholder" = "Email";
+"Authentication.PasswordTextField.Placeholder" = "Password";
+"Authentication.LogInButton" = "Log in";
+"Authentication.FacebookButton" = "Facebook";
+"Authentication.SignUpButton" = "Sign up";
+
+// Registration
+"Registration.Title" = "Sign up:";
+"Registration.EmailLabel" = "Email:";
+"Registration.PasswordLabel" = "Password:";
+"Registration.NameLabel" = "Name:";
+"Registration.SurnameLabel" = "Surname:";
+"Registration.CityLabel" = "City:";
+"Registration.StreetLabel" = "Street:";
+"Registration.RegistrationButton" = "Registration";
+
+// Profile
+"Profile.Title" = "Profile";
+"Profile.FullNameLabel" = "Full name:";
+"Profile.CityLabel" = "City:";
+"Profile.StreetLabel" = "Street:";
+"Profile.LogOutButton" = "Log out";

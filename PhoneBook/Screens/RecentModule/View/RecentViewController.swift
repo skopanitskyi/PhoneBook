@@ -33,11 +33,10 @@ class RecentViewController: UIViewController {
         leftButton.isEnabled = false
         navigationItem.leftBarButtonItem = leftButton
         setupTableView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
+        viewModel.downloadData()
+        viewModel.updateView = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -63,7 +62,17 @@ class RecentViewController: UIViewController {
     }
     
     @objc private func deleteRecentsContacts() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteAll = UIAlertAction(title: "Очистить все недавние", style: .destructive) { [weak self] action in
+            self?.viewModel.deleteAllContacts()
+        }
+        let cancel = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
         
+        alertController.addAction(deleteAll)
+        alertController.addAction(cancel)
+        alertController.pruneNegativeWidthConstraints()
+
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -79,6 +88,7 @@ extension RecentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
+        viewModel.deleteContact(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     

@@ -20,6 +20,10 @@ protocol TabBarItemCoordinator {
     var tabBarItem: UITabBarItem { get }
 }
 
+protocol A {
+    func addToRecent(contact: Contact)
+}
+
 class TabBarCoordinator: Coordinator {
     
     private var window: UIWindow
@@ -35,7 +39,7 @@ class TabBarCoordinator: Coordinator {
         tabBarController = UITabBarController()
         
         
-        let contactCoordinator = ContactsCoordinator(firebaseService: firebaseService)
+        let contactCoordinator = ContactsCoordinator(coordinator: self, firebaseService: firebaseService)
         contactCoordinator.start()
         
         let recentCoordinator = RecentCoordinator(firebaseService: firebaseService)
@@ -76,6 +80,11 @@ class TabBarCoordinator: Coordinator {
     
     public func logout() {
         appCoordinator?.logout()
+    }
+    
+    public func addToRecent(contact: Contact) {
+        let a = tabBarCoordinators[1] as? A
+        a?.addToRecent(contact: contact)
     }
 }
 

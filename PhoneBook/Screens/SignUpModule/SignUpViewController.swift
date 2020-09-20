@@ -19,9 +19,18 @@ class SignUpViewController: UITableViewController {
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var streetTextField: UITextField!
     
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var surnameLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var streetLabel: UILabel!
+    @IBOutlet weak var registrationButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Sign up"
+        localization()
     }
     
     @IBAction func registrationTapped(_ sender: Any) {
@@ -42,6 +51,17 @@ class SignUpViewController: UITableViewController {
     
     @IBAction func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
+    }
+    
+    private func localization() {
+        title = "Registration.Title".localized
+        emailLabel.text = "Registration.EmailLabel".localized
+        passwordLabel.text = "Registration.PasswordLabel".localized
+        nameLabel.text = "Registration.NameLabel".localized
+        surnameLabel.text = "Registration.SurnameLabel".localized
+        cityLabel.text = "Registration.CityLabel".localized
+        streetLabel.text = "Registration.StreetLabel".localized
+        registrationButton.setTitle("Registration.RegistrationButton".localized, for: .normal)
     }
 }
 

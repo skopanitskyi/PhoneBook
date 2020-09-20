@@ -20,9 +20,7 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     }
     
     public func start() {
-        let favoritesViewController = FavoritesViewController()
-        let favoritesViewModel = FavoritesViewModel()
-        favoritesViewController.viewModel = favoritesViewModel
+        let favoritesViewController = ScreensFactory.makeFavoritesScreen()
         navigationController.pushViewController(favoritesViewController, animated: true)
     }
 }

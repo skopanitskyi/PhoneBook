@@ -19,10 +19,7 @@ class SignUpCoordinator: Coordinator {
     }
     
     public func start() {
-        let signUpController = UIStoryboard(name: "SignUp",
-                                            bundle: nil).instantiateViewController(withIdentifier: "SignUp") as! SignUpViewController
-        let signUpViewModel = SignUpViewModel(signUpCoordinator: self)
-        signUpController.viewModel = signUpViewModel
+        let signUpController = ScreensFactory.makeSignUpScreen(coordinator: self)
         navigationController.pushViewController(signUpController, animated: true)
     }
     

@@ -13,11 +13,15 @@ class LoginViewController: UITableViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var facebookButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var appNameLabel: UILabel!
     
     public var viewModel: LoginViewModelProtocol?
     
     override func viewDidLoad() {
-        title = "Log in"
+        localization()
         super.viewDidLoad()
     }
     
@@ -45,6 +49,16 @@ class LoginViewController: UITableViewController {
     
     @IBAction func hideKeyboard(_ sender: Any) {
         view.endEditing(true)
+    }
+    
+    private func localization() {
+        title = "Authentication.Titile".localized
+        appNameLabel.text = "Authentication.ApplicationName".localized
+        emailTextField.placeholder = "Authentication.EmailTextField.Placeholder".localized
+        passwordTextField.placeholder = "Authentication.PasswordTextField.Placeholder".localized
+        logInButton.setTitle("Authentication.LogInButton".localized, for: .normal)
+        facebookButton.setTitle("Authentication.FacebookButton".localized, for: .normal)
+        signUpButton.setTitle("Authentication.SignUpButton".localized, for: .normal)
     }
 }
 

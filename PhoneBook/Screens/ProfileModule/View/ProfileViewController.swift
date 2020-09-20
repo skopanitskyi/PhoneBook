@@ -16,13 +16,28 @@ class ProfileViewController: UITableViewController {
     @IBOutlet weak var streetLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var city: UILabel!
+    @IBOutlet weak var street: UILabel!
+    @IBOutlet weak var logOutButton: UIButton!
+    
     public var viewModel: ProfileViewModelProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        localizable()
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
         viewModel?.logout()
+    }
+    
+    private func localizable() {
+        title = "Profile.Title".localized
+        name.text = "Profile.FullNameLabel".localized
+        city.text = "Profile.CityLabel".localized
+        street.text = "Profile.StreetLabel".localized
+        logOutButton.setTitle("Profile.LogOutButton".localized, for: .normal)
     }
 }

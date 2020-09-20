@@ -27,3 +27,40 @@
 
 // Profile
 "Profile.Title" = "Профиль";
+
+// Authentication errors
+"AuthenticationErrors.FieldsNotFilled" = "Заполните все поля";
+"AuthenticationErrors.Canceled" = "Авторизация была отменена";
+"AuthenticationErrors.FailedToCreateUser" = "Не удалось создать пользователя";
+"AuthenticationErrors.FailedToLogin" = "Не удалось авторизоваться";
+"AuthenticationErrors.FailedToSignIn" = "Не удалсь зарегистрировать пользователя";
+"AuthenticationErrors.FailedToSaveData" = "Не удалось сохранить данные";
+"AuthenticationErrors.FailedToSignOut" = "Не удалось выйти из аккаунта";
+"AuthenticationErrors.FailedToUpdateData" = "Не удалось обновить данные";
+"AuthenticationErrors.UnknownError" = "Неизвестная ошибка";
+
+// Authentication
+"Authentication.Titile" = "Авторизация";
+"Authentication.ApplicationName" = "Телефонная книга";
+"Authentication.EmailTextField.Placeholder" = "Электронная почта";
+"Authentication.PasswordTextField.Placeholder" = "Пароль";
+"Authentication.LogInButton" = "Войти";
+"Authentication.FacebookButton" = "Фейсбук";
+"Authentication.SignUpButton" = "Зарегистрироваться";
+
+// Registration
+"Registration.Title" = "Регистрация";
+"Registration.EmailLabel" = "Электронная почта:";
+"Registration.PasswordLabel" = "Пароль:";
+"Registration.NameLabel" = "Имя:";
+"Registration.SurnameLabel" = "Фамилия:";
+"Registration.CityLabel" = "Город:";
+"Registration.StreetLabel" = "Улица:";
+"Registration.RegistrationButton" = "Зарегистрироваться";
+
+// Profile
+"Profile.Title" = "Профиль";
+"Profile.FullNameLabel" = "Полное имя:";
+"Profile.CityLabel" = "Город:";
+"Profile.StreetLabel" = "Улица:";
+"Profile.LogOutButton" = "Выйти";

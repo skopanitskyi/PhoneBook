@@ -28,8 +28,8 @@
 		2234FE8E24D3081200759AE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2234FE8C24D3081200759AE9 /* LaunchScreen.storyboard */; };
 		2234FEC024D4935000759AE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEBF24D4935000759AE9 /* Contact.swift */; };
 		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
-		2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC524D6F0BA00759AE9 /* StorageService.swift */; };
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
+		225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A02517A698009BF6EC /* ScreensFactory.swift */; };
 		22743F08250148E800098122 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22743F07250148E800098122 /* GoogleService-Info.plist */; };
 		22743F0A250160C700098122 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22743F09250160C700098122 /* LoginViewController.swift */; };
 		227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227ACBBF2504E0E300739484 /* SignUpModel.swift */; };
@@ -79,8 +79,8 @@
 		2234FE8D24D3081200759AE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2234FEBF24D4935000759AE9 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
-		2234FEC524D6F0BA00759AE9 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
+		225269A02517A698009BF6EC /* ScreensFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensFactory.swift; sourceTree = "<group>"; };
 		22743F07250148E800098122 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22743F09250160C700098122 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		227ACBBF2504E0E300739484 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -255,6 +255,7 @@
 				22228CA624E2DE8800C3293B /* Assets.xcassets */,
 				22743F07250148E800098122 /* GoogleService-Info.plist */,
 				228E4EC024F41B56003B4432 /* Info.plist */,
+				225269A32517B168009BF6EC /* Factory */,
 			);
 			path = PhoneBook;
 			sourceTree = "<group>";
@@ -299,12 +300,19 @@
 		2234FEC924D714D100759AE9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2234FEC524D6F0BA00759AE9 /* StorageService.swift */,
 				2234FEC724D702A500759AE9 /* ContactsService.swift */,
 				22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */,
 				227ACBC12505314900739484 /* FirebaseService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		225269A32517B168009BF6EC /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				225269A02517A698009BF6EC /* ScreensFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		228E4E9F24F408FF003B4432 /* View */ = {
@@ -537,7 +545,6 @@
 				22A012402506866100396E63 /* AuthError.swift in Sources */,
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
-				2234FEC624D6F0BA00759AE9 /* StorageService.swift in Sources */,
 				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
@@ -562,6 +569,7 @@
 				228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */,
 				2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */,
 				227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */,
+				225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */,
 				22EC884625040C40009E079A /* SignUpViewModel.swift in Sources */,
 				2218601D24F4076100E159A1 /* FavoritesViewModel.swift in Sources */,
 			);

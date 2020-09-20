@@ -16,6 +16,7 @@ enum AuthError {
     case failedToSignIn
     case failedToAddData
     case failedToSignOut
+    case failedToUpdateData
     case unknownError
 }
 
@@ -23,21 +24,23 @@ extension AuthError: LocalizedError {
    public var errorDescription: String? {
         switch self {
         case .notFilled:
-            return NSLocalizedString("Заполните все поля", comment: "")
+            return "AuthenticationErrors.FieldsNotFilled".localized
         case .cancelled:
-            return NSLocalizedString("Авторизация была отменена", comment: "")
+            return "AuthenticationErrors.Canceled".localized
         case .failedToCreateUser:
-            return NSLocalizedString("Не удалось создать пользователя", comment: "")
+            return "AuthenticationErrors.FailedToCreateUser".localized
         case .failedToLogin:
-            return NSLocalizedString("Не удалось авторизоваться", comment: "")
+            return "AuthenticationErrors.FailedToLogin".localized
         case .failedToSignIn:
-            return NSLocalizedString("Не удалсь зарегистрировать пользователя", comment: "")
+            return "AuthenticationErrors.FailedToSignIn".localized
         case .failedToAddData:
-            return NSLocalizedString("Не удалось сохранить данные", comment: "")
+            return "AuthenticationErrors.FailedToSaveData".localized
         case .failedToSignOut:
-            return NSLocalizedString("Не удалось выйти из аккаунта", comment: "")
+            return "AuthenticationErrors.FailedToSignOut".localized
+        case .failedToUpdateData:
+            return "AuthenticationErrors.FailedToUpdateData".localized
         case .unknownError:
-            return NSLocalizedString("Неизвестная ошибка", comment: "")
+            return "AuthenticationErrors.UnknownError".localized
         }
     }
 }

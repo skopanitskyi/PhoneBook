@@ -38,7 +38,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
     }
     
     public func fetchContactsData() {
-        firebaseService.g() { result in
+        firebaseService.userSavedData(name: "contacts") { result in
             switch result {
             case .success(let contacts):
                 self.createTwoDimensional(array: contacts)
@@ -114,7 +114,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
         let phoneNumber = contact.phoneNumber.removeWhitespaces()
         if let url = URL(string: "tel://\(phoneNumber)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            
+            coordinator.addToRecent(contact: contact)
         }
     }
 }

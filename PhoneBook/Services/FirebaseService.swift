@@ -25,7 +25,7 @@ class FirebaseService {
                 return
             }
             let data = self.getData(model: model, uid: result!.user.uid)
-            self.addData(data: data) { completio in
+            self.addData(uid: result!.user.uid, data: data) { completio in
                 completion(completio)
             }
         }
@@ -71,7 +71,7 @@ class FirebaseService {
                 let model = SignUpModel(email: nil, password: nil, name: result!.user.displayName, surname: nil,
                                         city: nil, street: nil)
                 let data = self.getData(model: model, uid: result!.user.uid)
-                self.addData(data: data) { complet in
+                self.addData(uid: result!.user.uid, data: data) { complet in
                     completion(complet)
                 }
             } else {
@@ -80,8 +80,8 @@ class FirebaseService {
         }
     }
     
-    private func addData(data: [String : Any], completion: @escaping (AuthResult) -> Void) {
-        firestore.addDocument(data: data) { error in
+    private func addData(uid: String, data: [String : Any], completion: @escaping (AuthResult) -> Void) {
+        firestore.document(uid).setData(data) { error in
             if let _ = error {
                 completion(.failure(.failedToAddData))
                 return
@@ -125,15 +125,18 @@ class FirebaseService {
         }
     }
     
-    public func g(completion: @escaping (Result<[Contact], Error>) -> Void) {
-        firestore.getDocuments { (querySnapshot, error) in
+    public func userSavedData(name: String, completion: @escaping (Result<[Contact], Error>) -> Void) {
+        firestore.document(auth.currentUser!.uid).getDocument { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            let document = querySnapshot?.documents.first?.data()["contacts"] as! [[String : String]]
-            let contacts = document.compactMap { documet -> Contact in
-                Contact(fullName: documet["name"]!, phoneNumber: documet["phone"]!, city: documet["city"]! , street: documet["street"]!)
+
+            
+            let document = querySnapshot?.data()![name] as! [[String : Any]]
+            
+            let contacts = document.compactMap { data -> Contact in
+                Contact(fullName: data["name"]! as! String, phoneNumber: data["phone"]! as! String, city: data["city"]! as! String , street: data["street"]! as! String)
             }
             completion(.success(contacts))
         }
@@ -145,6 +148,29 @@ class FirebaseService {
             completion(.success)
         } catch {
             completion(.failure(.failedToSignOut))
+        }
+    }
+    
+    public func updateData(data: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+        
+        var contacts = [[String : Any]]()
+        
+        data.forEach { contact in
+            contacts.append(["name" : contact.fullName,
+                             "phone" : contact.phoneNumber,
+                             "city" : contact.city,
+                             "isFavorite" : contact.isFavorite,
+                             "street": contact.street])
+        }
+        
+        let dataToSave = ["recent" : contacts]
+        
+        firestore.document(auth.currentUser!.uid).updateData(dataToSave) { error in
+            if let _ = error {
+                completion(.failure(.failedToUpdateData))
+                return
+            }
+            completion(.success)
         }
     }
 }

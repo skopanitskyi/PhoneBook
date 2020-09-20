@@ -24,10 +24,7 @@ class ProfileCoordinator: TabBarItemCoordinator {
     }
     
     public func start() {
-        let profileViewController = UIStoryboard(name: "Profile",
-        bundle: nil).instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
-        let profileViewModel = ProfileViewModel(coordinator: self)
-        profileViewController.viewModel = profileViewModel
+        let profileViewController = ScreensFactory.makeProfileScreen(coordinator: self)
         navigationController.pushViewController(profileViewController, animated: true)
     }
     
