@@ -38,7 +38,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
     }
     
     public func fetchContactsData() {
-        firebaseService.userSavedData(name: "contacts") { result in
+        firebaseService.userSavedData(data: .contacts) { result in
             switch result {
             case .success(let contacts):
                 self.createTwoDimensional(array: contacts)

@@ -77,7 +77,9 @@ class RecentViewController: UIViewController {
 }
 
 extension RecentViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.showDetailsContact(at: indexPath.row)
+    }
 }
 
 extension RecentViewController: UITableViewDataSource {

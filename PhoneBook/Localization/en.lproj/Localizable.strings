@@ -39,6 +39,7 @@
 "AuthenticationErrors.FailedToSaveData" = "Failed to save data";
 "AuthenticationErrors.FailedToSignOut" = "Failed to log out";
 "AuthenticationErrors.FailedToUpdateData" = "Failed to update data";
+"AuthenticationErrors.FailedToGetData" = "Failed to download data";
 "AuthenticationErrors.UnknownError" = "Unknown error";
 
 // Authentication

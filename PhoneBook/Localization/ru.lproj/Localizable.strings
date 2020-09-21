@@ -37,6 +37,7 @@
 "AuthenticationErrors.FailedToSaveData" = "Не удалось сохранить данные";
 "AuthenticationErrors.FailedToSignOut" = "Не удалось выйти из аккаунта";
 "AuthenticationErrors.FailedToUpdateData" = "Не удалось обновить данные";
+"AuthenticationErrors.FailedToGetData" = "Не удалось загрузить данные";
 "AuthenticationErrors.UnknownError" = "Неизвестная ошибка";
 
 // Authentication
@@ -50,7 +51,7 @@
 
 // Registration
 "Registration.Title" = "Регистрация";
-"Registration.EmailLabel" = "Электронная почта:";
+"Registration.EmailLabel" = "Эл. почта:";
 "Registration.PasswordLabel" = "Пароль:";
 "Registration.NameLabel" = "Имя:";
 "Registration.SurnameLabel" = "Фамилия:";
@@ -60,7 +61,7 @@
 
 // Profile
 "Profile.Title" = "Профиль";
-"Profile.FullNameLabel" = "Полное имя:";
+"Profile.FullNameLabel" = "Имя:";
 "Profile.CityLabel" = "Город:";
 "Profile.StreetLabel" = "Улица:";
 "Profile.LogOutButton" = "Выйти";

@@ -30,6 +30,10 @@
 		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
 		225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A02517A698009BF6EC /* ScreensFactory.swift */; };
+		225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A52518F60E009BF6EC /* DetailsContactViewController.swift */; };
+		225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225269A82518F636009BF6EC /* DetailsContact.storyboard */; };
+		225269AC2518F75A009BF6EC /* DetailsContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269AB2518F75A009BF6EC /* DetailsContactViewModel.swift */; };
+		225269AF2518FAF8009BF6EC /* DetailsContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269AE2518FAF8009BF6EC /* DetailsContactCoordinator.swift */; };
 		22743F08250148E800098122 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22743F07250148E800098122 /* GoogleService-Info.plist */; };
 		22743F0A250160C700098122 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22743F09250160C700098122 /* LoginViewController.swift */; };
 		227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227ACBBF2504E0E300739484 /* SignUpModel.swift */; };
@@ -81,6 +85,10 @@
 		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		225269A02517A698009BF6EC /* ScreensFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensFactory.swift; sourceTree = "<group>"; };
+		225269A52518F60E009BF6EC /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
+		225269A82518F636009BF6EC /* DetailsContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsContact.storyboard; sourceTree = "<group>"; };
+		225269AB2518F75A009BF6EC /* DetailsContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewModel.swift; sourceTree = "<group>"; };
+		225269AE2518FAF8009BF6EC /* DetailsContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactCoordinator.swift; sourceTree = "<group>"; };
 		22743F07250148E800098122 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22743F09250160C700098122 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		227ACBBF2504E0E300739484 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -155,6 +163,7 @@
 				228E4EA824F409B6003B4432 /* ProfileModule */,
 				22EC8833250265BE009E079A /* LogInModule */,
 				22EC883A2502B355009E079A /* SignUpModule */,
+				225269B12518FD38009BF6EC /* DetailsContactModule */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -313,6 +322,17 @@
 				225269A02517A698009BF6EC /* ScreensFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		225269B12518FD38009BF6EC /* DetailsContactModule */ = {
+			isa = PBXGroup;
+			children = (
+				225269A52518F60E009BF6EC /* DetailsContactViewController.swift */,
+				225269A82518F636009BF6EC /* DetailsContact.storyboard */,
+				225269AB2518F75A009BF6EC /* DetailsContactViewModel.swift */,
+				225269AE2518FAF8009BF6EC /* DetailsContactCoordinator.swift */,
+			);
+			path = DetailsContactModule;
 			sourceTree = "<group>";
 		};
 		228E4E9F24F408FF003B4432 /* View */ = {
@@ -483,6 +503,7 @@
 				22EC88392502B339009E079A /* SignUp.storyboard in Resources */,
 				22743F08250148E800098122 /* GoogleService-Info.plist in Resources */,
 				22228CBB24E2E48700C3293B /* Localizable.strings in Resources */,
+				225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */,
 				2234FE8E24D3081200759AE9 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,6 +568,7 @@
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
 				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
+				225269AF2518FAF8009BF6EC /* DetailsContactCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
 				22EC883225026415009E079A /* LoginViewModel.swift in Sources */,
 				227ACBC22505314900739484 /* FirebaseService.swift in Sources */,
@@ -561,10 +583,12 @@
 				22FFB9CA24FCEF11002E4625 /* DeeplinkService.swift in Sources */,
 				228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */,
 				2216D31A24D990490007255D /* RecentViewController.swift in Sources */,
+				225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */,
 				22228C8E24DEAD5400C3293B /* AppCoordinator.swift in Sources */,
 				22228CA324E07D3700C3293B /* FilteredContactsViewController.swift in Sources */,
 				2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */,
 				22228C9024DEB11300C3293B /* TabBarCoordinator.swift in Sources */,
+				225269AC2518F75A009BF6EC /* DetailsContactViewModel.swift in Sources */,
 				228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */,
 				228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */,
 				2234FE8424D3081100759AE9 /* SceneDelegate.swift in Sources */,

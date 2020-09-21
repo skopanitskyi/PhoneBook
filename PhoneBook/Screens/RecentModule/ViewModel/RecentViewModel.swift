@@ -16,6 +16,7 @@ protocol RecentViewModelProtocol {
     func deleteContact(at index: Int)
     func deleteAllContacts()
     func downloadData()
+    func showDetailsContact(at index: Int)
 }
 
 class RecentViewModel: RecentViewModelProtocol {
@@ -26,7 +27,10 @@ class RecentViewModel: RecentViewModelProtocol {
     
     private let firebaseService: FirebaseService
     
-    init(firebaseService: FirebaseService) {
+    private let coordinator: RecentCoordinator
+    
+    init(coordinator: RecentCoordinator, firebaseService: FirebaseService) {
+        self.coordinator = coordinator
         self.firebaseService = firebaseService
     }
     
@@ -56,7 +60,7 @@ class RecentViewModel: RecentViewModelProtocol {
     }
     
     public func downloadData() {
-        firebaseService.userSavedData(name: "recent") { [weak self] result in
+        firebaseService.userSavedData(data: .recent) { [weak self] result in
             switch result {
             case .success(let contacts):
                 self?.contacts = contacts
@@ -73,8 +77,12 @@ class RecentViewModel: RecentViewModelProtocol {
             case.success:
                 print("Data saved")
             case .failure(let error):
-                print(error.errorDescription)
+                print(error.localizedDescription)
             }
         }
+    }
+    
+    public func showDetailsContact(at index: Int) {
+        coordinator.showDetailsContacts(contact: contacts[index])
     }
 }

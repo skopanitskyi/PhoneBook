@@ -17,6 +17,7 @@ enum AuthError {
     case failedToAddData
     case failedToSignOut
     case failedToUpdateData
+    case failedToGetData
     case unknownError
 }
 
@@ -39,6 +40,8 @@ extension AuthError: LocalizedError {
             return "AuthenticationErrors.FailedToSignOut".localized
         case .failedToUpdateData:
             return "AuthenticationErrors.FailedToUpdateData".localized
+        case .failedToGetData:
+            return "AuthenticationErrors.FailedToGetData".localized
         case .unknownError:
             return "AuthenticationErrors.UnknownError".localized
         }

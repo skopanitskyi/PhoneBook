@@ -23,8 +23,15 @@ class RecentCoordinator: TabBarItemCoordinator {
     }
     
     public func start() {
-        recentViewController = ScreensFactory.makeRecentScreen(firebaseService: firebaseService)
+        recentViewController = ScreensFactory.makeRecentScreen(coordinator: self, firebaseService: firebaseService)
         navigationController.pushViewController(recentViewController!, animated: true)
+    }
+    
+    public func showDetailsContacts(contact: Contact) {
+        let detailsCoordinator = DetailsContactCoordinator(navigationController: navigationController,
+                                                           contact: contact,
+                                                           firebaseService: firebaseService)
+        detailsCoordinator.start()
     }
 }
 

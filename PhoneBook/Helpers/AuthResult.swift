@@ -12,3 +12,7 @@ enum AuthResult {
     case success
     case failure(AuthError)
 }
+
+enum UserSavedData {
+    case success([Contact])
+    case failure(AuthError)}

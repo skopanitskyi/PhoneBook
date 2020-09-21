@@ -23,4 +23,16 @@ class Contact: Codable {
         self.street = street
         isFavorite = false
     }
+    
+    convenience init?(data: [String:Any]) {
+        guard
+            let fullName = data["name"] as? String,
+            let phoneNumber = data["phone"] as? String,
+            let city = data["city"] as? String,
+            let street = data["street"] as? String
+        else {
+            return nil
+        }
+        self.init(fullName: fullName, phoneNumber: phoneNumber, city: city, street: street)
+    }
 }
