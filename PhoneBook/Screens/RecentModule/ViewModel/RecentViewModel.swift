@@ -17,6 +17,7 @@ protocol RecentViewModelProtocol {
     func deleteAllContacts()
     func downloadData()
     func showDetailsContact(at index: Int)
+    func updateData()
 }
 
 class RecentViewModel: RecentViewModelProtocol {
@@ -71,7 +72,7 @@ class RecentViewModel: RecentViewModelProtocol {
         }
     }
     
-    private func updateData() {
+    public func updateData() {
         firebaseService.updateData(data: contacts) { result in
             switch result {
             case.success:

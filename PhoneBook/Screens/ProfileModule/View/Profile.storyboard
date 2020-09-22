@@ -15,7 +15,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qkp-iM-BPc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="Bet-6T-VSz">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="274"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -56,6 +56,8 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="mr1-Ns-6Mq" secondAttribute="bottom" constant="10" id="zoD-uX-6XJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="llF-ev-B9n">
                                         <rect key="frame" x="0.0" y="372" width="414" height="70"/>
@@ -90,6 +92,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="gRd-dB-Yl0" secondAttribute="trailing" constant="10" id="gtq-UU-bMw"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="jLr-tt-VfH">
                                         <rect key="frame" x="0.0" y="442" width="414" height="70"/>
@@ -124,6 +127,7 @@
                                                 <constraint firstItem="0nh-v7-Hpg" firstAttribute="leading" secondItem="Eyp-0c-hOG" secondAttribute="leadingMargin" constant="10" id="ssE-JT-EBG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="BRP-s4-vnA">
                                         <rect key="frame" x="0.0" y="512" width="414" height="70"/>
@@ -150,6 +154,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="2we-NT-j7h" secondAttribute="bottom" id="uq8-Sl-ayf"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.80039352180000001" green="0.91296946999999995" blue="0.97991293670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

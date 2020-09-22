@@ -28,10 +28,16 @@ class RecentCoordinator: TabBarItemCoordinator {
     }
     
     public func showDetailsContacts(contact: Contact) {
-        let detailsCoordinator = DetailsContactCoordinator(navigationController: navigationController,
+        let detailsCoordinator = DetailsContactCoordinator(coordinator: self,
+                                                           navigationController: navigationController,
                                                            contact: contact,
                                                            firebaseService: firebaseService)
         detailsCoordinator.start()
+    }
+    
+    
+    public func updateRecentData() {
+        recentViewController?.viewModel.updateData()
     }
 }
 

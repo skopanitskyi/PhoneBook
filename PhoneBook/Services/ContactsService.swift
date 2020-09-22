@@ -21,9 +21,14 @@ class ContactsService {
             if access {
                 do {
                     try self.contactStore.enumerateContacts(with: self.fetchRequest) { (contact, mutablePointer) in
+                        print(contact.givenName)
                         let name = "\(contact.givenName) \(contact.familyName)"
                         let phone = contact.phoneNumbers.first?.value.stringValue ?? ""
-                        contacts.append(Contact(fullName: name, phoneNumber: phone, city: "", street: ""))
+                        contacts.append(Contact(fullName: name,
+                                                phoneNumber: phone,
+                                                city: "",
+                                                street: "",
+                                                isFavorite: false))
                     }
                     completion(contacts)
                     

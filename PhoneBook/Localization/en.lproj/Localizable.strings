@@ -67,3 +67,9 @@
 "Profile.CityLabel" = "City:";
 "Profile.StreetLabel" = "Street:";
 "Profile.LogOutButton" = "Log out";
+
+// DetailsProfile
+"DetailsProfile.Name" = "Name:";
+"DetailsProfile.Phone" = "Phone:";
+"DetailsProfile.City" = "City:";
+"DetailsProfile.Street" = "Street:";

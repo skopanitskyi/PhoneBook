@@ -65,3 +65,9 @@
 "Profile.CityLabel" = "Город:";
 "Profile.StreetLabel" = "Улица:";
 "Profile.LogOutButton" = "Выйти";
+
+// DetailsProfile
+"DetailsProfile.Name" = "Имя:";
+"DetailsProfile.Phone" = "Телефон:";
+"DetailsProfile.City" = "Город:";
+"DetailsProfile.Street" = "Улица:";

@@ -52,9 +52,10 @@ class FirebaseService {
             }
             
             guard let result = result else { return }
-            let data = self.getData(model: model, uid: result.user.uid)
-            self.addData(uid: result.user.uid, data: data) { result in
-                completion(result)
+            self.getData(model: model, uid: result.user.uid) { data in
+                self.addData(uid: result.user.uid, data: data) { result in
+                    completion(result)
+                }
             }
         }
     }
@@ -99,9 +100,10 @@ class FirebaseService {
             
             if userInfo.isNewUser {
                 let model = SignUpModel(email: result.user.email, password: nil, name: result.user.displayName, surname: nil, city: nil, street: nil)
-                let data = self.getData(model: model, uid: result.user.uid)
-                self.addData(uid: result.user.uid, data: data) { result in
-                    completion(result)
+                self.getData(model: model, uid: result.user.uid) { data in
+                    self.addData(uid: result.user.uid, data: data) { result in
+                        completion(result)
+                    }
                 }
             } else {
                 completion(.success)
@@ -119,24 +121,24 @@ class FirebaseService {
         }
     }
     
-    private func getData(model: SignUpModel, uid: String) -> [String : Any] {
+    private func getData(model: SignUpModel, uid: String, completion: @escaping (([String:Any]) -> Void)){
         
-        var contacts = [[String : Any]]()
         
-        getContacts { contact in
-            contacts = contact
+        getContacts { contacts in
+            
+            let docData: [String : Any] = [
+                FieldNames.name: model.name ?? "",
+                FieldNames.surname: model.surname ?? "",
+                FieldNames.city: model.city ?? "",
+                FieldNames.street: model.street ?? "",
+                FieldNames.uid: uid,
+                FieldNames.contacts: contacts,
+                FieldNames.recent: [[String : Any]](),
+            ]
+            completion(docData)
         }
         
-        let docData: [String : Any] = [
-            FieldNames.name: model.name ?? "",
-            FieldNames.surname: model.surname ?? "",
-            FieldNames.city: model.city ?? "",
-            FieldNames.street: model.street ?? "",
-            FieldNames.uid: uid,
-            FieldNames.contacts: contacts,
-            FieldNames.recent: [[String : Any]](),
-        ]
-        return docData
+        
     }
     
     private func getContacts(completion: @escaping ([[String : Any]]) -> Void) {

@@ -19,7 +19,6 @@
 		22228C9F24E0655900C3293B /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228C9E24E0655900C3293B /* AlertController.swift */; };
 		22228CA324E07D3700C3293B /* FilteredContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228CA224E07D3700C3293B /* FilteredContactsViewController.swift */; };
 		22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22228CA424E18EB900C3293B /* FilteredContactsViewModel.swift */; };
-		22228CA724E2DE8800C3293B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22228CA624E2DE8800C3293B /* Assets.xcassets */; };
 		22228CBB24E2E48700C3293B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22228CBD24E2E48700C3293B /* Localizable.strings */; };
 		22228CC224E2E6E800C3293B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22228CC424E2E6E800C3293B /* InfoPlist.strings */; };
 		2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FE8124D3081100759AE9 /* AppDelegate.swift */; };
@@ -34,6 +33,7 @@
 		225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225269A82518F636009BF6EC /* DetailsContact.storyboard */; };
 		225269AC2518F75A009BF6EC /* DetailsContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269AB2518F75A009BF6EC /* DetailsContactViewModel.swift */; };
 		225269AF2518FAF8009BF6EC /* DetailsContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269AE2518FAF8009BF6EC /* DetailsContactCoordinator.swift */; };
+		225269F9251A329A009BF6EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 225269F7251A321C009BF6EC /* Assets.xcassets */; };
 		22743F08250148E800098122 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22743F07250148E800098122 /* GoogleService-Info.plist */; };
 		22743F0A250160C700098122 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22743F09250160C700098122 /* LoginViewController.swift */; };
 		227ACBC02504E0E300739484 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227ACBBF2504E0E300739484 /* SignUpModel.swift */; };
@@ -71,7 +71,6 @@
 		22228C9E24E0655900C3293B /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		22228CA224E07D3700C3293B /* FilteredContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredContactsViewController.swift; sourceTree = "<group>"; };
 		22228CA424E18EB900C3293B /* FilteredContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredContactsViewModel.swift; sourceTree = "<group>"; };
-		22228CA624E2DE8800C3293B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22228CBC24E2E48700C3293B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22228CBF24E2E4FF00C3293B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22228CC324E2E6E800C3293B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		225269A82518F636009BF6EC /* DetailsContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsContact.storyboard; sourceTree = "<group>"; };
 		225269AB2518F75A009BF6EC /* DetailsContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewModel.swift; sourceTree = "<group>"; };
 		225269AE2518FAF8009BF6EC /* DetailsContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactCoordinator.swift; sourceTree = "<group>"; };
+		225269F7251A321C009BF6EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22743F07250148E800098122 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22743F09250160C700098122 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		227ACBBF2504E0E300739484 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
@@ -254,6 +254,7 @@
 			children = (
 				2234FE8124D3081100759AE9 /* AppDelegate.swift */,
 				2234FE8324D3081100759AE9 /* SceneDelegate.swift */,
+				225269A32517B168009BF6EC /* Factory */,
 				22A0123E250685DC00396E63 /* Helpers */,
 				22228C9824DED0CB00C3293B /* Extensions */,
 				2234FEC924D714D100759AE9 /* Services */,
@@ -261,10 +262,9 @@
 				2218601924F3FAB800E159A1 /* Screens */,
 				22228CC624E2F39800C3293B /* Localization */,
 				2234FE8C24D3081200759AE9 /* LaunchScreen.storyboard */,
-				22228CA624E2DE8800C3293B /* Assets.xcassets */,
+				225269F7251A321C009BF6EC /* Assets.xcassets */,
 				22743F07250148E800098122 /* GoogleService-Info.plist */,
 				228E4EC024F41B56003B4432 /* Info.plist */,
-				225269A32517B168009BF6EC /* Factory */,
 			);
 			path = PhoneBook;
 			sourceTree = "<group>";
@@ -496,7 +496,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22228CA724E2DE8800C3293B /* Assets.xcassets in Resources */,
 				22228CC224E2E6E800C3293B /* InfoPlist.strings in Resources */,
 				22A0123825067DFF00396E63 /* Profile.storyboard in Resources */,
 				22EC883725029698009E079A /* Login.storyboard in Resources */,
@@ -504,6 +503,7 @@
 				22743F08250148E800098122 /* GoogleService-Info.plist in Resources */,
 				22228CBB24E2E48700C3293B /* Localizable.strings in Resources */,
 				225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */,
+				225269F9251A329A009BF6EC /* Assets.xcassets in Resources */,
 				2234FE8E24D3081200759AE9 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
