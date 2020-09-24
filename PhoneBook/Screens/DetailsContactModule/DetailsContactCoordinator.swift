@@ -8,15 +8,19 @@
 
 import UIKit
 
+protocol UpdateData {
+   func updateRecentData(contact: Contact)
+}
+
 class DetailsContactCoordinator: Coordinator {
     
-    private let coordinator: RecentCoordinator
+    private let coordinator: UpdateData
     private let contact: Contact
     private let navigationController: UINavigationController
     private let firebaseService: FirebaseService
     
     
-    init(coordinator: RecentCoordinator, navigationController: UINavigationController, contact: Contact, firebaseService: FirebaseService) {
+    init(coordinator: UpdateData, navigationController: UINavigationController, contact: Contact, firebaseService: FirebaseService) {
         self.coordinator = coordinator
         self.navigationController = navigationController
         self.contact = contact
@@ -35,7 +39,7 @@ class DetailsContactCoordinator: Coordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
     
-    public func updateRecentData() {
-        coordinator.updateRecentData()
+    public func updateRecentData(contact: Contact) {
+        coordinator.updateRecentData(contact: contact)
     }
 }

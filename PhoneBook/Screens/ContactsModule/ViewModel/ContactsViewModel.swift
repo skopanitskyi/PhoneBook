@@ -18,6 +18,7 @@ protocol ContactsViewModelProtocol {
     func reverse(isAscending: Bool)
     func getFilteredContacts(name: String) -> [Contact]
     func makeCall(at indexPath: IndexPath)
+    func updateContact(contact: Contact)
 }
 
 class ContactsViewModel: ContactsViewModelProtocol {
@@ -115,6 +116,17 @@ class ContactsViewModel: ContactsViewModelProtocol {
         if let url = URL(string: "tel://\(phoneNumber)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             coordinator.addToRecent(contact: contact)
+        }
+    }
+    
+    public func updateContact(contact: Contact) {
+        for i in 0..<contacts.count {
+            for j in 0..<contacts[i].count {
+                if contacts[i][j].fullName == contact.fullName {
+                    contacts[i][j].isFavorite = contact.isFavorite
+                    break
+                }
+            }
         }
     }
 }

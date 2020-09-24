@@ -32,7 +32,8 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     
     public func updateFavoriteStatus() {
         contact.isFavorite = !contact.isFavorite
-        coordinator.updateRecentData()
+        firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)
+        coordinator.updateRecentData(contact: contact)
     }
     
     public func closeDetailsContact() {

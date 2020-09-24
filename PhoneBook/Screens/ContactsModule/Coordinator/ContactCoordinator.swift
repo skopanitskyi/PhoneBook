@@ -8,13 +8,18 @@
 
 import UIKit
 
+protocol B {
+    func updateContact(contact: Contact)
+}
+
 class ContactsCoordinator: TabBarItemCoordinator {
     
+    private var contactsViewController: ContactsViewController?
     private let coordinator: TabBarCoordinator
     private let firebaseService: FirebaseService
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
-
+    
     
     
     init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
@@ -27,12 +32,18 @@ class ContactsCoordinator: TabBarItemCoordinator {
     
     
     public func start() {
-        let contactsViewController = ScreensFactory.makeContactsScreen(coordinator: self,
-                                                                       firebaseService: firebaseService)
-        navigationController.pushViewController(contactsViewController, animated: true)
+        contactsViewController = ScreensFactory.makeContactsScreen(coordinator: self,
+                                                                   firebaseService: firebaseService)
+        navigationController.pushViewController(contactsViewController!, animated: true)
     }
     
     public func addToRecent(contact: Contact) {
         coordinator.addToRecent(contact: contact)
+    }
+}
+
+extension ContactsCoordinator: B {
+    func updateContact(contact: Contact) {
+        contactsViewController?.viewModel?.updateContact(contact: contact)
     }
 }

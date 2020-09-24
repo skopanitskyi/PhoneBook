@@ -28,6 +28,7 @@
 		2234FEC024D4935000759AE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEBF24D4935000759AE9 /* Contact.swift */; };
 		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
+		223C6392251CDFED00011A4B /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 223C6391251CDFED00011A4B /* Favorites.storyboard */; };
 		225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A02517A698009BF6EC /* ScreensFactory.swift */; };
 		225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A52518F60E009BF6EC /* DetailsContactViewController.swift */; };
 		225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225269A82518F636009BF6EC /* DetailsContact.storyboard */; };
@@ -83,6 +84,7 @@
 		2234FEBF24D4935000759AE9 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
+		223C6391251CDFED00011A4B /* Favorites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
 		225269A02517A698009BF6EC /* ScreensFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensFactory.swift; sourceTree = "<group>"; };
 		225269A52518F60E009BF6EC /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
 		225269A82518F636009BF6EC /* DetailsContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsContact.storyboard; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				2218601A24F4070F00E159A1 /* FavoritesViewController.swift */,
+				223C6391251CDFED00011A4B /* Favorites.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				22A0123825067DFF00396E63 /* Profile.storyboard in Resources */,
 				22EC883725029698009E079A /* Login.storyboard in Resources */,
 				22EC88392502B339009E079A /* SignUp.storyboard in Resources */,
+				223C6392251CDFED00011A4B /* Favorites.storyboard in Resources */,
 				22743F08250148E800098122 /* GoogleService-Info.plist in Resources */,
 				22228CBB24E2E48700C3293B /* Localizable.strings in Resources */,
 				225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */,

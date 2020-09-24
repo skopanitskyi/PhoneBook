@@ -18,6 +18,7 @@ protocol RecentViewModelProtocol {
     func downloadData()
     func showDetailsContact(at index: Int)
     func updateData()
+    func some(contact: Contact)
 }
 
 class RecentViewModel: RecentViewModelProtocol {
@@ -85,5 +86,13 @@ class RecentViewModel: RecentViewModelProtocol {
     
     public func showDetailsContact(at index: Int) {
         coordinator.showDetailsContacts(contact: contacts[index])
+    }
+    
+    func some(contact: Contact) {
+        for recentContact in contacts {
+            if recentContact.fullName == contact.fullName {
+                recentContact.isFavorite = contact.isFavorite
+            }
+        }
     }
 }

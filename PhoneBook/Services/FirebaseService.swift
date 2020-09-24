@@ -209,10 +209,37 @@ class FirebaseService {
     
     
     public func some(name: String, favorite: Bool) {
-        firestore.document(uid!).updateData([FieldNames.contacts : [FieldNames.name : name,
-                                                                    FieldNames.isFavorite : favorite]]) { (error) in
+        firestore.document(uid!).getDocument { (querySnapshot, error) in
             if let error = error {
                 print(error.localizedDescription)
+                return
+            }
+            
+            guard let document = querySnapshot?.data() else { return }
+            
+            guard var contacts = document["contacts"] as? [[String: Any]] else { return }
+            
+            guard var recent = document["recent"] as? [[String: Any]] else { return }
+            
+            
+            for i in 0..<contacts.count {
+                if contacts[i]["name"] as! String == name {
+                    contacts[i]["isFavorite"] = favorite
+                    break
+                }
+            }
+            
+            for i in 0..<recent.count {
+                if recent[i]["name"] as! String == name {
+                    recent[i]["isFavorite"] = favorite
+                }
+            }
+            
+            querySnapshot?.reference.updateData([FieldNames.contacts : contacts,
+                                                 FieldNames.recent : recent]) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
             }
         }
     }

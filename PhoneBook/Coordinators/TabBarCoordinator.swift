@@ -20,10 +20,6 @@ protocol TabBarItemCoordinator {
     var tabBarItem: UITabBarItem { get }
 }
 
-protocol A {
-    func addToRecent(contact: Contact)
-}
-
 class TabBarCoordinator: Coordinator {
     
     private var window: UIWindow
@@ -42,10 +38,10 @@ class TabBarCoordinator: Coordinator {
         let contactCoordinator = ContactsCoordinator(coordinator: self, firebaseService: firebaseService)
         contactCoordinator.start()
         
-        let recentCoordinator = RecentCoordinator(firebaseService: firebaseService)
+        let recentCoordinator = RecentCoordinator(coordinator: self, firebaseService: firebaseService)
         recentCoordinator.start()
         
-        let favoritesCoordinator = FavoritesCoordinator()
+        let favoritesCoordinator = FavoritesCoordinator(coordinator: self, firebaseService: firebaseService)
         favoritesCoordinator.start()
         
         let profileCoordinator = ProfileCoordinator(firebaseService: firebaseService, coordinator: self)
@@ -85,6 +81,20 @@ class TabBarCoordinator: Coordinator {
     public func addToRecent(contact: Contact) {
         let a = tabBarCoordinators[1] as? A
         a?.addToRecent(contact: contact)
+    }
+    
+    public func updateFromRecent(contact: Contact) {
+       let a = tabBarCoordinators[0] as? B
+        a?.updateContact(contact: contact)
+       let b = tabBarCoordinators[2] as? B
+        b?.updateContact(contact: contact)
+    }
+    
+    public func updateFromFavorite(contact: Contact) {
+        let a = tabBarCoordinators[0] as? B
+         a?.updateContact(contact: contact)
+        let b = tabBarCoordinators[1] as? B
+        b?.updateContact(contact: contact)
     }
 }
 

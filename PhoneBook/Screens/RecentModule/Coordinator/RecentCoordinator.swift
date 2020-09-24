@@ -8,14 +8,20 @@
 
 import UIKit
 
+protocol A {
+    func addToRecent(contact: Contact)
+}
+
 class RecentCoordinator: TabBarItemCoordinator {
     
+    private let coordinator: TabBarCoordinator
     private let firebaseService: FirebaseService
     private var recentViewController: RecentViewController?
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
     
-    init(firebaseService: FirebaseService) {
+    init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
+        self.coordinator = coordinator
         self.firebaseService = firebaseService
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Recent.Title".localized, image: UIImage(named: "recent"), tag: 1)
@@ -34,16 +40,24 @@ class RecentCoordinator: TabBarItemCoordinator {
                                                            firebaseService: firebaseService)
         detailsCoordinator.start()
     }
-    
-    
-    public func updateRecentData() {
-        recentViewController?.viewModel.updateData()
-    }
 }
 
 extension RecentCoordinator: A {
     
     func addToRecent(contact: Contact) {
         recentViewController?.viewModel.addToRecent(contact: contact)
+    }
+}
+
+extension RecentCoordinator: B {
+    func updateContact(contact: Contact) {
+        recentViewController?.viewModel.some(contact: contact)
+    }
+}
+
+extension RecentCoordinator: UpdateData {
+    public func updateRecentData(contact: Contact) {
+        recentViewController?.viewModel.some(contact: contact)
+        coordinator.updateFromRecent(contact: contact)
     }
 }
