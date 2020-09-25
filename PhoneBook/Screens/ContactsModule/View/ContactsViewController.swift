@@ -21,9 +21,7 @@ class ContactsViewController: UIViewController {
     }()
     
     private var searchController: UISearchController = {
-        let filteredController = FilteredContactsViewController()
-        filteredController.viewModel = FilteredContactsViewModel()
-        let searchController = UISearchController(searchResultsController: filteredController)
+        let searchController = UISearchController(searchResultsController: nil)
         return searchController
     }()
     

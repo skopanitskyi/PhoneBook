@@ -29,6 +29,11 @@
 		2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */; };
 		2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234FEC724D702A500759AE9 /* ContactsService.swift */; };
 		223C6392251CDFED00011A4B /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 223C6391251CDFED00011A4B /* Favorites.storyboard */; };
+		223C6395251E278400011A4B /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C6394251E278400011A4B /* AddContactViewController.swift */; };
+		223C6398251E27B200011A4B /* AddContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 223C6397251E27B200011A4B /* AddContact.storyboard */; };
+		223C639B251E299900011A4B /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C639A251E299900011A4B /* AddContactViewModel.swift */; };
+		223C639E251E2D5300011A4B /* AddContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C639D251E2D5300011A4B /* AddContactCoordinator.swift */; };
+		223C63A1251E3AE900011A4B /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C63A0251E3AE900011A4B /* AddContactTableViewCell.swift */; };
 		225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A02517A698009BF6EC /* ScreensFactory.swift */; };
 		225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A52518F60E009BF6EC /* DetailsContactViewController.swift */; };
 		225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225269A82518F636009BF6EC /* DetailsContact.storyboard */; };
@@ -85,6 +90,11 @@
 		2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		2234FEC724D702A500759AE9 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		223C6391251CDFED00011A4B /* Favorites.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
+		223C6394251E278400011A4B /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		223C6397251E27B200011A4B /* AddContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddContact.storyboard; sourceTree = "<group>"; };
+		223C639A251E299900011A4B /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
+		223C639D251E2D5300011A4B /* AddContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactCoordinator.swift; sourceTree = "<group>"; };
+		223C63A0251E3AE900011A4B /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
 		225269A02517A698009BF6EC /* ScreensFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensFactory.swift; sourceTree = "<group>"; };
 		225269A52518F60E009BF6EC /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
 		225269A82518F636009BF6EC /* DetailsContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsContact.storyboard; sourceTree = "<group>"; };
@@ -166,6 +176,7 @@
 				22EC8833250265BE009E079A /* LogInModule */,
 				22EC883A2502B355009E079A /* SignUpModule */,
 				225269B12518FD38009BF6EC /* DetailsContactModule */,
+				223C63A3251E5EEA00011A4B /* AddContactModule */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -316,6 +327,18 @@
 				227ACBC12505314900739484 /* FirebaseService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		223C63A3251E5EEA00011A4B /* AddContactModule */ = {
+			isa = PBXGroup;
+			children = (
+				223C6394251E278400011A4B /* AddContactViewController.swift */,
+				223C63A0251E3AE900011A4B /* AddContactTableViewCell.swift */,
+				223C6397251E27B200011A4B /* AddContact.storyboard */,
+				223C639A251E299900011A4B /* AddContactViewModel.swift */,
+				223C639D251E2D5300011A4B /* AddContactCoordinator.swift */,
+			);
+			path = AddContactModule;
 			sourceTree = "<group>";
 		};
 		225269A32517B168009BF6EC /* Factory */ = {
@@ -500,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22228CC224E2E6E800C3293B /* InfoPlist.strings in Resources */,
+				223C6398251E27B200011A4B /* AddContact.storyboard in Resources */,
 				22A0123825067DFF00396E63 /* Profile.storyboard in Resources */,
 				22EC883725029698009E079A /* Login.storyboard in Resources */,
 				22EC88392502B339009E079A /* SignUp.storyboard in Resources */,
@@ -566,15 +590,18 @@
 				22228C9F24E0655900C3293B /* AlertController.swift in Sources */,
 				22EC883E25039B04009E079A /* RegistrationCoordinator.swift in Sources */,
 				22EC883C25039AED009E079A /* AuthenticationCoordinator.swift in Sources */,
+				223C6395251E278400011A4B /* AddContactViewController.swift in Sources */,
 				22228C9724DED0C300C3293B /* String.swift in Sources */,
 				22A012402506866100396E63 /* AuthError.swift in Sources */,
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
 				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
+				223C63A1251E3AE900011A4B /* AddContactTableViewCell.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				225269AF2518FAF8009BF6EC /* DetailsContactCoordinator.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
 				22EC883225026415009E079A /* LoginViewModel.swift in Sources */,
+				223C639B251E299900011A4B /* AddContactViewModel.swift in Sources */,
 				227ACBC22505314900739484 /* FirebaseService.swift in Sources */,
 				22EC884025039F7B009E079A /* LoginCoordinator.swift in Sources */,
 				22228CA524E18EB900C3293B /* FilteredContactsViewModel.swift in Sources */,
@@ -592,6 +619,7 @@
 				22228CA324E07D3700C3293B /* FilteredContactsViewController.swift in Sources */,
 				2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */,
 				22228C9024DEB11300C3293B /* TabBarCoordinator.swift in Sources */,
+				223C639E251E2D5300011A4B /* AddContactCoordinator.swift in Sources */,
 				225269AC2518F75A009BF6EC /* DetailsContactViewModel.swift in Sources */,
 				228E4EA524F40949003B4432 /* ProfileViewModel.swift in Sources */,
 				228E4EA324F40931003B4432 /* ProfileViewController.swift in Sources */,

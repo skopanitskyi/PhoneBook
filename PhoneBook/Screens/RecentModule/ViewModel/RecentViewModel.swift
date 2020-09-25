@@ -74,7 +74,7 @@ class RecentViewModel: RecentViewModelProtocol {
     }
     
     public func updateData() {
-        firebaseService.updateData(data: contacts) { result in
+        firebaseService.updateData(fors: "recent", data: contacts) { result in
             switch result {
             case.success:
                 print("Data saved")

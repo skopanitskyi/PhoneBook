@@ -16,6 +16,7 @@ protocol ScreensFactoryProtocol {
     static func makeContactsScreen(coordinator: ContactsCoordinator, firebaseService: FirebaseService) -> ContactsViewController
     static func makeRecentScreen(coordinator: RecentCoordinator, firebaseService: FirebaseService) -> RecentViewController
     static func makeDetailsContactScreen(coordinator: DetailsContactCoordinator, contact: Contact, firebaseService: FirebaseService) -> DetailsContactViewController
+    static func makeAddContactScreen(coordinator: AddContactCoordinator, firebaseService: FirebaseService) -> AddContactViewController
 }
 
 class ScreensFactory: ScreensFactoryProtocol {
@@ -48,7 +49,6 @@ class ScreensFactory: ScreensFactoryProtocol {
         let favoritesViewController = UIStoryboard(name: "Favorites",
                                                  bundle: nil).instantiateViewController(withIdentifier: "Favorites") as! FavoritesViewController
         
-//        let favoritesViewController = FavoritesViewController()
         let favoritesViewModel = FavoritesViewModel(coordinator: coordinator, firebaseService: firebaseService)
         favoritesViewController.viewModel = favoritesViewModel
         return favoritesViewController
@@ -80,4 +80,13 @@ class ScreensFactory: ScreensFactoryProtocol {
         detailsViewController.viewModel = viewModel
         return detailsViewController
     }
+    
+    public static func makeAddContactScreen(coordinator: AddContactCoordinator, firebaseService: FirebaseService) -> AddContactViewController {
+        let addContact = UIStoryboard(name: "AddContact",
+                                      bundle: nil).instantiateViewController(withIdentifier: "AddContact") as! AddContactViewController
+        let viewModel = AddContactViewModel(coordinator: coordinator, firebaseService: firebaseService)
+        addContact.viewModel = viewModel
+        return addContact
+    }
+
 }

@@ -37,6 +37,13 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     public func s(contact: Contact) {
         coordinator.updateFromFavorite(contact: contact)
     }
+    
+    public func showAddButtonController() {
+        let addContactCoordinator = AddContactCoordinator(coordinator: self,
+                                                          firebaseService: firebaseService,
+                                                          navigationController: navigationController)
+        addContactCoordinator.start()
+    }
 
     
 }

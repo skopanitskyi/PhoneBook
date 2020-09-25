@@ -17,6 +17,7 @@ protocol FavoritesViewModelProtocol {
     func getContactName(at index: Int) -> String
     func updateContact(contact: Contact)
     func showDetailsContact(at index: Int)
+    func showAddButtonController()
 }
 
 class FavoritesViewModel: FavoritesViewModelProtocol {
@@ -34,11 +35,10 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     }
     
     public func fetchFavoritesContacts() {
-        firebaseService.userSavedData(data: .contacts) { result in
+        firebaseService.userSavedData(data: .favorites) { result in
             switch result {
             case.success(let contacts):
-                let favorite = contacts.filter { $0.isFavorite }
-                self.favoritesContacts = favorite
+                self.favoritesContacts = contacts
                 self.updateView?()
             case .failure(let error):
                 print(error.errorDescription!)
@@ -53,6 +53,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     public func remove(at index: Int) {
         let contact = favoritesContacts[index]
         contact.isFavorite = false
+        firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)
         coordinator.s(contact: contact)
         favoritesContacts.remove(at: index)
     }
@@ -60,6 +61,14 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     public func move(from: Int, to: Int) {
         let contact = favoritesContacts.remove(at: from)
         favoritesContacts.insert(contact, at: to)
+        firebaseService.updateData(fors: "favorites", data: favoritesContacts) { result in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                print(error.errorDescription!)
+            }
+        }
     }
     
     public func getContactName(at index: Int) -> String {
@@ -68,7 +77,10 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     public func updateContact(contact: Contact) {
         if contact.isFavorite {
-            favoritesContacts.append(contact)
+            favoritesContacts.insert(contact, at: 0)
+            firebaseService.updateData(fors: "favorites", data: favoritesContacts) { (AuthResult) in
+                
+            }
         } else {
             guard let index = favoritesContacts.firstIndex (where: { $0.fullName == contact.fullName }) else { return }
             favoritesContacts.remove(at: index)
@@ -78,5 +90,9 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     public func showDetailsContact(at index: Int) {
         coordinator.showDetailsContact(contact: favoritesContacts[index])
+    }
+    
+    public func showAddButtonController() {
+        coordinator.showAddButtonController()
     }
 }

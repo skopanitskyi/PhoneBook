@@ -34,7 +34,7 @@ class FavoritesViewController: UIViewController {
     }
     
     @IBAction func addContactButtonPressed(_ sender: Any) {
-        
+        viewModel?.showAddButtonController()
     }
 }
 

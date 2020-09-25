@@ -17,6 +17,7 @@ struct FieldNames {
     public static let uid = "uid"
     public static let contacts = "contacts"
     public static let recent = "recent"
+    public static let favorites = "favorites"
     public static let phone = "phone"
     public static let city = "city"
     public static let isFavorite = "isFavorite"
@@ -26,6 +27,7 @@ struct FieldNames {
 enum DownloadData: String {
     case contacts = "contacts"
     case recent = "recent"
+    case favorites = "favorites"
 }
 
 class FirebaseService {
@@ -131,9 +133,10 @@ class FirebaseService {
                 FieldNames.surname: model.surname ?? "",
                 FieldNames.city: model.city ?? "",
                 FieldNames.street: model.street ?? "",
+                FieldNames.favorites: [],
                 FieldNames.uid: uid,
                 FieldNames.contacts: contacts,
-                FieldNames.recent: [[String : Any]](),
+                FieldNames.recent: [],
             ]
             completion(docData)
         }
@@ -171,10 +174,10 @@ class FirebaseService {
         }
     }
     
-    public func updateData(data: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+    public func updateData(fors: String, data: [Contact], completion: @escaping ((AuthResult) -> Void)) {
         
         guard let uid = uid else { return }
-        let dataToUpdate = [FieldNames.recent: createModelToSave(data: data)]
+        let dataToUpdate = [fors : createModelToSave(data: data)]
         
         firestore.document(uid).updateData(dataToUpdate) { error in
             if let _ = error {
@@ -221,6 +224,9 @@ class FirebaseService {
             
             guard var recent = document["recent"] as? [[String: Any]] else { return }
             
+            guard var favorites = document["favorites"] as? [[String: Any]] else { return }
+
+            
             
             for i in 0..<contacts.count {
                 if contacts[i]["name"] as! String == name {
@@ -235,8 +241,15 @@ class FirebaseService {
                 }
             }
             
+            if !favorite {
+                if let index = favorites.firstIndex(where: { $0["name"] as! String == name }) {
+                    favorites.remove(at: index)
+                }
+            }
+            
             querySnapshot?.reference.updateData([FieldNames.contacts : contacts,
-                                                 FieldNames.recent : recent]) { error in
+                                                 FieldNames.recent : recent,
+                                                 FieldNames.favorites : favorites]) { error in
                 if let error = error {
                     print(error.localizedDescription)
                 }
