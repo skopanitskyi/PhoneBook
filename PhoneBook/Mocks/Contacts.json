@@ -1,0 +1,70 @@
+[{
+    "fullName": "Мартынов Дмитрий",
+    "phoneNumber": "+380502409643",
+    "city": "Кропивницкий",
+    "street": "Соборная, 5",
+    "isFavorite": false
+},
+{
+    "fullName": "Каськив Иннокентий",
+    "phoneNumber": "+380508816800",
+    "city": "Кропивницкий",
+    "street": "Крепостной переулок, 19",
+    "isFavorite": true
+},
+{
+    "fullName": "Ерёменко Назар",
+    "phoneNumber": "+380509470214",
+    "city": "Кропивницкий",
+    "street": "Василивский переулок, 19",
+    "isFavorite": false
+},
+{
+    "fullName": "Якушев Родион",
+    "phoneNumber": "+380504880911",
+    "city": "Кропивницкий",
+    "street": "Большая Перспективная, 41",
+    "isFavorite": false
+},
+{
+    "fullName": "Скоропадский Людвиг",
+    "phoneNumber": "+380506112646",
+    "city": "Кропивницкий",
+    "street": "Шевченко, 31",
+    "isFavorite": false
+},
+{
+    "fullName": "Червоний Сава",
+    "phoneNumber": "+380502701806",
+    "city": "Кропивницкий",
+    "street": "Гагарина, 49",
+    "isFavorite": false
+},
+{
+    "fullName": "Дорофеев Игнатий",
+    "phoneNumber": "+380505487539",
+    "city": "Кропивницкий",
+    "street": "Генерала Жадова, 23А",
+    "isFavorite": false
+},
+{
+    "fullName": "Нестеров Елисей",
+    "phoneNumber": "+380501700922",
+    "city": "Кропивницкий",
+    "street": "Космонавта Попова, 15/2",
+    "isFavorite": false
+},
+{
+    "fullName": "Шаров Еремей",
+    "phoneNumber": "+380503389844",
+    "city": "Кропивницкий",
+    "street": "Ушакова, 65-53",
+    "isFavorite": false
+},
+{
+    "fullName": "Овчаренко Ананий",
+    "phoneNumber": "+380502430508",
+    "city": "Кропивницкий",
+    "street": "9-линия, 41",
+    "isFavorite": true
+}]

@@ -11,6 +11,9 @@ import MapKit
 
 class ProfileViewController: UITableViewController {
     
+    /// Distance in meters from the current location
+    private let distance: CLLocationDistance = 500
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var streetLabel: UILabel!
@@ -23,10 +26,12 @@ class ProfileViewController: UITableViewController {
     @IBOutlet weak var logOutButton: UIButton!
     
     public var viewModel: ProfileViewModelProtocol?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         localizable()
+        setPointOnMap()
+        setUserData()
     }
     
     @IBAction func logoutTapped(_ sender: Any) {
@@ -40,4 +45,26 @@ class ProfileViewController: UITableViewController {
         street.text = "Profile.StreetLabel".localized
         logOutButton.setTitle("Profile.LogOutButton".localized, for: .normal)
     }
+    
+    private func setPointOnMap() {
+        
+        viewModel?.getCoordinates { coordinates in
+            if let coordinates = coordinates {
+                let anotation = MKPointAnnotation()
+                let region = MKCoordinateRegion(center: coordinates,
+                                                latitudinalMeters: self.distance,
+                                                longitudinalMeters: self.distance)
+                anotation.coordinate = coordinates
+                self.mapView.setRegion(region, animated: true)
+                self.mapView.addAnnotation(anotation)
+            }
+        }
+    }
+    
+    private func setUserData() {
+        nameLabel.text = viewModel?.getUserName()
+        cityLabel.text = viewModel?.getUserCity()
+        streetLabel.text = viewModel?.getUserStreet()
+    }
 }
+

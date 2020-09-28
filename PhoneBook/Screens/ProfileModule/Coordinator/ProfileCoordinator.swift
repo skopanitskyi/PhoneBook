@@ -10,12 +10,14 @@ import UIKit
 
 class ProfileCoordinator: TabBarItemCoordinator {
 
+    private let model: SignUpModel?
     private let firebaseService: FirebaseService
     private weak var coordinator: TabBarCoordinator?
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
     
-    init(firebaseService: FirebaseService, coordinator: TabBarCoordinator) {
+    init(model: SignUpModel?, firebaseService: FirebaseService, coordinator: TabBarCoordinator) {
+        self.model = model
         self.firebaseService = firebaseService
         self.coordinator = coordinator
         navigationController = UINavigationController()
@@ -24,7 +26,7 @@ class ProfileCoordinator: TabBarItemCoordinator {
     }
     
     public func start() {
-        let profileViewController = ScreensFactory.makeProfileScreen(coordinator: self)
+        let profileViewController = ScreensFactory.makeProfileScreen(coordinator: self, model: model)
         navigationController.pushViewController(profileViewController, animated: true)
     }
     

@@ -22,13 +22,15 @@ protocol TabBarItemCoordinator {
 
 class TabBarCoordinator: Coordinator {
     
+    private let userModel: SignUpModel?
     private var window: UIWindow
     private let firebaseService: FirebaseService
     private let tabBarController: UITabBarController
     private weak var appCoordinator: AppCoordinator?
     private var tabBarCoordinators: [TabBarItemCoordinator] = []
     
-    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator) {
+    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator, userModel: SignUpModel?) {
+        self.userModel = userModel
         self.window = window
         self.firebaseService = firebaseService
         self.appCoordinator = appCoordinator
@@ -44,7 +46,7 @@ class TabBarCoordinator: Coordinator {
         let favoritesCoordinator = FavoritesCoordinator(coordinator: self, firebaseService: firebaseService)
         favoritesCoordinator.start()
         
-        let profileCoordinator = ProfileCoordinator(firebaseService: firebaseService, coordinator: self)
+        let profileCoordinator = ProfileCoordinator(model: userModel, firebaseService: firebaseService, coordinator: self)
         profileCoordinator.start()
         
         tabBarController.viewControllers = [contactCoordinator.navigationController,

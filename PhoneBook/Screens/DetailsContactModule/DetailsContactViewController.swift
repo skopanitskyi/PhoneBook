@@ -26,12 +26,20 @@ class DetailsContactViewController: UITableViewController {
     
     private var isFavorite: Bool?
     
+    private let locationManager = CLLocationManager()
+    
+    
     public var viewModel: DetailsContactViewModelProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         localization()
         setInformation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setup()
     }
     
     @IBAction func favoriteButtonTapped(_ sender: Any) {
@@ -72,4 +80,52 @@ class DetailsContactViewController: UITableViewController {
             favoriteButton.setImage(UIImage(named: "Icon-Small-1"), for: .normal)
         }
     }
+    
+    private func setup() {
+        
+        let isLocationEnabled = CLLocationManager.locationServicesEnabled()
+        
+        if isLocationEnabled {
+            setupLocationManadger()
+            checkAutorization()
+        } else {
+            // Show alert controller
+        }
+    }
+    
+    private func setupLocationManadger() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    private func checkAutorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways:
+            break
+        case .authorizedWhenInUse:
+            mapView.showsUserLocation = true
+            locationManager.startUpdatingLocation()
+        case .denied:
+            // Show alert controller
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            break
+        }
+    }
+}
+extension DetailsContactViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last?.coordinate {
+            let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
+            self.mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkAutorization()
+    }
+    
 }

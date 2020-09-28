@@ -8,6 +8,7 @@
 
 
 CFBundleDisplayName = "Phone Book";
+NSLocationWhenInUseUsageDescription = "Needed for building routes to contacts";
 NSContactsUsageDescription = "The app needs access to contacts to work correctly";
 "ShortcutItem.Profile" = "Profile";
 "ShortcutItem.Favorites" = "Favorites";

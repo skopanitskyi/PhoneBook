@@ -39,7 +39,7 @@ class SignUpViewModel: SignUpViewModelProtocol {
             FirebaseService().signUp(model: signUpModel) { result in
                 switch result {
                 case .success:
-                    self.signUpCoordinator.userDidSignUp()
+                    self.signUpCoordinator.userDidSignUp(model: signUpModel)
                 case .failure(let error):
                     if let error = error.errorDescription {
                         print(error)

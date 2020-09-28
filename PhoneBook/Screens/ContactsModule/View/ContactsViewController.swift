@@ -22,6 +22,8 @@ class ContactsViewController: UIViewController {
     
     private var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search the contact"
+        searchController.obscuresBackgroundDuringPresentation = false
         return searchController
     }()
     
@@ -30,6 +32,16 @@ class ContactsViewController: UIViewController {
         button.setImage(UIImage(named: "I"), for: .normal)
         return button
     }()
+    
+    /// Returns true if search bar is empty
+    private var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    /// Returns true if data is entered into the search controller
+    private var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +61,7 @@ class ContactsViewController: UIViewController {
         view.backgroundColor = .white
         title = "Contacts.Title".localized
         searchController.searchResultsUpdater = self
+        definesPresentationContext = true
         navigationController?.navigationBar.prefersLargeTitles = true
         sortingButton.addTarget(self, action: #selector(sortingButtonTapped), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortingButton)
@@ -99,6 +112,7 @@ extension ContactsViewController: UITableViewDelegate {
 extension ContactsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.isFiltering = isFiltering
         return viewModel.numberOfSections()
     }
     
@@ -121,10 +135,8 @@ extension ContactsViewController: UITableViewDataSource {
 extension ContactsViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let resultsController = searchController.searchResultsController as? FilteredContactsViewController {
-            guard let name = searchController.searchBar.text?.lowercased() else { return }
-            let contacts = viewModel.getFilteredContacts(name: name)
-            resultsController.viewModel.set(contacts: contacts)
+        if let contactName = searchController.searchBar.text?.lowercased() {
+            viewModel.getFilteredContacts(name: contactName)
         }
     }
 }

@@ -9,19 +9,22 @@
 import UIKit
 
 protocol ContactsViewModelProtocol {
+    var isFiltering: Bool { get set }
     var updateTableView:(() -> Void)? { get set }
     func fetchContactsData()
     func getContact(at indexPath: IndexPath) -> Contact
     func numberOfRowsInSection(section: Int) -> Int
-    func titleForHeaderInSection(section: Int) -> String
+    func titleForHeaderInSection(section: Int) -> String?
     func numberOfSections() -> Int
     func reverse(isAscending: Bool)
-    func getFilteredContacts(name: String) -> [Contact]
+    func getFilteredContacts(name: String)
     func makeCall(at indexPath: IndexPath)
     func updateContact(contact: Contact)
 }
 
 class ContactsViewModel: ContactsViewModelProtocol {
+    
+    public var isFiltering = false
     
     private var isAscending = true
     
@@ -29,10 +32,12 @@ class ContactsViewModel: ContactsViewModelProtocol {
     
     private var contacts = [[Contact]]()
     
+    private var filteredContacts = [[Contact]]()
+    
     private let firebaseService: FirebaseService
     
     private let coordinator: ContactsCoordinator
-        
+    
     init(firebaseService: FirebaseService, coordinator: ContactsCoordinator) {
         self.firebaseService = firebaseService
         self.coordinator = coordinator
@@ -51,19 +56,22 @@ class ContactsViewModel: ContactsViewModelProtocol {
     }
     
     public func getContact(at indexPath: IndexPath) -> Contact {
-        return contacts[indexPath.section][indexPath.row]
+        return isFiltering ? filteredContacts[indexPath.section][indexPath.row] :
+                             contacts[indexPath.section][indexPath.row]
+                             
     }
     
-    public func titleForHeaderInSection(section: Int) -> String {
-        return contacts[section].first?.fullName.first?.uppercased() ?? ""
+    public func titleForHeaderInSection(section: Int) -> String? {
+        return isFiltering ? filteredContacts[section].first?.fullName.first?.uppercased() :
+                             contacts[section].first?.fullName.first?.uppercased()
     }
     
     public func numberOfRowsInSection(section: Int) -> Int {
-        return contacts[section].count
+        return isFiltering ? filteredContacts[section].count : contacts[section].count
     }
     
     public func numberOfSections() -> Int {
-        return contacts.count
+        return isFiltering ? filteredContacts.count : contacts.count
     }
     
     private func createTwoDimensional(array: [Contact]) {
@@ -98,16 +106,18 @@ class ContactsViewModel: ContactsViewModelProtocol {
         }
     }
     
-    public func getFilteredContacts(name: String) -> [Contact] {
-        
-        var filteredContacts = [Contact]()
+    public func getFilteredContacts(name: String) {
+        var index = 0
+        filteredContacts.removeAll()
         
         for contact in contacts {
-            contact.filter { $0.fullName.lowercased().contains(name) }.forEach { filteredContact in
-                filteredContacts.append(filteredContact)
+            let filtered = contact.filter { $0.fullName.lowercased().contains(name) }
+            if filtered.count > 0 {
+                filteredContacts.insert(filtered, at: index)
+                index += 1
             }
         }
-        return filteredContacts
+        updateTableView?()
     }
     
     public func makeCall(at indexPath: IndexPath) {
@@ -117,6 +127,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             coordinator.addToRecent(contact: contact)
         }
+        print(contact.fullName)
     }
     
     public func updateContact(contact: Contact) {

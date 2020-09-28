@@ -25,7 +25,7 @@ class RegistrationCoordinator: Coordinator {
         signUpCoordinator.start()
     }
     
-    public func userDidSignUp() {
-        authenticationCoordinator?.userDidSignUp()
+    public func userDidSignUp(model: SignUpModel) {
+        authenticationCoordinator?.userDidSignUp(model: model)
     }
 }

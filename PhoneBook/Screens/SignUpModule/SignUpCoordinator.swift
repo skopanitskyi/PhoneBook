@@ -23,7 +23,7 @@ class SignUpCoordinator: Coordinator {
         navigationController.pushViewController(signUpController, animated: true)
     }
     
-    public func userDidSignUp() {
-        registrationCoordinator.userDidSignUp()
+    public func userDidSignUp(model: SignUpModel) {
+        registrationCoordinator.userDidSignUp(model: model)
     }
 }

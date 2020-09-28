@@ -38,8 +38,8 @@ class AppCoordinator: Coordinator {
         return tabBarCoordinator
     }
     
-    public func startApp() {
-        tabBarCoordinator = TabBarCoordinator(window: window, firebaseService: firebaseService, appCoordinator: self)
+    public func startApp(model: SignUpModel?) {
+        tabBarCoordinator = TabBarCoordinator(window: window, firebaseService: firebaseService, appCoordinator: self, userModel: model)
         tabBarCoordinator?.start()
         
         authenticationCoordinator = nil
