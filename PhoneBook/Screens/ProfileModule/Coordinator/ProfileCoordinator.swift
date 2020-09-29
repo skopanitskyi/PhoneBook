@@ -10,13 +10,13 @@ import UIKit
 
 class ProfileCoordinator: TabBarItemCoordinator {
 
-    private let model: SignUpModel?
+    private let model: Profile?
     private let firebaseService: FirebaseService
     private weak var coordinator: TabBarCoordinator?
     public let navigationController: UINavigationController
     public let tabBarItem: UITabBarItem
     
-    init(model: SignUpModel?, firebaseService: FirebaseService, coordinator: TabBarCoordinator) {
+    init(model: Profile?, firebaseService: FirebaseService, coordinator: TabBarCoordinator) {
         self.model = model
         self.firebaseService = firebaseService
         self.coordinator = coordinator

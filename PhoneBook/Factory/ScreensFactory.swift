@@ -11,7 +11,7 @@ import UIKit
 protocol ScreensFactoryProtocol {
     static func makeSignUpScreen(coordinator: SignUpCoordinator) -> SignUpViewController
     static func makeLoginScreen(coordinator: LoginCoordinator) -> LoginViewController
-    static func makeProfileScreen(coordinator: ProfileCoordinator, model: SignUpModel?) -> ProfileViewController
+    static func makeProfileScreen(coordinator: ProfileCoordinator, model: Profile?) -> ProfileViewController
     static func makeFavoritesScreen(coordinator: FavoritesCoordinator, firebaseService: FirebaseService) -> FavoritesViewController
     static func makeContactsScreen(coordinator: ContactsCoordinator, firebaseService: FirebaseService) -> ContactsViewController
     static func makeRecentScreen(coordinator: RecentCoordinator, firebaseService: FirebaseService) -> RecentViewController
@@ -37,10 +37,10 @@ class ScreensFactory: ScreensFactoryProtocol {
         return loginController
     }
     
-    public static func makeProfileScreen(coordinator: ProfileCoordinator, model: SignUpModel?) -> ProfileViewController {
+    public static func makeProfileScreen(coordinator: ProfileCoordinator, model: Profile?) -> ProfileViewController {
         let profileViewController = UIStoryboard(name: "Profile",
                                                  bundle: nil).instantiateViewController(withIdentifier: "Profile") as! ProfileViewController
-        let profileViewModel = ProfileViewModel(coordinator: coordinator, model: model)
+        let profileViewModel = ProfileViewModel(coordinator: coordinator, profile: model)
         profileViewController.viewModel = profileViewModel
         return profileViewController
     }

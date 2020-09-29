@@ -42,10 +42,8 @@ class FirebaseService {
         return auth.currentUser?.uid
     }
     
-    public func signUp(model: SignUpModel, completion: @escaping (AuthResult) -> Void) {
-        
-        guard let email = model.email, let password = model.password else { return }
-        
+    public func signUp(email: String, password: String, model: Profile, completion: @escaping (AuthResult) -> Void) {
+            
         auth.createUser(withEmail: email, password: password) { (result, error) in
             
             if let _ = error {
@@ -72,43 +70,43 @@ class FirebaseService {
         }
     }
     
-    public func logInWithFacebook(completion: @escaping (AuthResult) -> Void) {
+    public func logInWithFacebook(completion: @escaping (Profile?, AuthResult) -> Void) {
         
         loginManager.logIn(permissions: [.publicProfile, .email], viewController: nil) { result in
             
             switch result {
             case .failed:
-                completion(.failure(.failedToLogin))
+                completion(nil, .failure(.failedToLogin))
             case .cancelled:
-                completion(.failure(.cancelled))
+                completion(nil, .failure(.cancelled))
             case .success(_ , _, let token):
                 let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
-                self.logInWith(credential: credential) { result in
-                    completion(result)
+                self.logInWith(credential: credential) { (model, result) in
+                    completion(model, result)
                 }
             }
         }
     }
     
-    private func logInWith(credential: AuthCredential, completion: @escaping (AuthResult) -> Void) {
+    private func logInWith(credential: AuthCredential, completion: @escaping (Profile?, AuthResult) -> Void) {
         
         auth.signIn(with: credential) { (result, error) in
             if let _ = error {
-                completion(.failure(.failedToSignIn))
+                completion(nil, .failure(.failedToSignIn))
                 return
             }
             
             guard let result = result, let userInfo = result.additionalUserInfo else { return }
             
             if userInfo.isNewUser {
-                let model = SignUpModel(email: result.user.email, password: nil, name: result.user.displayName, surname: nil, city: nil, street: nil)
+                let model = Profile(name: result.user.displayName!, city: nil, street: nil)
                 self.getData(model: model, uid: result.user.uid) { data in
                     self.addData(uid: result.user.uid, data: data) { result in
-                        completion(result)
+                        completion(model, result)
                     }
                 }
             } else {
-                completion(.success)
+                completion(nil, .success)
             }
         }
     }
@@ -123,17 +121,17 @@ class FirebaseService {
         }
     }
     
-    private func getData(model: SignUpModel, uid: String, completion: @escaping (([String:Any]) -> Void)){
+    private func getData(model: Profile, uid: String, completion: @escaping (([String:Any]) -> Void)){
         
         
         getContacts { contacts in
+            let favorites = contacts.filter { $0[FieldNames.isFavorite] as! Bool }
             
             let docData: [String : Any] = [
-                FieldNames.name: model.name ?? "",
-                FieldNames.surname: model.surname ?? "",
+                FieldNames.name: model.name,
                 FieldNames.city: model.city ?? "",
                 FieldNames.street: model.street ?? "",
-                FieldNames.favorites: [],
+                FieldNames.favorites: favorites,
                 FieldNames.uid: uid,
                 FieldNames.contacts: contacts,
                 FieldNames.recent: [],
@@ -146,8 +144,9 @@ class FirebaseService {
     
     private func getContacts(completion: @escaping ([[String : Any]]) -> Void) {
         
-        ContactsService().fetchContactsData { result in
+        ContactsService().fetchFromMocks { result in
             completion(self.createModelToSave(data: result))
+            print(Thread.current)
         }
     }
     
@@ -225,7 +224,7 @@ class FirebaseService {
             guard var recent = document["recent"] as? [[String: Any]] else { return }
             
             guard var favorites = document["favorites"] as? [[String: Any]] else { return }
-
+            
             
             
             for i in 0..<contacts.count {
@@ -254,6 +253,24 @@ class FirebaseService {
                     print(error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    public func getUserData(completion: @escaping ((Profile?) -> Void)) {
+        firestore.document(uid!).getDocument { (querySnapshot, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(nil)
+                return
+            }
+            guard let document = querySnapshot?.data(),
+                  let name = document[FieldNames.name] as? String,
+                  let city = document[FieldNames.city] as? String,
+                  let street = document[FieldNames.street] as? String
+            else { return }
+            
+            let profile = Profile(name: name, city: city, street: street)
+            completion(profile)
         }
     }
 }

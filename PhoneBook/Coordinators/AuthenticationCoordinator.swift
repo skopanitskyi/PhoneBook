@@ -34,11 +34,11 @@ class AuthenticationCoordinator: Coordinator {
         registrationCoordinator.start()
     }
     
-    public func userDidSignUp(model: SignUpModel) {
+    public func userDidSignUp(model: Profile) {
         appCoordinator?.startApp(model: model)
     }
     
-    public func userDidLogIn() {
-        appCoordinator?.startApp(model: nil)
+    public func userDidLogIn(model: Profile?) {
+        appCoordinator?.startApp(model: model)
     }
 }

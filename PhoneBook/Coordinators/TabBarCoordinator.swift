@@ -22,14 +22,14 @@ protocol TabBarItemCoordinator {
 
 class TabBarCoordinator: Coordinator {
     
-    private let userModel: SignUpModel?
+    private let userModel: Profile?
     private var window: UIWindow
     private let firebaseService: FirebaseService
     private let tabBarController: UITabBarController
     private weak var appCoordinator: AppCoordinator?
     private var tabBarCoordinators: [TabBarItemCoordinator] = []
     
-    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator, userModel: SignUpModel?) {
+    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator, userModel: Profile?) {
         self.userModel = userModel
         self.window = window
         self.firebaseService = firebaseService

@@ -30,16 +30,12 @@ class SignUpViewModel: SignUpViewModelProtocol {
                 let street = street
             else { return }
             
-            let signUpModel = SignUpModel(email: email!,
-                                          password: password!,
-                                          name: name,
-                                          surname: surname,
-                                          city: city,
-                                          street: street)
-            FirebaseService().signUp(model: signUpModel) { result in
+            let profile = Profile(name: "\(name) \(surname)", city: city, street: street)
+            
+            FirebaseService().signUp(email: email!, password: password!, model: profile) { result in
                 switch result {
                 case .success:
-                    self.signUpCoordinator.userDidSignUp(model: signUpModel)
+                    self.signUpCoordinator.userDidSignUp(model: profile)
                 case .failure(let error):
                     if let error = error.errorDescription {
                         print(error)

@@ -23,10 +23,10 @@ class LoginViewModel: LoginViewModelProtocol {
     }
     
     public func loginWithFacebook() {
-        FirebaseService().logInWithFacebook() { result in
+        FirebaseService().logInWithFacebook() { model, result in
             switch result {
             case .success:
-                self.loginCoordinator.userDidLogIn()
+                self.loginCoordinator.userDidLogIn(model: model)
             case .failure(let error):
                 print(error.errorDescription!)
             }
@@ -38,7 +38,7 @@ class LoginViewModel: LoginViewModelProtocol {
             FirebaseService().logIn(email: email!, password: password!) { result in
                 switch result {
                 case .success:
-                    self.loginCoordinator.userDidLogIn()
+                    self.loginCoordinator.userDidLogIn(model: nil)
                 case .failure(let error):
                     print(error.errorDescription!)
                 }

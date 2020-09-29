@@ -24,6 +24,8 @@ class DetailsContactViewController: UITableViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    private let reuseIdentifier = "anotation"
+    
     private var isFavorite: Bool?
     
     private let locationManager = CLLocationManager()
@@ -86,6 +88,7 @@ class DetailsContactViewController: UITableViewController {
         let isLocationEnabled = CLLocationManager.locationServicesEnabled()
         
         if isLocationEnabled {
+            mapView.delegate = self
             setupLocationManadger()
             checkAutorization()
         } else {
@@ -105,6 +108,10 @@ class DetailsContactViewController: UITableViewController {
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
+            
+            let region = MKCoordinateRegion(center: locationManager.location!.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+            
+            mapView.setRegion(region, animated: true)
         case .denied:
             // Show alert controller
             break
@@ -112,20 +119,76 @@ class DetailsContactViewController: UITableViewController {
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
             break
+        @unknown default:
+            fatalError()
         }
     }
 }
 extension DetailsContactViewController: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last?.coordinate {
-            let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
-            self.mapView.setRegion(region, animated: true)
-        }
-    }
+//    
+//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//            if let location = locations.last?.coordinate {
+//                let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
+//                self.mapView.setRegion(region, animated: true)
+//            }
+//        }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkAutorization()
     }
+}
+
+extension DetailsContactViewController: MKMapViewDelegate {
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        var viewMarker: MKMarkerAnnotationView
+        
+        if let view = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? MKMarkerAnnotationView {
+            view.annotation = annotation
+            viewMarker = view
+        } else {
+            viewMarker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        }
+        return viewMarker
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        guard let coordinate = locationManager.location?.coordinate else { return }
+        
+        let adress = "\(viewModel!.getContactCity()) \(viewModel!.getContactStreet())"
+        
+        MapService().getCoordinates(with: adress) { contactCoordinate in
+            
+            let start = MKPlacemark(coordinate: coordinate)
+            let end = MKPlacemark(coordinate: contactCoordinate!)
+            
+            let anotation = MKPointAnnotation()
+            anotation.coordinate = contactCoordinate!
+            anotation.title = self.viewModel!.getContactName()
+            
+            let request = MKDirections.Request()
+            request.source = MKMapItem(placemark: start)
+            request.destination = MKMapItem(placemark: end)
+            request.transportType = .automobile
+            
+            let direction = MKDirections(request: request)
+            direction.calculate { (result, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                self.mapView.addAnnotation(anotation)
+                self.mapView.removeOverlays(self.mapView.overlays)
+                self.mapView.addOverlay(result!.routes.first!.polyline)
+            }
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let render = MKPolylineRenderer(overlay: overlay)
+        render.strokeColor = .blue
+        render.lineWidth = 5
+        return render
+    }
 }

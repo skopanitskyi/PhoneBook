@@ -10,10 +10,10 @@ import Foundation
 import Contacts
 
 class ContactsService {
-                
+    
     private let contactStore = CNContactStore()
-        
-    public func fetchContactsData(completion: @escaping ([Contact]) -> Void) {
+    
+    public func fetchFromStorage(completion: @escaping ([Contact]) -> Void) {
         var contacts = [Contact]()
         
         contactStore.requestAccess(for: .contacts) { (access, error) in
@@ -21,7 +21,6 @@ class ContactsService {
             if access {
                 do {
                     try self.contactStore.enumerateContacts(with: self.fetchRequest) { (contact, mutablePointer) in
-                        print(contact.givenName)
                         let name = "\(contact.givenName) \(contact.familyName)"
                         let phone = contact.phoneNumbers.first?.value.stringValue ?? ""
                         contacts.append(Contact(fullName: name,
@@ -33,7 +32,22 @@ class ContactsService {
                     completion(contacts)
                     
                 } catch (let error) {
-                    print(error)
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    public func fetchFromMocks(completion: @escaping ([Contact]) -> Void) {
+        if let path = Bundle.main.path(forResource: "Contacts", ofType: "json") {
+            DispatchQueue.global(qos: .default).async {
+                do {
+                    let url = URL(fileURLWithPath: path)
+                    let data = try Data(contentsOf: url)
+                    let contacts = try JSONDecoder().decode([Contact].self, from: data)
+                    completion(contacts)
+                } catch(let error) {
+                    print(error.localizedDescription)
                 }
             }
         }

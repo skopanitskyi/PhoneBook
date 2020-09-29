@@ -32,6 +32,7 @@
 		223C639B251E299900011A4B /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C639A251E299900011A4B /* AddContactViewModel.swift */; };
 		223C639E251E2D5300011A4B /* AddContactCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C639D251E2D5300011A4B /* AddContactCoordinator.swift */; };
 		223C63A1251E3AE900011A4B /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223C63A0251E3AE900011A4B /* AddContactTableViewCell.swift */; };
+		22420BD525238B1D00A43E36 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22420BD425238B1C00A43E36 /* Profile.swift */; };
 		225269A12517A698009BF6EC /* ScreensFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A02517A698009BF6EC /* ScreensFactory.swift */; };
 		225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225269A52518F60E009BF6EC /* DetailsContactViewController.swift */; };
 		225269A92518F636009BF6EC /* DetailsContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225269A82518F636009BF6EC /* DetailsContact.storyboard */; };
@@ -93,6 +94,7 @@
 		223C639A251E299900011A4B /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		223C639D251E2D5300011A4B /* AddContactCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactCoordinator.swift; sourceTree = "<group>"; };
 		223C63A0251E3AE900011A4B /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
+		22420BD425238B1C00A43E36 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		225269A02517A698009BF6EC /* ScreensFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensFactory.swift; sourceTree = "<group>"; };
 		225269A52518F60E009BF6EC /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
 		225269A82518F636009BF6EC /* DetailsContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsContact.storyboard; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				228E4EA924F409C6003B4432 /* View */,
 				228E4EAA24F409CC003B4432 /* ViewModel */,
 				228E4EAB24F409D7003B4432 /* Coordinator */,
+				22420BD425238B1C00A43E36 /* Profile.swift */,
 			);
 			path = ProfileModule;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				22228C9724DED0C300C3293B /* String.swift in Sources */,
 				22A012402506866100396E63 /* AuthError.swift in Sources */,
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
+				22420BD525238B1D00A43E36 /* Profile.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
 				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
 				223C63A1251E3AE900011A4B /* AddContactTableViewCell.swift in Sources */,

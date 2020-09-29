@@ -28,7 +28,7 @@ class LoginCoordinator: Coordinator {
         authenticationCoordinator?.signUp()
     }
     
-    public func userDidLogIn() {
-        authenticationCoordinator?.userDidLogIn()
+    public func userDidLogIn(model: Profile?) {
+        authenticationCoordinator?.userDidLogIn(model: model)
     }
 }

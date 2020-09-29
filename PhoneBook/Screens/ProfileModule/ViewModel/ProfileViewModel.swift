@@ -18,23 +18,33 @@ protocol ProfileViewModelProtocol {
 }
 
 class ProfileViewModel: ProfileViewModelProtocol {
-    
-    private var model: SignUpModel?
+        
+    private var profile: Profile?
     
     private let coordinator: ProfileCoordinator
     
-    init(coordinator: ProfileCoordinator, model: SignUpModel?) {
-        self.model = model
+    init(coordinator: ProfileCoordinator, profile: Profile?) {
+        self.profile = profile
         self.coordinator = coordinator
+        checkProfileData()
     }
     
     public func logout() {
         coordinator.logout()
     }
     
+    private func checkProfileData() {
+        
+        if profile == nil {
+            FirebaseService().getUserData { [weak self] profile in
+                self?.profile = profile
+            }
+        }
+    }
+    
     public func getCoordinates(completion: @escaping ((CLLocationCoordinate2D?) -> Void)) {
         
-        guard let city = model?.city, let street = model?.street else { return }
+        guard let city = profile?.city, let street = profile?.street else { return }
         
         let adress = "\(city), \(street)"
         
@@ -44,16 +54,14 @@ class ProfileViewModel: ProfileViewModelProtocol {
     }
     
     public func getUserName() -> String? {
-        let name = model!.name!
-        let surname = model!.surname!
-        return "\(name) \(surname)"
+        return profile?.name
     }
     
     public func getUserCity() -> String? {
-        return model?.city
+        return profile?.city
     }
     
     public func getUserStreet() -> String? {
-        return model?.street
+        return profile?.street
     }
 }
