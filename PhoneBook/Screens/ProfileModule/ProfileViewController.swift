@@ -11,33 +11,52 @@ import MapKit
 
 class ProfileViewController: UITableViewController {
     
+    // MARK: - Class instances
+    
     /// Distance in meters from the current location
     private let distance: CLLocationDistance = 500
+    
+    /// View model
+    public var viewModel: ProfileViewModelProtocol?
+    
+    // MARK: - Outlets
+    
+    /// Data labels
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var streetLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
+    /// Data name labels
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var city: UILabel!
     @IBOutlet weak var street: UILabel!
     @IBOutlet weak var logOutButton: UIButton!
     
-    public var viewModel: ProfileViewModelProtocol?
+    // MARK: - Class life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         localizable()
         setPointOnMap()
         setUserData()
+        viewModel?.updateData = { [weak self] in
+            self?.setPointOnMap()
+            self?.setUserData()
+        }
     }
+    
+    // MARK: - Actions
     
     @IBAction func logoutTapped(_ sender: Any) {
         viewModel?.logout()
     }
     
+    // MARK: - Class methods
+    
+    /// Localiza data name labels
     private func localizable() {
         title = "Profile.Title".localized
         name.text = "Profile.FullNameLabel".localized
@@ -46,9 +65,11 @@ class ProfileViewController: UITableViewController {
         logOutButton.setTitle("Profile.LogOutButton".localized, for: .normal)
     }
     
+    /// Set annotation at the user address
     private func setPointOnMap() {
-        
-        viewModel?.getCoordinates { coordinates in
+        viewModel?.getCoordinates { [weak self] coordinates in
+            guard let self = self else { return }
+            
             if let coordinates = coordinates {
                 let anotation = MKPointAnnotation()
                 let region = MKCoordinateRegion(center: coordinates,
@@ -61,6 +82,7 @@ class ProfileViewController: UITableViewController {
         }
     }
     
+    /// Set user data
     private func setUserData() {
         nameLabel.text = viewModel?.getUserName()
         cityLabel.text = viewModel?.getUserCity()

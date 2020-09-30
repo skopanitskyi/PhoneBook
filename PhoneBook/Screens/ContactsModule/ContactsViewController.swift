@@ -10,28 +10,13 @@ import UIKit
 
 class ContactsViewController: UIViewController {
     
+    // MARK: - Class instances
+    
+    /// Reuse identifier for cells
     private let reuseIdentifier = "Cell"
     
+    /// Contacts view model
     public var viewModel: ContactsViewModelProtocol!
-    
-    private var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-    
-    private var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search the contact"
-        searchController.obscuresBackgroundDuringPresentation = false
-        return searchController
-    }()
-    
-    private var sortingButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "I"), for: .normal)
-        return button
-    }()
     
     /// Returns true if search bar is empty
     private var isSearchBarEmpty: Bool {
@@ -43,6 +28,32 @@ class ContactsViewController: UIViewController {
         return searchController.isActive && !isSearchBarEmpty
     }
     
+    // MARK: - Create UI elements
+    
+    /// Create table view
+    private var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    /// Create search controller
+    private var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Contacts.SearchBarPlaceholder".localized
+        searchController.obscuresBackgroundDuringPresentation = false
+        return searchController
+    }()
+    
+    /// Create sorting button
+    private var sortingButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "I"), for: .normal)
+        return button
+    }()
+    
+    // MARK: - Class life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
@@ -50,13 +61,9 @@ class ContactsViewController: UIViewController {
         setupTableView()
     }
     
-    private func loadData() {
-        viewModel.fetchContactsData()
-        viewModel.updateTableView = { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
+    // MARK: - Setup UI elements
     
+    /// Setup view
     private func setupView() {
         view.backgroundColor = .white
         title = "Contacts.Title".localized
@@ -68,6 +75,7 @@ class ContactsViewController: UIViewController {
         navigationItem.searchController = searchController
     }
     
+    /// Add table view and setup constraints
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
@@ -79,6 +87,9 @@ class ContactsViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
+    // MARK: - Class methods
+    
+    /// Sorts contacts alphabetically
     @objc private func sortingButtonTapped() {
         let alertController = UIAlertController(title: "Contacts.AlertTitile".localized, message: "Contacts.AlertMessage".localized, preferredStyle: .actionSheet)
         
@@ -101,13 +112,25 @@ class ContactsViewController: UIViewController {
         alertController.pruneNegativeWidthConstraints()
         present(alertController, animated: true, completion: nil)
     }
+    
+    /// Load contacts data
+    private func loadData() {
+        viewModel.fetchContactsData()
+        viewModel.updateTableView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
+
+// MARK: - TableViewDelegate
 
 extension ContactsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.makeCall(at: indexPath)
     }
 }
+
+// MARK: - TableViewDataSource
 
 extension ContactsViewController: UITableViewDataSource {
     
@@ -131,6 +154,8 @@ extension ContactsViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - SearchResultsUpdating
 
 extension ContactsViewController: UISearchResultsUpdating {
     

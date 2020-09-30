@@ -8,11 +8,13 @@
 
 import Foundation
 
+/// Authorization result
 enum AuthResult {
     case success
     case failure(AuthError)
 }
 
+/// User data retrieval result
 enum UserSavedData {
     case success([Contact])
     case failure(AuthError)}

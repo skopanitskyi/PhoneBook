@@ -173,10 +173,10 @@ class FirebaseService {
         }
     }
     
-    public func updateData(fors: String, data: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+    public func updateData(fors: DownloadData, data: [Contact], completion: @escaping ((AuthResult) -> Void)) {
         
         guard let uid = uid else { return }
-        let dataToUpdate = [fors : createModelToSave(data: data)]
+        let dataToUpdate = [fors.rawValue : createModelToSave(data: data)]
         
         firestore.document(uid).updateData(dataToUpdate) { error in
             if let _ = error {

@@ -10,19 +10,32 @@ import UIKit
 
 class SignUpCoordinator: Coordinator {
     
+    // MARK: - Class instances
+    
+    /// Navigation controller
     private let navigationController: UINavigationController
+    
+    /// Coordinator
     private let registrationCoordinator: RegistrationCoordinator
     
+    // MARK: - Class constructor
+    
+    /// Sign up coordinator class constructor
     init(navigationController: UINavigationController, registrationCoordinator: RegistrationCoordinator) {
         self.navigationController = navigationController
         self.registrationCoordinator = registrationCoordinator
     }
     
+    // MARK: - Class methods
+    
+    /// Creates a sign up screen and displays it
     public func start() {
-        let signUpController = ScreensFactory.makeSignUpScreen(coordinator: self)
+        guard let signUpController = ScreensFactory.makeSignUpScreen(coordinator: self) else { return }
         navigationController.pushViewController(signUpController, animated: true)
     }
     
+    /// Tells the coordinator that the user is sign up
+    /// - Parameter model: Stores user data
     public func userDidSignUp(model: Profile) {
         registrationCoordinator.userDidSignUp(model: model)
     }

@@ -8,18 +8,32 @@
 
 import UIKit
 
-protocol A {
+protocol UpdateRecentContacts {
     func addToRecent(contact: Contact)
 }
 
 class RecentCoordinator: TabBarItemCoordinator {
     
+    // MARK: - Class instances
+    
+    /// Coordinator
     private let coordinator: TabBarCoordinator
+    
+    /// Firebase service
     private let firebaseService: FirebaseService
+    
+    /// Recent view controller
     private var recentViewController: RecentViewController?
+    
+    /// Navigation controller
     public let navigationController: UINavigationController
+    
+    /// Tab bar item
     public let tabBarItem: UITabBarItem
     
+    // MARK: - Class constructor
+    
+    /// Recent coordinator class constructor
     init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
@@ -28,11 +42,16 @@ class RecentCoordinator: TabBarItemCoordinator {
         navigationController.tabBarItem = tabBarItem
     }
     
+    // MARK: - Class methods
+    
+    /// Creates a recent screen and displays it
     public func start() {
         recentViewController = ScreensFactory.makeRecentScreen(coordinator: self, firebaseService: firebaseService)
         navigationController.pushViewController(recentViewController!, animated: true)
     }
     
+    /// Creates a details contact coordinator and transfers contact data to him
+    /// - Parameter contact: The contact, data of which will be displayed
     public func showDetailsContacts(contact: Contact) {
         let detailsCoordinator = DetailsContactCoordinator(coordinator: self,
                                                            navigationController: navigationController,
@@ -42,22 +61,28 @@ class RecentCoordinator: TabBarItemCoordinator {
     }
 }
 
-extension RecentCoordinator: A {
+// MARK: - UpdateRecentContacts
+
+extension RecentCoordinator: UpdateRecentContacts {
     
     func addToRecent(contact: Contact) {
         recentViewController?.viewModel.addToRecent(contact: contact)
     }
 }
 
-extension RecentCoordinator: B {
+// MARK: - UpdateFavoriteContactStatus
+
+extension RecentCoordinator: UpdateFavoriteContactStatus {
     func updateContact(contact: Contact) {
-        recentViewController?.viewModel.some(contact: contact)
+        recentViewController?.viewModel.updateContactData(contact: contact)
     }
 }
 
-extension RecentCoordinator: UpdateData {
+// MARK: - UpdateDataFromDetailsContact
+
+extension RecentCoordinator: UpdateDataFromDetailsContact {
     public func updateRecentData(contact: Contact) {
-        recentViewController?.viewModel.some(contact: contact)
+        recentViewController?.viewModel.updateContactData(contact: contact)
         coordinator.updateFromRecent(contact: contact)
     }
 }

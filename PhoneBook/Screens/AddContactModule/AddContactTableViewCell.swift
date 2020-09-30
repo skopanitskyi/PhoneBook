@@ -14,15 +14,24 @@ protocol AddContactCellDelegate {
 
 class AddContactTableViewCell: UITableViewCell {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var nameLabel: UILabel!
 
+    // MARK: Class instances
+    
+    /// Add contact cell delegate
+    public var delegate: AddContactCellDelegate?
+    
+    /// Store contact full name
     public var name: String? {
         didSet {
             nameLabel.text = self.name
         }
+
     }
     
-    public var delegate: AddContactCellDelegate?
+    // MARK: - Actions
 
     @IBAction func addButtonTapped(_ sender: UIButton) {
         if let name = name {

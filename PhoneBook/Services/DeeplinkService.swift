@@ -18,26 +18,28 @@ enum DeeplinkScreens: String {
 class DeeplinkService {
     
     private let appCoordinator: AppCoordinator
-    private var screenUrl: URL?
+    private var screenName: String?
     
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
     
-    public func showScreen( _ url: URL, isAuthorized: Bool) {
+    public func showScreen( _ name: String, isAuthorized: Bool) {
         
-        if !isAuthorized {
-            screenUrl = url
-            return
-            print("Saved linknk")
-        }
+        print(name)
+        guard let screen = DeeplinkScreens.init(rawValue: name) else { return }
         
-        guard let screen = DeeplinkScreens.init(rawValue: url.path) else { return }
         
+        print()
         print("!!!!!!!!!!!!!!!!!!!!!")
         print(screen)
         print("!!!!!!!!!!!!!!!!!!!!!")
-
+        
+        if !isAuthorized {
+            screenName = name
+            return
+        }
+        
         switch screen {
         case .contacts:
             displayContacts()
@@ -51,9 +53,9 @@ class DeeplinkService {
     }
     
     public func openSavedLink() {
-        if let url = screenUrl {
+        if let url = screenName {
             showScreen(url, isAuthorized: true)
-            screenUrl = nil
+            screenName = nil
         }
     }
     

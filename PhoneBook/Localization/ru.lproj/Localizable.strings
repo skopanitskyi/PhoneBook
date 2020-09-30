@@ -13,14 +13,18 @@
 "Contacts.Title" = "Контакты";
 "Contacts.ButtonTitle" = "Сортировать";
 "Contacts.AlertTitile" = "Сортировать контакты";
-"Contacts.AlertMessage" = "Выберите";
+"Contacts.AlertMessage" = "Выберите один из вариантов";
 "Contacts.AllertAscending" = "А-Я";
 "Contacts.AllertDescending" = "Я-А";
+"Contacts.SearchBarPlaceholder" = "Найти контакт";
 
 
 // Recents
 "Recent.Title" = "Недавние";
 "Recent.LeftButton.Delete" = "Удалить";
+"Recent.AlertController.DeleteAllContacts" = "Очистить все недавние";
+"Recent.AlertController.Cancel" = "Отмена";
+
 
 // Favorites
 "Favorites.Title" = "Избранные";

@@ -10,27 +10,44 @@ import UIKit
 
 class AddContactCoordinator: Coordinator {
     
+    // MARK: - Class instances
+    
+    /// Coordinator
     private let coordinator: FavoritesCoordinator
+    
+    /// Firebase service
     private let firebaseService: FirebaseService
+    
+    /// Navigation controller
     private let navigationController: UINavigationController
     
+    // MARK: - Class constructor
+    
+    /// Add contact coordinator class constructor
     init(coordinator: FavoritesCoordinator, firebaseService: FirebaseService, navigationController: UINavigationController) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
         self.navigationController = navigationController
     }
     
+    // MARK: - Class methods
+    
+    /// Creates an add contact screen and displays it
     public func start() {
-        let addContact = ScreensFactory.makeAddContactScreen(coordinator: self, firebaseService: firebaseService)
+        guard let addContact = ScreensFactory.makeAddContactScreen(coordinator: self,
+                                                                   firebaseService: firebaseService) else { return }
         navigationController.present(addContact, animated: true, completion: nil)
     }
     
+    /// Close add contact screen
     public func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
 
-extension AddContactCoordinator: UpdateData {
+// MARK: - UpdateDataFromDetailsContact
+
+extension AddContactCoordinator: UpdateDataFromDetailsContact {
     func updateRecentData(contact: Contact) {
         coordinator.updateRecentData(contact: contact)
         firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)

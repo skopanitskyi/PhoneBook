@@ -10,12 +10,24 @@ import Foundation
 
 class Contact: Codable {
     
+    /// Full user name
     public let fullName: String
+    
+    /// User phone number
     public let phoneNumber: String
+    
+    /// User city
     public let city: String
+    
+    /// User street
     public let street: String
+    
+    /// Is user favorite
     public var isFavorite: Bool
     
+    // MARK: - Class constructors
+    
+    /// Contact class constructor
     init(fullName: String, phoneNumber: String, city: String, street: String, isFavorite: Bool) {
         self.fullName = fullName
         self.phoneNumber = phoneNumber
@@ -24,6 +36,7 @@ class Contact: Codable {
         self.isFavorite = isFavorite
     }
     
+    /// Contact class convenience constructor
     convenience init?(data: [String:Any]) {
         guard
             let fullName = data["name"] as? String,

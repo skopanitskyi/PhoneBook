@@ -153,26 +153,18 @@
 		2216D31B24D990500007255D /* RecentModule */ = {
 			isa = PBXGroup;
 			children = (
-				2216D31C24D9905E0007255D /* View */,
-				22228C9D24DEDBB800C3293B /* ViewModel */,
-				22228CA124E065FA00C3293B /* Coordinator */,
+				2216D31924D990490007255D /* RecentViewController.swift */,
+				22228C9B24DEDBA800C3293B /* RecentViewModel.swift */,
+				22228C9424DEBDDE00C3293B /* RecentCoordinator.swift */,
 			);
 			path = RecentModule;
-			sourceTree = "<group>";
-		};
-		2216D31C24D9905E0007255D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2216D31924D990490007255D /* RecentViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		2218601924F3FAB800E159A1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				2216D31B24D990500007255D /* RecentModule */,
 				2234FEB924D4312900759AE9 /* ContactsModule */,
+				2216D31B24D990500007255D /* RecentModule */,
 				2218602024F407D000E159A1 /* FavoritesModule */,
 				228E4EA824F409B6003B4432 /* ProfileModule */,
 				22EC8833250265BE009E079A /* LogInModule */,
@@ -186,9 +178,10 @@
 		2218602024F407D000E159A1 /* FavoritesModule */ = {
 			isa = PBXGroup;
 			children = (
-				228E4E9F24F408FF003B4432 /* View */,
-				228E4EA024F40905003B4432 /* ViewModel */,
-				228E4EA124F4090C003B4432 /* Coordinator */,
+				223C6391251CDFED00011A4B /* Favorites.storyboard */,
+				2218601A24F4070F00E159A1 /* FavoritesViewController.swift */,
+				2218601C24F4076100E159A1 /* FavoritesViewModel.swift */,
+				228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */,
 			);
 			path = FavoritesModule;
 			sourceTree = "<group>";
@@ -211,30 +204,6 @@
 				22228C9E24E0655900C3293B /* AlertController.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		22228C9D24DEDBB800C3293B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				22228C9B24DEDBA800C3293B /* RecentViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		22228CA024E065EB00C3293B /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				22228C9224DEB69F00C3293B /* ContactCoordinator.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		22228CA124E065FA00C3293B /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				22228C9424DEBDDE00C3293B /* RecentCoordinator.swift */,
-			);
-			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		22228CC624E2F39800C3293B /* Localization */ = {
@@ -288,36 +257,12 @@
 		2234FEB924D4312900759AE9 /* ContactsModule */ = {
 			isa = PBXGroup;
 			children = (
-				2234FEC124D4935500759AE9 /* Model */,
-				2234FEBA24D4313F00759AE9 /* View */,
-				2234FEC424D58CD700759AE9 /* ViewModel */,
-				22228CA024E065EB00C3293B /* Coordinator */,
+				2234FEBF24D4935000759AE9 /* Contact.swift */,
+				2234FE8524D3081100759AE9 /* ContactsViewController.swift */,
+				2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */,
+				22228C9224DEB69F00C3293B /* ContactCoordinator.swift */,
 			);
 			path = ContactsModule;
-			sourceTree = "<group>";
-		};
-		2234FEBA24D4313F00759AE9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2234FE8524D3081100759AE9 /* ContactsViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		2234FEC124D4935500759AE9 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2234FEBF24D4935000759AE9 /* Contact.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		2234FEC424D58CD700759AE9 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				2234FEC224D58CD000759AE9 /* ContactsViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		2234FEC924D714D100759AE9 /* Services */ = {
@@ -362,65 +307,16 @@
 			path = DetailsContactModule;
 			sourceTree = "<group>";
 		};
-		228E4E9F24F408FF003B4432 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2218601A24F4070F00E159A1 /* FavoritesViewController.swift */,
-				223C6391251CDFED00011A4B /* Favorites.storyboard */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		228E4EA024F40905003B4432 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				2218601C24F4076100E159A1 /* FavoritesViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		228E4EA124F4090C003B4432 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				228E4E9D24F408E0003B4432 /* FavoritesCoordinator.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
 		228E4EA824F409B6003B4432 /* ProfileModule */ = {
-			isa = PBXGroup;
-			children = (
-				228E4EA924F409C6003B4432 /* View */,
-				228E4EAA24F409CC003B4432 /* ViewModel */,
-				228E4EAB24F409D7003B4432 /* Coordinator */,
-				22420BD425238B1C00A43E36 /* Profile.swift */,
-			);
-			path = ProfileModule;
-			sourceTree = "<group>";
-		};
-		228E4EA924F409C6003B4432 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				228E4EA224F40931003B4432 /* ProfileViewController.swift */,
 				22A0123725067DFF00396E63 /* Profile.storyboard */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		228E4EAA24F409CC003B4432 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
 				228E4EA424F40949003B4432 /* ProfileViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		228E4EAB24F409D7003B4432 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
 				228E4EA624F40982003B4432 /* ProfileCoordinator.swift */,
+				22420BD425238B1C00A43E36 /* Profile.swift */,
 			);
-			path = Coordinator;
+			path = ProfileModule;
 			sourceTree = "<group>";
 		};
 		22A0123E250685DC00396E63 /* Helpers */ = {

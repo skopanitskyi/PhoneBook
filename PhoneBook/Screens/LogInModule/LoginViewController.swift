@@ -11,6 +11,13 @@ import FBSDKLoginKit
 
 class LoginViewController: UITableViewController {
     
+    // MARK: - Class instances
+    
+    /// View model
+    public var viewModel: LoginViewModelProtocol?
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
@@ -18,8 +25,8 @@ class LoginViewController: UITableViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var appNameLabel: UILabel!
     
-    public var viewModel: LoginViewModelProtocol?
-    
+    // MARK: - Class life cycle
+        
     override func viewDidLoad() {
         localization()
         super.viewDidLoad()
@@ -34,6 +41,8 @@ class LoginViewController: UITableViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    // MARK: - Actions
     
     @IBAction func logInButtonTapped(_ sender: Any) {
         viewModel?.loginWithEmail(email: emailTextField.text, password: passwordTextField.text)
@@ -51,6 +60,9 @@ class LoginViewController: UITableViewController {
         view.endEditing(true)
     }
     
+    // MARK: - Class methods
+    
+    /// Localize screen
     private func localization() {
         title = "Authentication.Titile".localized
         appNameLabel.text = "Authentication.ApplicationName".localized

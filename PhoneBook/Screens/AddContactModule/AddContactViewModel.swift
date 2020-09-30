@@ -19,20 +19,31 @@ protocol AddContactViewModelProtocol {
 
 class AddContactViewModel: AddContactViewModelProtocol {
     
+    // MARK: - Class instances
+    
+    /// Update table view data
     public var updateView: (() -> ())?
     
+    /// Coordinator
     private let coordinator: AddContactCoordinator
     
+    /// Firebase service
     private let firebaseService: FirebaseService
     
+    /// Store unfavorite contacts
     private var contacts = [Contact]()
     
+    // MARK: - Class constructor
     
+    /// Add contact view model
     init(coordinator: AddContactCoordinator, firebaseService: FirebaseService) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
     }
     
+    // MARK: - Class methods
+    
+    /// Get contact data from firebase
     public func fetchContacts() {
         firebaseService.userSavedData(data: .contacts) { [weak self] result in
             switch result {
@@ -48,18 +59,24 @@ class AddContactViewModel: AddContactViewModelProtocol {
         }
     }
     
+    /// Return number of rows in section
     public func numberOfRowsInSection() -> Int {
         return contacts.count
     }
     
+    /// Return contact name
+    /// - Parameter index: Contact index
     public func getContactName(at index: Int) -> String {
         return contacts[index].fullName
     }
     
+    /// Tells  coordinator to close contact screen add
     public func cancel() {
         coordinator.dismiss()
     }
     
+    /// Removes contact by name and returns its index
+    /// - Parameter name: Contact name
     public func deleteCell(at name: String) -> Int? {
         if let index = contacts.firstIndex(where: {$0.fullName == name }) {
             contacts[index].isFavorite = true

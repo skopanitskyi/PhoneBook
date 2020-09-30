@@ -9,7 +9,13 @@
 import Foundation
 
 struct Profile {
+    
+    /// User name
     public let name: String
+    
+    /// User city
     public let city: String?
+    
+    /// User street
     public let street: String?
 }

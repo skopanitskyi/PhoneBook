@@ -34,16 +34,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        if let url = URL(string: shortcutItem.type) {
-            appCoordinator?.showScreen(url)
-        }
+        print(shortcutItem.type)
+        appCoordinator?.showScreen(shortcutItem.type)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url {
+        if let url = URLContexts.first?.url, let name = url.host {
             ApplicationDelegate.shared.application(UIApplication.shared, open: url, sourceApplication: nil,
                                                    annotation:[UIApplication.OpenURLOptionsKey.annotation])
-            appCoordinator?.showScreen(url)
+            appCoordinator?.showScreen(name)
         }
     }
     

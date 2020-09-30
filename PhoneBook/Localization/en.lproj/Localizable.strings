@@ -15,14 +15,17 @@
 "Contacts.Title" = "Contacts";
 "Contacts.ButtonTitle" = "Sort";
 "Contacts.AlertTitile" = "Sort contacts";
-"Contacts.AlertMessage" = "Choose";
+"Contacts.AlertMessage" = "Choose one of the options";
 "Contacts.AllertAscending" = "A-Z";
 "Contacts.AllertDescending" = "Z-A";
+"Contacts.SearchBarPlaceholder" = "Search the contact";
 
 
 // Recent
 "Recent.Title" = "Recent";
 "Recent.LeftButton.Delete" = "Delete";
+"Recent.AlertController.DeleteAllContacts" = "Clear all recent";
+"Recent.AlertController.Cancel" = "Cancel";
 
 // Favorites
 "Favorites.Title" = "Favorites";

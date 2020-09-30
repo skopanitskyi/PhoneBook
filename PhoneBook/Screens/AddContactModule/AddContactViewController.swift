@@ -9,29 +9,48 @@
 import UIKit
 
 class AddContactViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Class instances
     
     private let identifier = "Cell"
     
     public var viewModel: AddContactViewModelProtocol?
     
+    // MARK: - Outlets
+
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Class life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        getContactsData()
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        viewModel?.cancel()
+    }
+    
+    // MARK: - Class methods
+    
+    /// Get contact data from view model
+    private func getContactsData() {
         viewModel?.updateView = { [weak self] in
             self?.tableView.reloadData()
         }
         viewModel?.fetchContacts()
     }
-    
-    @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        viewModel?.cancel()
-    }
 }
+
+// MARK: - TableViewDelegate
 
 extension AddContactViewController: UITableViewDelegate {
     
 }
+
+// MARK: - TableViewDataSource
 
 extension AddContactViewController: UITableViewDataSource {
     
@@ -46,6 +65,8 @@ extension AddContactViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - AddContactCellDelegate
 
 extension AddContactViewController: AddContactCellDelegate {
     func deleteCell(at name: String) {

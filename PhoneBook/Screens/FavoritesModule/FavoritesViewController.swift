@@ -9,40 +9,66 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
+    
+    // MARK: - Class instances
         
+    /// View model
     public var viewModel: FavoritesViewModelProtocol?
     
-    @IBOutlet weak var tableView: UITableView!
-    
+    /// Reuse identifier for cell
     private let reuseIdentifier = "Cell"
     
+    // MARK: - Outlets
+    
+    /// Table view outlet
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Class life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Favorites.Title".localized
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = editButtonItem
-        viewModel?.fetchFavoritesContacts()
-        viewModel?.updateView = { [weak self] in
-            self?.tableView.reloadData()
-        }
+        setupView()
+        fetchContactsData()
     }
+    
+    // MARK: - Class methods
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         tableView.setEditing(editing, animated: true)
     }
     
+    /// Setup view
+    private func setupView() {
+        title = "Favorites.Title".localized
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
+    
+    /// Get favorites contacts from view model
+    private func fetchContactsData() {
+        viewModel?.fetchFavoritesContacts()
+        viewModel?.updateView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    // MARK: - Actions
+    
     @IBAction func addContactButtonPressed(_ sender: Any) {
-        viewModel?.showAddButtonController()
+        viewModel?.showAddContactController ()
     }
 }
+
+// MARK: - TableViewDelegate
 
 extension FavoritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel?.showDetailsContact(at: indexPath.row)
     }
 }
+
+// MARK: - TableViewDataSource
 
 extension FavoritesViewController: UITableViewDataSource {
     

@@ -17,50 +17,70 @@ protocol RecentViewModelProtocol {
     func deleteAllContacts()
     func downloadData()
     func showDetailsContact(at index: Int)
-    func updateData()
-    func some(contact: Contact)
+    func updateDataInFirebase()
+    func updateContactData(contact: Contact)
 }
 
 class RecentViewModel: RecentViewModelProtocol {
     
+    // MARK: - Class instances
+    
+    /// Used to update data in a table view
     public var updateView: (() -> Void)?
     
+    /// Stores recent contacts
     private var contacts = [Contact]()
     
+    /// Firebase service
     private let firebaseService: FirebaseService
     
+    /// Coordinator
     private let coordinator: RecentCoordinator
     
+    // MARK: - Class constructor
+    
+    /// Recent view model class constructor
     init(coordinator: RecentCoordinator, firebaseService: FirebaseService) {
         self.coordinator = coordinator
         self.firebaseService = firebaseService
     }
     
+    // MARK: - Class methods
+    
+    /// Return number of rows in section
     public func numberOfRowsInSection() -> Int {
         return contacts.count
     }
     
+    /// Return contact name
+    /// - Parameter index: Contact index
     public func getContactName(at index: Int) -> String {
         return contacts[index].fullName
     }
     
+    /// Adds the specified contact to recent
+    /// - Parameter contact: The contact to be added to recent
     public func addToRecent(contact: Contact) {
         contacts.insert(contact, at: 0)
-        updateData()
+        updateDataInFirebase()
         updateView?()
     }
     
+    /// Removes a contact from recent at the specified index
+    /// - Parameter index: The index by which the contact will be deleted
     public func deleteContact(at index: Int) {
         contacts.remove(at: index)
-        updateData()
+        updateDataInFirebase()
     }
     
+    /// Removes all contacts from recent
     public func deleteAllContacts() {
         contacts.removeAll()
-        updateData()
+        updateDataInFirebase()
         updateView?()
     }
     
+    /// Download recent contacts data from firebase
     public func downloadData() {
         firebaseService.userSavedData(data: .recent) { [weak self] result in
             switch result {
@@ -73,8 +93,9 @@ class RecentViewModel: RecentViewModelProtocol {
         }
     }
     
-    public func updateData() {
-        firebaseService.updateData(fors: "recent", data: contacts) { result in
+    /// Update contact recent data in firebase
+    public func updateDataInFirebase() {
+        firebaseService.updateData(fors: .recent, data: contacts) { result in
             switch result {
             case.success:
                 print("Data saved")
@@ -84,11 +105,15 @@ class RecentViewModel: RecentViewModelProtocol {
         }
     }
     
+    /// Tells the coordinator to display details contact screen
+    /// - Parameter index: Index of contact which data will be display
     public func showDetailsContact(at index: Int) {
         coordinator.showDetailsContacts(contact: contacts[index])
     }
     
-    func some(contact: Contact) {
+    /// Refreshes data between stored contact and received
+    /// - Parameter contact: Received contact with new data
+    func updateContactData(contact: Contact) {
         for recentContact in contacts {
             if recentContact.fullName == contact.fullName {
                 recentContact.isFavorite = contact.isFavorite

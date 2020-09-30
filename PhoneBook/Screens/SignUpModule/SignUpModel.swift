@@ -9,10 +9,22 @@
 import Foundation
 
 struct SignUpModel {
+    
+    /// User email
     public let email: String?
+    
+    /// User password
     public let password: String?
+    
+    /// User name
     public let name: String?
+    
+    /// User surname
     public let surname: String?
+    
+    /// User city
     public let city: String?
+    
+    /// User street
     public let street: String?
 }

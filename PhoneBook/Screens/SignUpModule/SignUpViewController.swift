@@ -10,7 +10,14 @@ import UIKit
 
 class SignUpViewController: UITableViewController {
     
+    // MARK: - Class instances
+    
+    /// View model
     public var viewModel: SignUpViewModelProtocol?
+    
+    // MARK: - Outlets
+    
+    /// Text fields
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -18,6 +25,8 @@ class SignUpViewController: UITableViewController {
     @IBOutlet weak var surnameTextField: UITextField!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var streetTextField: UITextField!
+    
+    /// Labels
     
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -27,11 +36,14 @@ class SignUpViewController: UITableViewController {
     @IBOutlet weak var streetLabel: UILabel!
     @IBOutlet weak var registrationButton: UIButton!
     
+    // MARK: - Class life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         localization()
     }
+    
+    // MARK: - Actions
     
     @IBAction func registrationTapped(_ sender: Any) {
         let email = emailTextField.text
@@ -41,7 +53,7 @@ class SignUpViewController: UITableViewController {
         let city = cityTextField.text
         let street = streetTextField.text
         
-        viewModel?.signUp(email: email,
+        viewModel?.validate(email: email,
                           password: password,
                           name: name,
                           surname: surname,
@@ -53,6 +65,9 @@ class SignUpViewController: UITableViewController {
         view.endEditing(true)
     }
     
+    // MARK: - Class methods
+    
+    /// Localize view
     private func localization() {
         title = "Registration.Title".localized
         emailLabel.text = "Registration.EmailLabel".localized

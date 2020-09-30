@@ -22,13 +22,29 @@ protocol TabBarItemCoordinator {
 
 class TabBarCoordinator: Coordinator {
     
+    // MARK: - Class instances
+    
+    /// User model which stores user data
     private let userModel: Profile?
+    
+    /// Window
     private var window: UIWindow
+    
+    /// Firebase service
     private let firebaseService: FirebaseService
+    
+    /// Tab bar controller
     private let tabBarController: UITabBarController
+    
+    /// App coordinator
     private weak var appCoordinator: AppCoordinator?
+    
+    /// Store tab bar coordinators
     private var tabBarCoordinators: [TabBarItemCoordinator] = []
     
+    // MARK: - Class constructor
+    
+    /// TabBarCoordinator class constructor
     init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator, userModel: Profile?) {
         self.userModel = userModel
         self.window = window
@@ -57,11 +73,16 @@ class TabBarCoordinator: Coordinator {
         tabBarCoordinators = [contactCoordinator, recentCoordinator, favoritesCoordinator, profileCoordinator]
     }
     
+    // MARK: - Class methods
+    
+    /// Declares a tab bar controller as a root controller
     public func start() {
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }
     
+    /// Displays the screen at the selected index
+    /// - Parameter index: Screen index
     public func selectItem(at index: TabBarScreen) {
         let selectedIndex = index.rawValue
         tabBarController.selectedIndex = selectedIndex
@@ -69,6 +90,8 @@ class TabBarCoordinator: Coordinator {
         navigationController?.popViewController(animated: false)
     }
     
+    /// Returns the navigation controller at the specified index
+    /// - Parameter index: Navigation controller index
     private func getNavigationController(at index: Int)  -> UINavigationController? {
         if index < tabBarCoordinators.count {
             return tabBarCoordinators[index].navigationController
@@ -76,27 +99,34 @@ class TabBarCoordinator: Coordinator {
         return nil
     }
     
+    /// Tells the app coordinator that the user is logout
     public func logout() {
         appCoordinator?.logout()
     }
     
+    /// Add contact to recent
+    /// - Parameter contact: Contact to be added to recent
     public func addToRecent(contact: Contact) {
-        let a = tabBarCoordinators[1] as? A
-        a?.addToRecent(contact: contact)
+        let recentCoordinator = tabBarCoordinators[1] as? UpdateRecentContacts
+        recentCoordinator?.addToRecent(contact: contact)
     }
     
+    /// Refreshes contact details from recent in other controllers
+    /// - Parameter contact: The contact whose details will be updated
     public func updateFromRecent(contact: Contact) {
-       let a = tabBarCoordinators[0] as? B
-        a?.updateContact(contact: contact)
-       let b = tabBarCoordinators[2] as? B
-        b?.updateContact(contact: contact)
+       let contactCoordinator = tabBarCoordinators[0] as? UpdateFavoriteContactStatus
+        contactCoordinator?.updateContact(contact: contact)
+       let favoritesCoordinator = tabBarCoordinators[2] as? UpdateFavoriteContactStatus
+        favoritesCoordinator?.updateContact(contact: contact)
     }
     
+    /// Refreshes contact details from favorite in other controllers
+    /// - Parameter contact: The contact whose details will be updated
     public func updateFromFavorite(contact: Contact) {
-        let a = tabBarCoordinators[0] as? B
-         a?.updateContact(contact: contact)
-        let b = tabBarCoordinators[1] as? B
-        b?.updateContact(contact: contact)
+        let contactCoordinator = tabBarCoordinators[0] as? UpdateFavoriteContactStatus
+        contactCoordinator?.updateContact(contact: contact)
+        let recentCoordinator = tabBarCoordinators[1] as? UpdateFavoriteContactStatus
+        recentCoordinator?.updateContact(contact: contact)
     }
 }
 

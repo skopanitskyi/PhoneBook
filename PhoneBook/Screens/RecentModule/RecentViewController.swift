@@ -10,33 +10,40 @@ import UIKit
 
 class RecentViewController: UIViewController {
     
+    // MARK: - Class instances
+    
+    /// View model
     public var viewModel: RecentViewModelProtocol!
     
+    /// Reuse identifier for cell
     private let reuseIdentifier = "Cell"
     
+    // MARK: - Create UI elements
+    
+    /// Create table view
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
+    /// Create left button
+    private lazy var leftButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Recent.LeftButton.Delete".localized,
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(deleteRecentsContacts))
+        button.isEnabled = false
+        return button
+    }()
+    
+    // MARK: - Class life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Recent.Title".localized
-        view.backgroundColor = .white
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.rightBarButtonItem = editButtonItem
-        let leftButton = UIBarButtonItem(title: "Recent.LeftButton.Delete".localized,
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(deleteRecentsContacts))
-        leftButton.isEnabled = false
-        navigationItem.leftBarButtonItem = leftButton
+        setupView()
         setupTableView()
-        viewModel.downloadData()
-        viewModel.updateView = { [weak self] in
-            self?.tableView.reloadData()
-        }
+        fetchRecentData()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -50,6 +57,18 @@ class RecentViewController: UIViewController {
         }
     }
     
+    // MARK: - Add UI elements and setup view
+    
+    /// Setup view
+    private func setupView() {
+        title = "Recent.Title".localized
+        view.backgroundColor = .white
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem = leftButton
+    }
+    
+    /// Add table view and setup constraints
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.dataSource = self
@@ -61,12 +80,25 @@ class RecentViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
     
+    // MARK: - Class methods
+    
+    /// Fetch recent contacts data from view model
+    private func fetchRecentData() {
+        viewModel.downloadData()
+        viewModel.updateView = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    /// Delete all recents contacts
     @objc private func deleteRecentsContacts() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let deleteAll = UIAlertAction(title: "Очистить все недавние", style: .destructive) { [weak self] action in
+        
+        let deleteAll = UIAlertAction(title: "Recent.AlertController.DeleteAllContacts".localized,
+                                      style: .destructive) { [weak self] action in
             self?.viewModel.deleteAllContacts()
         }
-        let cancel = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Recent.AlertController.Cancel".localized, style: .cancel, handler: nil)
         
         alertController.addAction(deleteAll)
         alertController.addAction(cancel)
@@ -76,11 +108,15 @@ class RecentViewController: UIViewController {
     }
 }
 
+// MARK: - TableViewDelegate
+
 extension RecentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.showDetailsContact(at: indexPath.row)
     }
 }
+
+// MARK: - TableViewDataSource
 
 extension RecentViewController: UITableViewDataSource {
     

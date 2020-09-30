@@ -16,29 +16,42 @@ protocol LoginViewModelProtocol {
 
 class LoginViewModel: LoginViewModelProtocol {
     
+    // MARK: - Class instances
+    
+    /// Coordinator
     private let loginCoordinator: LoginCoordinator
     
+    // MARK: - Class constructor
+    
+    /// Login view model class constructor
     init(loginCoordinator: LoginCoordinator) {
         self.loginCoordinator = loginCoordinator
     }
     
+    // MARK: - Class methods
+    
+    /// Performs authorization using facebook
     public func loginWithFacebook() {
-        FirebaseService().logInWithFacebook() { model, result in
+        FirebaseService().logInWithFacebook() { [weak self] model, result in
             switch result {
             case .success:
-                self.loginCoordinator.userDidLogIn(model: model)
+                self?.loginCoordinator.userDidLogIn(model: model)
             case .failure(let error):
                 print(error.errorDescription!)
             }
         }
     }
     
+    /// Performs authorization using email and password
+    /// - Parameters:
+    ///   - email: User email address
+    ///   - password: User password
     public func loginWithEmail(email: String?, password: String?) {
         if email!.isValidEmail && password!.isValidPassword {
-            FirebaseService().logIn(email: email!, password: password!) { result in
+            FirebaseService().logIn(email: email!, password: password!) { [weak self] result in
                 switch result {
                 case .success:
-                    self.loginCoordinator.userDidLogIn(model: nil)
+                    self?.loginCoordinator.userDidLogIn(model: nil)
                 case .failure(let error):
                     print(error.errorDescription!)
                 }
@@ -48,6 +61,7 @@ class LoginViewModel: LoginViewModelProtocol {
         }
     }
     
+    /// Tells the coordinator that the user wants to register
     public func signUp() {
         loginCoordinator.signUp()
     }

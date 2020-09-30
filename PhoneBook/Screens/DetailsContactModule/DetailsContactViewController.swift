@@ -11,11 +11,31 @@ import MapKit
 
 class DetailsContactViewController: UITableViewController {
     
+    // MARK: - Class instances
+    
+    /// Reuse identifier for anotation
+    private let reuseIdentifier = "anotation"
+    
+    /// Is contact favorite
+    private var isFavorite: Bool?
+    
+    /// Location manager
+    private let locationManager = CLLocationManager()
+    
+    /// View model
+    public var viewModel: DetailsContactViewModelProtocol?
+    
+    // MARK: - Outlet
+    
+    /// Data name labels
+    
     @IBOutlet weak var nameLocalization: UILabel!
     @IBOutlet weak var phoneLocalization: UILabel!
     @IBOutlet weak var cityLocalization: UILabel!
     @IBOutlet weak var streetLocalization: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    
+    /// Data labels
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var phone: UILabel!
@@ -24,14 +44,7 @@ class DetailsContactViewController: UITableViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    private let reuseIdentifier = "anotation"
-    
-    private var isFavorite: Bool?
-    
-    private let locationManager = CLLocationManager()
-    
-    
-    public var viewModel: DetailsContactViewModelProtocol?
+    // MARK: - Class life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +54,13 @@ class DetailsContactViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setup()
+        setupMapView()
     }
     
+    // MARK: - Actions
+    
     @IBAction func favoriteButtonTapped(_ sender: Any) {
-        changeImage()
+        changeFavoriteStatus()
         viewModel?.updateFavoriteStatus()
     }
     
@@ -53,12 +68,16 @@ class DetailsContactViewController: UITableViewController {
         viewModel?.closeDetailsContact()
     }
     
-    private func changeImage() {
+    // MARK: - Class methods
+    
+    /// Change  favorite status and favorite status image
+    private func changeFavoriteStatus() {
         guard let favoriteStatus = isFavorite else { return }
         isFavorite = !favoriteStatus
-        setupImage()
+        changeFavoriteStatusImage()
     }
     
+    /// Localize view
     private func localization() {
         nameLocalization.text = "DetailsProfile.Name".localized
         phoneLocalization.text = "DetailsProfile.Phone".localized
@@ -66,16 +85,18 @@ class DetailsContactViewController: UITableViewController {
         streetLocalization.text = "DetailsProfile.Street".localized
     }
     
+    /// Set user data
     private func setInformation() {
         name.text = viewModel?.getContactName()
         phone.text = viewModel?.getContactPhone()
         city.text = viewModel?.getContactCity()
         street.text = viewModel?.getContactStreet()
         isFavorite = viewModel?.getFavoriteStatus()
-        setupImage()
+        changeFavoriteStatusImage()
     }
     
-    private func setupImage() {
+    /// Change image for favorite status
+    private func changeFavoriteStatusImage() {
         if isFavorite! {
             favoriteButton.setImage(UIImage(named: "Icon-Small"), for: .normal)
         } else {
@@ -83,24 +104,27 @@ class DetailsContactViewController: UITableViewController {
         }
     }
     
-    private func setup() {
+    /// Setup map view
+    private func setupMapView() {
         
         let isLocationEnabled = CLLocationManager.locationServicesEnabled()
         
         if isLocationEnabled {
             mapView.delegate = self
-            setupLocationManadger()
+            setupLocationManager()
             checkAutorization()
         } else {
             // Show alert controller
         }
     }
     
-    private func setupLocationManadger() {
+    /// Setup location manager
+    private func setupLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    /// Check authorization status
     private func checkAutorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways:
@@ -124,19 +148,17 @@ class DetailsContactViewController: UITableViewController {
         }
     }
 }
+
+// MARK: - CLLocationManagerDelegate
+
 extension DetailsContactViewController: CLLocationManagerDelegate {
-//    
-//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//            if let location = locations.last?.coordinate {
-//                let region = MKCoordinateRegion(center: location, latitudinalMeters: 5000, longitudinalMeters: 5000)
-//                self.mapView.setRegion(region, animated: true)
-//            }
-//        }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkAutorization()
     }
 }
+
+// MARK: - MKMapViewDelegate
 
 extension DetailsContactViewController: MKMapViewDelegate {
     
@@ -154,18 +176,19 @@ extension DetailsContactViewController: MKMapViewDelegate {
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        
         guard let coordinate = locationManager.location?.coordinate else { return }
         
         let adress = "\(viewModel!.getContactCity()) \(viewModel!.getContactStreet())"
         
-        MapService().getCoordinates(with: adress) { contactCoordinate in
+        MapService().getCoordinates(with: adress) { [weak self] contactCoordinate in
             
             let start = MKPlacemark(coordinate: coordinate)
             let end = MKPlacemark(coordinate: contactCoordinate!)
             
             let anotation = MKPointAnnotation()
             anotation.coordinate = contactCoordinate!
-            anotation.title = self.viewModel!.getContactName()
+            anotation.title = self?.viewModel!.getContactName()
             
             let request = MKDirections.Request()
             request.source = MKMapItem(placemark: start)
@@ -178,9 +201,9 @@ extension DetailsContactViewController: MKMapViewDelegate {
                     print(error.localizedDescription)
                     return
                 }
-                self.mapView.addAnnotation(anotation)
-                self.mapView.removeOverlays(self.mapView.overlays)
-                self.mapView.addOverlay(result!.routes.first!.polyline)
+                self?.mapView.addAnnotation(anotation)
+                self?.mapView.removeOverlays(self!.mapView.overlays)
+                self?.mapView.addOverlay(result!.routes.first!.polyline)
             }
         }
     }

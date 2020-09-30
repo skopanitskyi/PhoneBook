@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Errors that may occur when login, logout, retrieving and updating data
 enum AuthError {
     case notFilled
     case cancelled
@@ -21,6 +22,7 @@ enum AuthError {
     case unknownError
 }
 
+/// Description for possible errors
 extension AuthError: LocalizedError {
    public var errorDescription: String? {
         switch self {
