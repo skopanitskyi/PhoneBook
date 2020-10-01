@@ -42,10 +42,8 @@ class ProfileViewController: UITableViewController {
         localizable()
         setPointOnMap()
         setUserData()
-        viewModel?.updateData = { [weak self] in
-            self?.setPointOnMap()
-            self?.setUserData()
-        }
+        showError()
+        updateUserData()
     }
     
     // MARK: - Actions
@@ -79,6 +77,21 @@ class ProfileViewController: UITableViewController {
                 self.mapView.setRegion(region, animated: true)
                 self.mapView.addAnnotation(anotation)
             }
+        }
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
+        }
+    }
+    
+    /// Update user data
+    private func updateUserData() {
+        viewModel?.updateData = { [weak self] in
+            self?.setPointOnMap()
+            self?.setUserData()
         }
     }
     

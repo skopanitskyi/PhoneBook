@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 protocol DetailsContactViewModelProtocol {
     func updateFavoriteStatus()
@@ -16,6 +17,8 @@ protocol DetailsContactViewModelProtocol {
     func getContactCity() -> String
     func getContactStreet() -> String
     func getFavoriteStatus() -> Bool
+    func getRouteToContact(userCoordinate: CLLocationCoordinate2D,
+                           completion: @escaping ((MKRoute?, MKPointAnnotation?) -> Void))
 }
 
 class DetailContactViewModel: DetailsContactViewModelProtocol {
@@ -31,6 +34,11 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     /// Firebase service
     private let firebaseService: FirebaseService
     
+    /// Return contact full address
+    private var address: String {
+        return "\(contact.city), \(contact.street)"
+    }
+    
     // MARK: - Class constructor
     
     /// Detail contact view model class constructor
@@ -45,7 +53,7 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     /// Update favorite status in firebase and another controllers
     public func updateFavoriteStatus() {
         contact.isFavorite = !contact.isFavorite
-        firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)
+        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
         coordinator.updateRecentData(contact: contact)
     }
     
@@ -77,5 +85,19 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     /// Return favorite status
     public func getFavoriteStatus() -> Bool {
         return contact.isFavorite
+    }
+    
+    /// Returns a route to a contact and his annotation
+    /// - Parameters:
+    ///   - userCoordinate: User current coordinates
+    ///   - completion: Contains route and annotation
+    public func getRouteToContact(userCoordinate: CLLocationCoordinate2D,
+                                  completion: @escaping ((MKRoute?, MKPointAnnotation?) -> Void)) {
+        
+        MapService().getRoute(userCoordinate: userCoordinate,
+                                  address: address,
+                                  name: contact.fullName) { (direction, anotation) in
+            completion(direction, anotation)
+        }
     }
 }

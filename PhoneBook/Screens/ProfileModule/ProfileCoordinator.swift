@@ -43,21 +43,14 @@ class ProfileCoordinator: TabBarItemCoordinator {
     
     /// Creates a profile screen and displays it
     public func start() {
-        guard let profileViewController = ScreensFactory.makeProfileScreen(coordinator: self, model: model) else { return }
+        guard let profileViewController = ScreensFactory.makeProfileScreen(firebaseService: firebaseService,
+                                                                           coordinator: self,
+                                                                           model: model) else { return }
         navigationController.pushViewController(profileViewController, animated: true)
     }
     
     /// User logout from the app
     public func logout() {
-        firebaseService.signOut { result in
-            switch result {
-            case .success:
-                coordinator?.logout()
-            case .failure(let error):
-                if let error = error.errorDescription {
-                    print(error)
-                }
-            }
-        }
+        coordinator?.logout()
     }
 }

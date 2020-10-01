@@ -41,6 +41,7 @@ class SignUpViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         localization()
+        showError()
     }
     
     // MARK: - Actions
@@ -54,11 +55,11 @@ class SignUpViewController: UITableViewController {
         let street = streetTextField.text
         
         viewModel?.validate(email: email,
-                          password: password,
-                          name: name,
-                          surname: surname,
-                          city: city,
-                          street: street)
+                            password: password,
+                            name: name,
+                            surname: surname,
+                            city: city,
+                            street: street)
     }
     
     @IBAction func hideKeyboard(_ sender: Any) {
@@ -77,6 +78,13 @@ class SignUpViewController: UITableViewController {
         cityLabel.text = "Registration.CityLabel".localized
         streetLabel.text = "Registration.StreetLabel".localized
         registrationButton.setTitle("Registration.RegistrationButton".localized, for: .normal)
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
+        }
     }
 }
 

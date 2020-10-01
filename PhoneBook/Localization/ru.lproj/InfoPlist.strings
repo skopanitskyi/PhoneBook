@@ -7,7 +7,7 @@
 */
 
 CFBundleDisplayName = "Телефонная книга";
-NSLocationWhenInUseUsageDescription = "Нужен для построения маршрутов к контактам";
+NSLocationWhenInUseUsageDescription = "Нужна для построения маршрутов к контактам";
 NSContactsUsageDescription = "Приложению нужен доступ к контактам для корректной работы";
 "ShortcutItem.Profile" = "Профиль";
 "ShortcutItem.Favorites" = "Избранные";

@@ -29,6 +29,7 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         fetchContactsData()
+        showError()
     }
     
     // MARK: - Class methods
@@ -50,6 +51,13 @@ class FavoritesViewController: UIViewController {
         viewModel?.fetchFavoritesContacts()
         viewModel?.updateView = { [weak self] in
             self?.tableView.reloadData()
+        }
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
         }
     }
     

@@ -28,8 +28,9 @@ class LoginViewController: UITableViewController {
     // MARK: - Class life cycle
         
     override func viewDidLoad() {
-        localization()
         super.viewDidLoad()
+        localization()
+        showError()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +72,13 @@ class LoginViewController: UITableViewController {
         logInButton.setTitle("Authentication.LogInButton".localized, for: .normal)
         facebookButton.setTitle("Authentication.FacebookButton".localized, for: .normal)
         signUpButton.setTitle("Authentication.SignUpButton".localized, for: .normal)
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
+        }
     }
 }
 

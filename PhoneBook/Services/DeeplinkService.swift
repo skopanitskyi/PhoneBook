@@ -17,23 +17,30 @@ enum DeeplinkScreens: String {
 
 class DeeplinkService {
     
+    // MARK: - Class instances
+    
+    /// App coordinator
     private let appCoordinator: AppCoordinator
+    
+    /// Store screen name which will be shown after authorization
     private var screenName: String?
     
+    // MARK: - Class constructor
+    
+    /// Deeplink service class constructor
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
     }
     
+    // MARK: - Class methods
+    
+    /// Displays the selected screen
+    /// - Parameters:
+    ///   - name: Name of the screen to be displayed
+    ///   - isAuthorized: Is user authorized
     public func showScreen( _ name: String, isAuthorized: Bool) {
         
-        print(name)
         guard let screen = DeeplinkScreens.init(rawValue: name) else { return }
-        
-        
-        print()
-        print("!!!!!!!!!!!!!!!!!!!!!")
-        print(screen)
-        print("!!!!!!!!!!!!!!!!!!!!!")
         
         if !isAuthorized {
             screenName = name
@@ -52,6 +59,7 @@ class DeeplinkService {
         }
     }
     
+    /// Displays the selected screen after login
     public func openSavedLink() {
         if let url = screenName {
             showScreen(url, isAuthorized: true)
@@ -59,22 +67,28 @@ class DeeplinkService {
         }
     }
     
+    /// Display contacts screnn
     private func displayContacts() {
         setSelectedTabBarItem(at: TabBarScreen.contacts)
     }
     
+    /// Display recent screen
     private func displayRecent() {
         setSelectedTabBarItem(at: TabBarScreen.recent)
     }
     
+    /// Display favorite screen
     private func displayFavorite() {
         setSelectedTabBarItem(at: TabBarScreen.favorites)
     }
     
+    /// Display profile screen
     private func displayProfile() {
         setSelectedTabBarItem(at: TabBarScreen.profile)
     }
     
+    /// Tells the tab bar coordinator which screen to display
+    /// - Parameter index: Index of screen
     private func setSelectedTabBarItem(at index: TabBarScreen) {
         appCoordinator.getTabBarCoordinator()?.selectItem(at: index)
     }

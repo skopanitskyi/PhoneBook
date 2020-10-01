@@ -24,7 +24,9 @@ protocol ScreensFactoryProtocol {
     
     static func makeLoginScreen(coordinator: LoginCoordinator) -> LoginViewController?
     
-    static func makeProfileScreen(coordinator: ProfileCoordinator, model: Profile?) -> ProfileViewController?
+    static func makeProfileScreen(firebaseService: FirebaseService,
+                                  coordinator: ProfileCoordinator,
+                                  model: Profile?) -> ProfileViewController?
     
     static func makeFavoritesScreen(coordinator: FavoritesCoordinator,
                                     firebaseService: FirebaseService) -> FavoritesViewController?
@@ -69,10 +71,13 @@ class ScreensFactory: ScreensFactoryProtocol {
     /// - Parameters:
     ///   - coordinator: An object of the ProfileCoordinator class, which is responsible for the logic of displaying screens
     ///   - model: Contains user data such as: full name, city, street.
-    public static func makeProfileScreen(coordinator: ProfileCoordinator, model: Profile?) -> ProfileViewController? {
+    public static func makeProfileScreen(firebaseService: FirebaseService,
+                                         coordinator: ProfileCoordinator,
+                                         model: Profile?) -> ProfileViewController? {
+        
         let profileViewController = createScreen(identifier: ScreenIdentifier.profile,
                                                  type: ProfileViewController.self)
-        let profileViewModel = ProfileViewModel(coordinator: coordinator, profile: model)
+        let profileViewModel = ProfileViewModel(firebaseService: firebaseService, coordinator: coordinator, profile: model)
         profileViewController?.viewModel = profileViewModel
         return profileViewController
     }

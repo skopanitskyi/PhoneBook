@@ -59,6 +59,7 @@ class ContactsViewController: UIViewController {
         loadData()
         setupView()
         setupTableView()
+        showError()
     }
     
     // MARK: - Setup UI elements
@@ -91,26 +92,16 @@ class ContactsViewController: UIViewController {
     
     /// Sorts contacts alphabetically
     @objc private func sortingButtonTapped() {
-        let alertController = UIAlertController(title: "Contacts.AlertTitile".localized, message: "Contacts.AlertMessage".localized, preferredStyle: .actionSheet)
         
-        let ascending = UIAlertAction(title: "Contacts.AllertAscending".localized, style: .default) { _ in
-            self.sortingButton.setImage(UIImage(named: "I"), for: .normal)
-            self.viewModel.reverse(isAscending: true)
+        self.showAlert(title: "Contacts.AlertTitile".localized,
+                       message: "Contacts.AlertMessage".localized,
+                       leftButton: "Contacts.AllertAscending".localized,
+                       rightButton: "Contacts.AllertDescending".localized,
+                       cancel: true,
+                       style: .actionSheet) { [weak self] isAcending in
+            self?.viewModel.reverse(isAscending: isAcending)
+            self?.changeButtonImage(isAcending: isAcending)
         }
-        
-        let descending = UIAlertAction(title: "Contacts.AllertDescending".localized, style: .default) { _ in
-            self.sortingButton.setImage(UIImage(named: "I1"), for: .normal)
-            self.viewModel.reverse(isAscending: false)
-        }
-        
-        let cancel = UIAlertAction(title: "Common.Cancel".localized, style: .cancel)
-        
-        alertController.addAction(ascending)
-        alertController.addAction(descending)
-        alertController.addAction(cancel)
-        
-        alertController.pruneNegativeWidthConstraints()
-        present(alertController, animated: true, completion: nil)
     }
     
     /// Load contacts data
@@ -119,6 +110,20 @@ class ContactsViewController: UIViewController {
         viewModel.updateTableView = { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel.error = { [weak self] message in
+            self?.showError(message: message)
+        }
+    }
+    
+    /// Change button image
+    /// - Parameter isAcending: Are contacts sorted in ascending order
+    private func changeButtonImage(isAcending: Bool) {
+        let image = isAcending ? UIImage(named: "I") : UIImage(named: "I1")
+        sortingButton.setImage(image, for: .normal)
     }
 }
 

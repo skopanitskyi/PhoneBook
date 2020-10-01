@@ -11,8 +11,25 @@ import Contacts
 
 class ContactsService {
     
+    // MARK: - Class instances
+    
+    /// Contact store
     private let contactStore = CNContactStore()
     
+    /// Return  data keys to be requested
+    private var keysToFetch: [CNKeyDescriptor] {
+        return [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+    }
+    
+    /// Return request to get contacts
+    private var fetchRequest: CNContactFetchRequest {
+        return CNContactFetchRequest(keysToFetch: keysToFetch)
+    }
+    
+    // MARK: - Class methods
+    
+    /// Requests contact data from the internal storage of the device
+    /// - Parameter completion: Returns received contacts
     public func fetchFromStorage(completion: @escaping ([Contact]) -> Void) {
         var contacts = [Contact]()
         
@@ -23,14 +40,10 @@ class ContactsService {
                     try self.contactStore.enumerateContacts(with: self.fetchRequest) { (contact, mutablePointer) in
                         let name = "\(contact.givenName) \(contact.familyName)"
                         let phone = contact.phoneNumbers.first?.value.stringValue ?? ""
-                        contacts.append(Contact(fullName: name,
-                                                phoneNumber: phone,
-                                                city: "",
-                                                street: "",
-                                                isFavorite: false))
+                        let contact = Contact(fullName: name, phoneNumber: phone, city: "", street: "", isFavorite: false)
+                        contacts.append(contact)
                     }
                     completion(contacts)
-                    
                 } catch (let error) {
                     print(error.localizedDescription)
                 }
@@ -38,6 +51,8 @@ class ContactsService {
         }
     }
     
+    /// Fetch mocks contacts
+    /// - Parameter completion: Returns  contacts
     public func fetchFromMocks(completion: @escaping ([Contact]) -> Void) {
         if let path = Bundle.main.path(forResource: "Contacts", ofType: "json") {
             DispatchQueue.global(qos: .default).async {
@@ -51,13 +66,5 @@ class ContactsService {
                 }
             }
         }
-    }
-    
-    private var keysToFetch: [CNKeyDescriptor] {
-        return [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
-    }
-    
-    private var fetchRequest: CNContactFetchRequest {
-        return CNContactFetchRequest(keysToFetch: keysToFetch)
     }
 }

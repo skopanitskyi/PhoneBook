@@ -9,6 +9,7 @@
 import Foundation
 
 protocol LoginViewModelProtocol {
+    var error: ((String?) -> Void)? { get set }
     func loginWithFacebook()
     func loginWithEmail(email: String?, password: String?)
     func signUp()
@@ -20,6 +21,9 @@ class LoginViewModel: LoginViewModelProtocol {
     
     /// Coordinator
     private let loginCoordinator: LoginCoordinator
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     // MARK: - Class constructor
     
@@ -37,7 +41,7 @@ class LoginViewModel: LoginViewModelProtocol {
             case .success:
                 self?.loginCoordinator.userDidLogIn(model: model)
             case .failure(let error):
-                print(error.errorDescription!)
+                self?.error?(error.errorDescription)
             }
         }
     }
@@ -53,11 +57,11 @@ class LoginViewModel: LoginViewModelProtocol {
                 case .success:
                     self?.loginCoordinator.userDidLogIn(model: nil)
                 case .failure(let error):
-                    print(error.errorDescription!)
+                    self?.error?(error.errorDescription)
                 }
             }
         } else {
-            print("Password or email is invalid")
+            error?("Login.PasswordOrEmailInvalid".localized)
         }
     }
     

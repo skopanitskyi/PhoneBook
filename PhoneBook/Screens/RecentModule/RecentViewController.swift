@@ -44,6 +44,7 @@ class RecentViewController: UIViewController {
         setupView()
         setupTableView()
         fetchRecentData()
+        showError()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -90,21 +91,26 @@ class RecentViewController: UIViewController {
         }
     }
     
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel.error = { [weak self] message in
+            self?.showError(message: message)
+        }
+    }
+    
     /// Delete all recents contacts
     @objc private func deleteRecentsContacts() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let deleteAll = UIAlertAction(title: "Recent.AlertController.DeleteAllContacts".localized,
-                                      style: .destructive) { [weak self] action in
-            self?.viewModel.deleteAllContacts()
+        self.showAlert(title: nil,
+                       message: nil,
+                       leftButton: "Recent.AlertController.DeleteAllContacts".localized,
+                       rightButton: nil,
+                       cancel: true,
+                       style: .actionSheet) { [weak self] isDelete in
+            if isDelete {
+                self?.viewModel.deleteAllContacts()
+            }
         }
-        let cancel = UIAlertAction(title: "Recent.AlertController.Cancel".localized, style: .cancel, handler: nil)
-        
-        alertController.addAction(deleteAll)
-        alertController.addAction(cancel)
-        alertController.pruneNegativeWidthConstraints()
-
-        present(alertController, animated: true, completion: nil)
     }
 }
 

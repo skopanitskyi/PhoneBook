@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220FD3072526193B005F178C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220FD3062526193B005F178C /* ViewController.swift */; };
 		2216D31A24D990490007255D /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216D31924D990490007255D /* RecentViewController.swift */; };
 		2218601B24F4070F00E159A1 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218601A24F4070F00E159A1 /* FavoritesViewController.swift */; };
 		2218601D24F4076100E159A1 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218601C24F4076100E159A1 /* FavoritesViewModel.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		220FD3062526193B005F178C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2216D31924D990490007255D /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		2218601A24F4070F00E159A1 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		2218601C24F4076100E159A1 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				22228C9624DED0C300C3293B /* String.swift */,
 				22228C9E24E0655900C3293B /* AlertController.swift */,
+				220FD3062526193B005F178C /* ViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				22FFB9CA24FCEF11002E4625 /* DeeplinkService.swift in Sources */,
 				228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */,
 				2216D31A24D990490007255D /* RecentViewController.swift in Sources */,
+				220FD3072526193B005F178C /* ViewController.swift in Sources */,
 				225269A62518F60E009BF6EC /* DetailsContactViewController.swift in Sources */,
 				22228C8E24DEAD5400C3293B /* AppCoordinator.swift in Sources */,
 				2234FE8224D3081100759AE9 /* AppDelegate.swift in Sources */,

@@ -10,6 +10,8 @@
 
 // Common
 "Common.Cancel" = "Cancel";
+"Common.Error" = "Error";
+
 
 // Contacts
 "Contacts.Title" = "Contacts";
@@ -76,3 +78,13 @@
 "DetailsProfile.Phone" = "Phone:";
 "DetailsProfile.City" = "City:";
 "DetailsProfile.Street" = "Street:";
+"DetailsProfile.AlertTitile.NoGeolocation" = "The app does not have access to geolocation";
+"DetailsProfile.AlertMessage.NoGeolocation" = "Want to enable geolocation?";
+"DetailsProfile.LeftButton.NoGeolocation" = "Yes";
+"DetailsProfile.RightButton.NoGeolocation" = "No";
+"DetailsProfile.AlertTitile.FailedToShowLocation" = "Failed to display geolocation";
+"DetailsProfile.LeftButton.FailedToShowLocation" = "Ok";
+
+
+// Login
+"Login.PasswordOrEmailInvalid" = "Email or password entered incorrectly";

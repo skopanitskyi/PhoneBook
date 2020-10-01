@@ -10,6 +10,7 @@ import Foundation
 
 protocol AddContactViewModelProtocol {
     var updateView: (() -> ())? { get set }
+    var error: ((String?) -> Void)? { get set }
     func fetchContacts()
     func numberOfRowsInSection() -> Int
     func getContactName(at index: Int) -> String
@@ -23,6 +24,9 @@ class AddContactViewModel: AddContactViewModelProtocol {
     
     /// Update table view data
     public var updateView: (() -> ())?
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     /// Coordinator
     private let coordinator: AddContactCoordinator
@@ -52,9 +56,7 @@ class AddContactViewModel: AddContactViewModelProtocol {
                 self?.contacts = unfavorites
                 self?.updateView?()
             case .failure(let error):
-                if let error = error.errorDescription {
-                    print(error)
-                }
+                self?.error?(error.errorDescription)
             }
         }
     }

@@ -25,6 +25,7 @@ class AddContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getContactsData()
+        showError()
     }
     
     // MARK: - Actions
@@ -41,6 +42,13 @@ class AddContactViewController: UIViewController {
             self?.tableView.reloadData()
         }
         viewModel?.fetchContacts()
+    }
+    
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
+        }
     }
 }
 

@@ -11,6 +11,7 @@ import MapKit
 
 protocol ProfileViewModelProtocol {
     var updateData: (() -> Void)? { get set }
+    var error: ((String?) -> Void)? { get set }
     func logout()
     func getCoordinates(completion: @escaping ((CLLocationCoordinate2D?) -> Void))
     func getUserName() -> String?
@@ -24,17 +25,23 @@ class ProfileViewModel: ProfileViewModelProtocol {
     
     /// Used to update data in a view
     public var updateData: (() -> Void)?
-        
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
+    
     /// Profile
     private var profile: Profile?
     
     /// Coordinator
     private let coordinator: ProfileCoordinator
     
+    private let firebaseService: FirebaseService
+    
     // MARK: - Class constructor
     
     /// Profile view model class constructor
-    init(coordinator: ProfileCoordinator, profile: Profile?) {
+    init(firebaseService: FirebaseService, coordinator: ProfileCoordinator, profile: Profile?) {
+        self.firebaseService = firebaseService
         self.profile = profile
         self.coordinator = coordinator
         checkProfileData()
@@ -44,7 +51,14 @@ class ProfileViewModel: ProfileViewModelProtocol {
     
     /// Tells coordinator that user is logout
     public func logout() {
-        coordinator.logout()
+        firebaseService.signOut { [weak self] result in
+            switch result {
+            case .success:
+                self?.coordinator.logout()
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
+        }
     }
     
     /// Checks if user data is available. If they are not there, they are downloaded from the firebase.
@@ -63,9 +77,9 @@ class ProfileViewModel: ProfileViewModelProtocol {
         
         guard let city = profile?.city, let street = profile?.street else { return }
         
-        let adress = "\(city), \(street)"
+        let address = "\(city), \(street)"
         
-        MapService().getCoordinates(with: adress) { coordinates in
+        MapService().getCoordinates(with: address) { coordinates in
             completion(coordinates)
         }
     }

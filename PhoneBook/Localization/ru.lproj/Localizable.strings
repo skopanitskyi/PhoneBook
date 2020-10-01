@@ -8,6 +8,8 @@
 
 // Common
 "Common.Cancel" = "Отмена";
+"Common.Error" = "Ошибка";
+
 
 // Contacts
 "Contacts.Title" = "Контакты";
@@ -75,3 +77,12 @@
 "DetailsProfile.Phone" = "Телефон:";
 "DetailsProfile.City" = "Город:";
 "DetailsProfile.Street" = "Улица:";
+"DetailsProfile.AlertTitile.NoGeolocation" = "У приложения нет доступа к геолокации";
+"DetailsProfile.AlertMessage.NoGeolocation" = "Хотите включить геолокацию?";
+"DetailsProfile.LeftButton.NoGeolocation" = "Да";
+"DetailsProfile.RightButton.NoGeolocation" = "Нет";
+"DetailsProfile.AlertTitile.FailedToShowLocation" = "Не удалось отобразить геолакацию";
+"DetailsProfile.LeftButton.FailedToShowLocation" = "Ок";
+
+// Login
+"Login.PasswordOrEmailInvalid" = "Электронная почта или пароль введены неверно";

@@ -16,6 +16,9 @@ class DetailsContactViewController: UITableViewController {
     /// Reuse identifier for anotation
     private let reuseIdentifier = "anotation"
     
+    /// Distance in meters from the current location
+    private let distance: CLLocationDistance = 5000
+    
     /// Is contact favorite
     private var isFavorite: Bool?
     
@@ -114,7 +117,7 @@ class DetailsContactViewController: UITableViewController {
             setupLocationManager()
             checkAutorization()
         } else {
-            // Show alert controller
+            applicationDoesntHaveUserLocaction()
         }
     }
     
@@ -128,23 +131,53 @@ class DetailsContactViewController: UITableViewController {
     private func checkAutorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways:
-            break
+            mapView.showsUserLocation = true
+            locationManager.startUpdatingLocation()
+            showUserLocation()
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
-            
-            let region = MKCoordinateRegion(center: locationManager.location!.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
-            
-            mapView.setRegion(region, animated: true)
+            showUserLocation()
         case .denied:
-            // Show alert controller
-            break
+            applicationDoesntHaveUserLocaction()
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted:
             break
         @unknown default:
             fatalError()
+        }
+    }
+    
+    /// Show the user geolocation if available. If the location could not be retrieved, it displays an error
+    private func showUserLocation() {
+        if let coordinate = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: coordinate,
+                                            latitudinalMeters: distance,
+                                            longitudinalMeters: distance)
+            mapView.setRegion(region, animated: true)
+        } else {
+            showAlert(title: "DetailsProfile.AlertTitile.FailedToShowLocation".localized,
+                      message: nil,
+                      leftButton: "DetailsProfile.LeftButton.FailedToShowLocation".localized,
+                      rightButton: nil,
+                      cancel: false,
+                      style: .alert,
+                      completion: nil)
+        }
+    }
+    
+    /// Displays that the application does not have access to the location and asks to enable it
+    private func applicationDoesntHaveUserLocaction() {
+        showAlert(title: "DetailsProfile.AlertTitile.NoGeolocation".localized,
+                  message: "DetailsProfile.AlertMessage.NoGeolocation".localized,
+                  leftButton: "DetailsProfile.LeftButton.NoGeolocation".localized,
+                  rightButton: "DetailsProfile.RightButton.NoGeolocation".localized,
+                  cancel: false,
+                  style: .alert) { isAccess in
+            if let url = URL(string: UIApplication.openSettingsURLString), isAccess {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
 }
@@ -176,35 +209,14 @@ extension DetailsContactViewController: MKMapViewDelegate {
     }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        
         guard let coordinate = locationManager.location?.coordinate else { return }
         
-        let adress = "\(viewModel!.getContactCity()) \(viewModel!.getContactStreet())"
-        
-        MapService().getCoordinates(with: adress) { [weak self] contactCoordinate in
+        viewModel?.getRouteToContact(userCoordinate: coordinate) { [weak self] (route, anotation) in
+            guard let self = self, let route = route, let anotation = anotation else { return }
+            self.mapView.removeOverlays(self.mapView.overlays)
+            self.mapView.addAnnotation(anotation)
+            self.mapView.addOverlay(route.polyline)
             
-            let start = MKPlacemark(coordinate: coordinate)
-            let end = MKPlacemark(coordinate: contactCoordinate!)
-            
-            let anotation = MKPointAnnotation()
-            anotation.coordinate = contactCoordinate!
-            anotation.title = self?.viewModel!.getContactName()
-            
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: start)
-            request.destination = MKMapItem(placemark: end)
-            request.transportType = .automobile
-            
-            let direction = MKDirections(request: request)
-            direction.calculate { (result, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                self?.mapView.addAnnotation(anotation)
-                self?.mapView.removeOverlays(self!.mapView.overlays)
-                self?.mapView.addOverlay(result!.routes.first!.polyline)
-            }
         }
     }
     

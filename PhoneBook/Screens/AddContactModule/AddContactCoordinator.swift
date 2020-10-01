@@ -50,6 +50,6 @@ class AddContactCoordinator: Coordinator {
 extension AddContactCoordinator: UpdateDataFromDetailsContact {
     func updateRecentData(contact: Contact) {
         coordinator.updateRecentData(contact: contact)
-        firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)
+        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
     }
 }

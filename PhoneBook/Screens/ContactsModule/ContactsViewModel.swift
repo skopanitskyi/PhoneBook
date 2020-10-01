@@ -11,6 +11,7 @@ import UIKit
 protocol ContactsViewModelProtocol {
     var isFiltering: Bool { get set }
     var updateTableView:(() -> Void)? { get set }
+    var error: ((String?) -> Void)? { get set }
     func fetchContactsData()
     func getContact(at indexPath: IndexPath) -> Contact
     func numberOfRowsInSection(section: Int) -> Int
@@ -34,6 +35,9 @@ class ContactsViewModel: ContactsViewModelProtocol {
     
     /// Used to update data in a table view
     public var updateTableView: (() -> Void)?
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     /// Stores all contacts
     private var contacts = [[Contact]]()
@@ -64,7 +68,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
                 self?.createTwoDimensional(array: contacts)
                 self?.updateTableView?()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.error?(error.errorDescription)
             }
         }
     }

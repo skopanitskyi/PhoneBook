@@ -10,6 +10,7 @@ import Foundation
 
 protocol RecentViewModelProtocol {
     var updateView: (() -> Void)? { get set }
+    var error: ((String?) -> Void)? { get set }
     func numberOfRowsInSection() -> Int
     func getContactName(at index: Int) -> String
     func addToRecent(contact: Contact)
@@ -27,6 +28,9 @@ class RecentViewModel: RecentViewModelProtocol {
     
     /// Used to update data in a table view
     public var updateView: (() -> Void)?
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     /// Stores recent contacts
     private var contacts = [Contact]()
@@ -88,19 +92,19 @@ class RecentViewModel: RecentViewModelProtocol {
                 self?.contacts = contacts
                 self?.updateView?()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.error?(error.errorDescription)
             }
         }
     }
     
     /// Update contact recent data in firebase
     public func updateDataInFirebase() {
-        firebaseService.updateData(fors: .recent, data: contacts) { result in
+        firebaseService.updateAllContacts(for: .recent, contacts: contacts) { [weak self] result in
             switch result {
             case.success:
                 print("Data saved")
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.error?(error.errorDescription)
             }
         }
     }

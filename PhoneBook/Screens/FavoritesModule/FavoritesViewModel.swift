@@ -10,6 +10,7 @@ import Foundation
 
 protocol FavoritesViewModelProtocol {
     var updateView: (() -> Void)? { get set }
+    var error: ((String?) -> Void)? { get set }
     func fetchFavoritesContacts()
     func numberOfRowsInSection() -> Int
     func remove(at index: Int)
@@ -26,6 +27,9 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     /// Used to update data in a table view
     public var updateView: (() -> Void)?
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     /// Store favorites contacts
     private var favoritesContacts = [Contact]()
@@ -48,13 +52,13 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     /// Get favorites contacts from firebase
     public func fetchFavoritesContacts() {
-        firebaseService.userSavedData(data: .favorites) { result in
+        firebaseService.userSavedData(data: .favorites) { [weak self] result in
             switch result {
             case.success(let contacts):
-                self.favoritesContacts = contacts
-                self.updateView?()
+                self?.favoritesContacts = contacts
+                self?.updateView?()
             case .failure(let error):
-                print(error.errorDescription!)
+                self?.error?(error.errorDescription)
             }
         }
     }
@@ -69,7 +73,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     public func remove(at index: Int) {
         let contact = favoritesContacts[index]
         contact.isFavorite = false
-        firebaseService.some(name: contact.fullName, favorite: contact.isFavorite)
+        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
         coordinator.updateContactData(contact: contact)
         favoritesContacts.remove(at: index)
     }
@@ -105,12 +109,14 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     /// Update favorites contacts in firebase
     private func updateFavoritesContactsInFirebase() {
-        firebaseService.updateData(fors: .favorites, data: favoritesContacts) { result in
+        firebaseService.updateAllContacts(for: .favorites, contacts: favoritesContacts) { [weak self] result in
             switch result {
             case .success:
                 print("Data saved")
             case .failure(let error):
-                print(error.errorDescription!)
+                if let title = error.errorDescription {
+                    self?.error?(title)
+                }
             }
         }
     }
