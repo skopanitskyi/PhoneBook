@@ -8,26 +8,40 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 import FBSDKLoginKit
 
-struct FieldNames {
-    public static let collection = "users"
-    public static let name = "name"
-    public static let surname = "surname"
-    public static let uid = "uid"
-    public static let contacts = "contacts"
-    public static let recent = "recent"
-    public static let favorites = "favorites"
-    public static let phone = "phone"
-    public static let city = "city"
-    public static let isFavorite = "isFavorite"
-    public static let street = "street"
-}
-
-enum DownloadData: String {
+enum SavedContacts: String {
     case contacts = "contacts"
     case recent = "recent"
     case favorites = "favorites"
+}
+
+class User: Codable {
+    public let name: String
+    public let city: String?
+    public let street: String?
+    public var contacts: [Contact]
+    public var recent: [Contact]
+    public var favorites: [Contact]
+    
+    init(name: String, city: String?, street: String?, contacts: [Contact], recent: [Contact], favorites: [Contact]) {
+        self.name = name
+        self.city = city
+        self.street = street
+        self.contacts = contacts
+        self.recent = recent
+        self.favorites = favorites
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case city
+        case street
+        case contacts
+        case recent
+        case favorites
+    }
 }
 
 class FirebaseService {
@@ -41,7 +55,7 @@ class FirebaseService {
     private let loginManager = LoginManager()
     
     /// Firestore
-    private let firestore = Firestore.firestore().collection(FieldNames.collection)
+    private let firestore = Firestore.firestore().collection("users")
     
     /// User uid
     private var uid: String? {
@@ -56,21 +70,15 @@ class FirebaseService {
     ///   - password: Entered password
     ///   - model: Store user data
     ///   - completion: Return the sign up result
-    public func signUp(email: String, password: String, model: Profile, completion: @escaping (AuthResult) -> Void) {
-            
+    public func signUp(email: String, password: String, completion: @escaping (AuthResult) -> Void) {
+        
         auth.createUser(withEmail: email, password: password) { (result, error) in
             
             if let _ = error {
                 completion(.failure(.failedToCreateUser))
                 return
             }
-            
-            guard let result = result else { return }
-            self.getData(model: model, uid: result.user.uid) { data in
-                self.addData(uid: result.user.uid, data: data) { result in
-                    completion(result)
-                }
-            }
+            completion(.success)
         }
     }
     
@@ -91,19 +99,19 @@ class FirebaseService {
     
     /// Log in with facebook
     /// - Parameter completion: Return the log in result and user data
-    public func logInWithFacebook(completion: @escaping (Profile?, AuthResult) -> Void) {
+    public func logInWithFacebook(completion: @escaping (FacebookAuth) -> Void) {
         
-        loginManager.logIn(permissions: [.publicProfile, .email], viewController: nil) { result in
+        loginManager.logIn(permissions: [.publicProfile, .email], viewController: nil) { [weak self] result in
             
             switch result {
             case .failed:
-                completion(nil, .failure(.failedToLogin))
+                completion(.failure(.failedToLogin))
             case .cancelled:
-                completion(nil, .failure(.cancelled))
+                completion(.failure(.cancelled))
             case .success(_ , _, let token):
                 let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
-                self.logInWith(credential: credential) { (model, result) in
-                    completion(model, result)
+                self?.logInWith(credential: credential) { result in
+                    completion(result)
                 }
             }
         }
@@ -113,93 +121,60 @@ class FirebaseService {
     /// - Parameters:
     ///   - credential: Authentication credential
     ///   - completion: Return the log in result and user data
-    private func logInWith(credential: AuthCredential, completion: @escaping (Profile?, AuthResult) -> Void) {
+    private func logInWith(credential: AuthCredential, completion: @escaping ((FacebookAuth) -> Void)) {
         
         auth.signIn(with: credential) { (result, error) in
             if let _ = error {
-                completion(nil, .failure(.failedToSignIn))
+                completion(.failure(.failedToSignIn))
                 return
             }
-            
-            guard let result = result, let userInfo = result.additionalUserInfo else { return }
-            
-            if userInfo.isNewUser {
-                let model = Profile(name: result.user.displayName!, city: nil, street: nil)
-                self.getData(model: model, uid: result.user.uid) { data in
-                    self.addData(uid: result.user.uid, data: data) { result in
-                        completion(model, result)
-                    }
-                }
-            } else {
-                completion(nil, .success)
-            }
+            let isNewUser = result?.additionalUserInfo?.isNewUser
+            let name = result?.additionalUserInfo?.username
+            completion(.success(isNewUser, name))
         }
     }
     
-    /// Add user data to firestore
-    /// - Parameters:
-    ///   - uid: User uid
-    ///   - data: Data which will be save
-    ///   - completion: Return upgate result
-    private func addData(uid: String, data: [String : Any], completion: @escaping (AuthResult) -> Void) {
-        firestore.document(uid).setData(data) { error in
-            if let _ = error {
-                completion(.failure(.failedToAddData))
-                return
-            }
-            completion(.success)
+    public func saveNewUser(profile: Profile, contacts: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+        let user = createUserModel(contacts: contacts, profile: profile)
+        setUserDataInStorage(user: user) { result in
+            completion(result)
         }
     }
     
-    /// Create user model which will be save in firestore
-    /// - Parameters:
-    ///   - model: Store user data
-    ///   - uid: User uid
-    ///   - completion: Return the model
-    private func getData(model: Profile, uid: String, completion: @escaping (([String : Any]) -> Void)){
-        
-        
-        getContacts { contacts in
-            let favorites = contacts.filter { $0[FieldNames.isFavorite] as! Bool}
-            
-            let docData: [String : Any] = [
-                FieldNames.name: model.name,
-                FieldNames.city: model.city ?? "",
-                FieldNames.street: model.street ?? "",
-                FieldNames.favorites: favorites,
-                FieldNames.uid: uid,
-                FieldNames.contacts: contacts,
-                FieldNames.recent: [],
-            ]
-            completion(docData)
-        }
-    }
-    
-    /// Fetch contacts from device storage
-    /// - Parameter completion: Return contacts model for firebase
-    private func getContacts(completion: @escaping ([[String : Any]]) -> Void) {
-        
-        ContactsService().fetchFromMocks { [weak self] result in
-            guard let self = self else { return }
-            completion(self.createModelToSave(data: result))
-        }
+    private func createUserModel(contacts: [Contact], profile: Profile) -> User {
+        return User(name: profile.name,
+                    city: profile.city,
+                    street: profile.street,
+                    contacts: contacts,
+                    recent: [],
+                    favorites: contacts.filter{ $0.isFavorite })
     }
     
     /// Return user data saved in firestore
     /// - Parameters:
     ///   - data: Data which will be download
     ///   - completion: Return contacts data
-    public func userSavedData(data: DownloadData, completion: @escaping (UserSavedData) -> Void) {
+    public func getData(for contacts: SavedContacts, completion: @escaping (ContactsData) -> Void) {
         
-        guard let uid = uid else { return }
-        
-        firestore.document(uid).getDocument { (querySnapshot, error) in
-            if let _ = error {
-                completion(.failure(.failedToGetData))
-                return
+        getUserDataFromStorage { [unowned self] result in
+            switch result {
+            case .success(let user):
+                let contacts = self.getSelectedContacts(contacts: contacts, user: user)
+                completion(.success(contacts))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            let contacts = self.createContactsModel(data: data, contacts: querySnapshot?.data())
-            completion(.success(contacts))
+        }
+    }
+    
+    private func getSelectedContacts(contacts: SavedContacts, user: User) -> [Contact] {
+        switch contacts {
+        case .contacts:
+            return user.contacts
+        case .favorites:
+            return user.favorites
+        case .recent:
+            return user.recent
         }
     }
     
@@ -219,132 +194,104 @@ class FirebaseService {
     ///   - data: Data which will be update
     ///   - contacts: New contact data
     ///   - completion: Return update result
-    public func updateAllContacts(for data: DownloadData, contacts: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+    public func updateAllContacts(for data: SavedContacts, contacts: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+        // FIXME: -
         
-        guard let uid = uid else { return }
-        let dataToUpdate = [data.rawValue : createModelToSave(data: contacts)]
-        
-        firestore.document(uid).updateData(dataToUpdate) { error in
-            if let _ = error {
-                completion(.failure(.failedToUpdateData))
-                return
+        getUserDataFromStorage { [weak self] user in
+            switch user {
+            case .success(let user):
+                self?.setNewData(for: data, user: user, contacts: contacts)
+            // FIXME: - completion error
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(.success)
         }
     }
     
-    /// Create contacts model for save in firebase from array
-    /// - Parameter data: Return the contacts model
-    private func createModelToSave(data: [Contact]) -> [[String : Any]] {
-        var contacts = [[String : Any]]()
-        data.forEach { contact in
-            contacts.append([FieldNames.name: contact.fullName,
-                             FieldNames.phone: contact.phoneNumber,
-                             FieldNames.city: contact.city,
-                             FieldNames.isFavorite: contact.isFavorite,
-                             FieldNames.street: contact.street])
+    private func setNewData(for data: SavedContacts, user: User,contacts: [Contact]) {
+        switch data {
+        case .contacts:
+            user.contacts = contacts
+        case .favorites:
+            user.favorites = contacts
+        case .recent:
+            user.recent = contacts
         }
-        return contacts
-    }
-    
-    /// Create contacts array from data saved in firebase
-    /// - Parameters:
-    ///   - data: Contacts data which will be receive
-    ///   - contacts: Saved contacts
-    private func createContactsModel(data: DownloadData, contacts: [String : Any]?) -> [Contact] {
-        let document = contacts?[data.rawValue] as? [[String : Any]]
         
-        let contacts = document?.compactMap { data -> Contact? in
-            guard let contact = Contact(data: data) else { return nil}
-            return contact
+        setUserDataInStorage(user: user) { result in
+            // FIXME: - completion error
         }
-        return contacts!
     }
-    
     
     /// Update contact data in all arrays in firebase
     /// - Parameters:
     ///   - name: Contact name, data whom will be update
     ///   - favorite: Favorite status of the contact
     public func updateContact(name: String, favorite: Bool) {
-        firestore.document(uid!).getDocument { [weak self] (querySnapshot, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard
-                let self = self,
-                let document = querySnapshot?.data(),
-                let contactsData = document[FieldNames.contacts] as? [[String: Any]],
-                let recentData = document[FieldNames.recent] as? [[String: Any]],
-                let favoritesData = document[FieldNames.favorites] as? [[String: Any]]
-            else { return }
-            
-            let contacts = self.changeFavoriteStatus(data: contactsData, name: name, favorite: favorite)
-            let recent = self.changeFavoriteStatus(data: recentData, name: name, favorite: favorite)
-            let favorites = self.deleteFromFavorite(data: favoritesData, name: name, favorite: favorite)
-            
-            querySnapshot?.reference.updateData([FieldNames.contacts : contacts,
-                                                 FieldNames.recent : recent,
-                                                 FieldNames.favorites : favorites]) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                }
+        getUserDataFromStorage { [weak self] result in
+            switch result {
+            case .success(let user):
+                self?.updateDataInArrays(user: user, name: name, favorite: favorite)
+            case .failure(let error):
+                break
             }
         }
     }
     
-    /// Searches for the desired contact in the array and changes his favorite status
-    /// - Parameters:
-    ///   - data: Array of the contacts
-    ///   - name: Name of the contact to be changed
-    ///   - favorite: Favorite status of the contact
-    private func changeFavoriteStatus(data: [[String : Any]], name: String, favorite: Bool) -> [[String : Any]] {
-        
-        var contacts = data
-        
-        for i in 0..<contacts.count {
-            if let contactName = contacts[i][FieldNames.name] as? String, contactName == name {
-                contacts[i][FieldNames.isFavorite] = favorite
-            }
-        }
-        return contacts
-    }
-    
-    /// Removes a contact from favorites array
-    /// - Parameters:
-    ///   - data: Array of the contacts
-    ///   - name: Name of the contact to be changed
-    ///   - favorite: Favorite status of the contact
-    private func deleteFromFavorite(data: [[String : Any]], name: String, favorite: Bool) -> [[String : Any]] {
-        var contacts = data
-        
+    private func updateDataInArrays(user: User, name: String, favorite: Bool) {
+        user.contacts.filter { $0.fullName == name }.first?.isFavorite = favorite
+        user.recent.filter { $0.fullName == name }.forEach { $0.isFavorite = favorite }
         if !favorite {
-            if let index = contacts.firstIndex(where: { $0["name"] as! String == name }) {
-                contacts.remove(at: index)
-            }
+            guard let index = user.favorites.firstIndex(where: { $0.fullName == name }) else { return }
+            user.favorites.remove(at: index)
+        } else {
+            guard let contact = user.contacts.filter ({ $0.fullName == name}).first else { return }
+            user.favorites.append(contact)
         }
-        return contacts
+        setUserDataInStorage(user: user) { result in
+            // FIXME: - result
+        }
     }
-    
     
     /// Download user data from firestore
     /// - Parameter completion: Return user data
     public func getUserData(completion: @escaping ((Profile?) -> Void)) {
-        firestore.document(uid!).getDocument { (querySnapshot, error) in
-            if let _ = error {
+        getUserDataFromStorage { result in
+            switch result {
+            case .success(let user):
+                let profile = Profile(name: user.name, city: user.city, street: user.street)
+                completion(profile)
+            case .failure(let error):
                 completion(nil)
-                return
             }
-            guard let document = querySnapshot?.data(),
-                  let name = document[FieldNames.name] as? String,
-                  let city = document[FieldNames.city] as? String,
-                  let street = document[FieldNames.street] as? String
-            else { return }
-            
-            let profile = Profile(name: name, city: city, street: street)
-            completion(profile)
+        }
+    }
+    
+    
+    private func setUserDataInStorage(user: User, completion: @escaping ((AuthResult) -> Void)) {
+        do {
+            if let uid = uid {
+                try firestore.document(uid).setData(from: user)
+                completion(.success)
+            }
+        } catch {
+            completion(.failure(.failedToAddData))
+        }
+    }
+    
+    private func getUserDataFromStorage(completion: @escaping ((UserData) -> Void)) {
+        
+        guard let uid = uid else { return }
+        
+        firestore.document(uid).getDocument { (document, error) in
+            do {
+                if let user = try document?.data(as: User.self) {
+                    completion(.success(user))
+                }
+            } catch {
+                completion(.failure(.failedToGetData))
+            }
         }
     }
 }
+

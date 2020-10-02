@@ -49,7 +49,7 @@ class AddContactViewModel: AddContactViewModelProtocol {
     
     /// Get contact data from firebase
     public func fetchContacts() {
-        firebaseService.userSavedData(data: .contacts) { [weak self] result in
+        firebaseService.getData(for: .contacts) { [weak self] result in
             switch result {
             case .success(let contacts):
                 let unfavorites = contacts.filter { !$0.isFavorite }

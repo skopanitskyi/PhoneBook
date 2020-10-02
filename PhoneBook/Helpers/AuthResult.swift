@@ -14,7 +14,18 @@ enum AuthResult {
     case failure(AuthError)
 }
 
-/// User data retrieval result
-enum UserSavedData {
+enum FacebookAuth {
+    case success(Bool?, String?)
+    case failure(AuthError)
+}
+
+enum ContactsData {
     case success([Contact])
-    case failure(AuthError)}
+    case failure(AuthError)
+}
+
+/// User data retrieval result
+enum UserData {
+    case success(User)
+    case failure(AuthError)
+}

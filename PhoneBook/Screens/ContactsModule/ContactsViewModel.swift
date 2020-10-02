@@ -62,7 +62,7 @@ class ContactsViewModel: ContactsViewModelProtocol {
     
     /// Requests saved contact data from firebase
     public func fetchContactsData() {
-        firebaseService.userSavedData(data: .contacts) { [weak self] result in
+        firebaseService.getData(for: .contacts) { [weak self] result in
             switch result {
             case .success(let contacts):
                 self?.createTwoDimensional(array: contacts)

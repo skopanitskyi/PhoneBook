@@ -36,12 +36,38 @@ class LoginViewModel: LoginViewModelProtocol {
     
     /// Performs authorization using facebook
     public func loginWithFacebook() {
-        FirebaseService().logInWithFacebook() { [weak self] model, result in
-            switch result {
-            case .success:
-                self?.loginCoordinator.userDidLogIn(model: model)
-            case .failure(let error):
-                self?.error?(error.errorDescription)
+        FirebaseService().logInWithFacebook() { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let isNewUser, let name):
+                    self?.fetchContact(isNewUser: isNewUser, name: name)
+                case .failure(let error):
+                    self?.error?(error.errorDescription)
+                }
+            }
+        }
+    }
+    
+    private func fetchContact(isNewUser: Bool?, name: String?) {
+        if let isNewUser = isNewUser, let name = name, isNewUser {
+            let profile = Profile(name: name, city: nil, street: nil)
+            ContactsService().fetchFromMocks { [weak self] contacts in
+                self?.saveUserData(profile: profile, contacts: contacts)
+            }
+        } else {
+            loginCoordinator.userDidLogIn(model: nil)
+        }
+    }
+    
+    private func saveUserData(profile: Profile, contacts: [Contact]) {
+        FirebaseService().saveNewUser(profile: profile, contacts: contacts) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.loginCoordinator.userDidLogIn(model: profile)
+                case .failure(let error):
+                    self?.error?(error.errorDescription)
+                }
             }
         }
     }
@@ -53,11 +79,13 @@ class LoginViewModel: LoginViewModelProtocol {
     public func loginWithEmail(email: String?, password: String?) {
         if email!.isValidEmail && password!.isValidPassword {
             FirebaseService().logIn(email: email!, password: password!) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.loginCoordinator.userDidLogIn(model: nil)
-                case .failure(let error):
-                    self?.error?(error.errorDescription)
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self?.loginCoordinator.userDidLogIn(model: nil)
+                    case .failure(let error):
+                        self?.error?(error.errorDescription)
+                    }
                 }
             }
         } else {

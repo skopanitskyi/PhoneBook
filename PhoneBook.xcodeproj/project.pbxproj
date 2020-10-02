@@ -63,10 +63,11 @@
 		22EC88422503A8B0009E079A /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC88412503A8B0009E079A /* SignUpCoordinator.swift */; };
 		22EC884625040C40009E079A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC884525040C40009E079A /* SignUpViewModel.swift */; };
 		22FFB9CA24FCEF11002E4625 /* DeeplinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */; };
-		BB1C4C3770CD811D299775E2 /* libPods-PhoneBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1CFA912FFA34FE7D430251F /* libPods-PhoneBook.a */; };
+		899F051EF91974BEE1BFD5C8 /* libPods-PhoneBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD017642DC2E3463A4342F7 /* libPods-PhoneBook.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20CF9E025932CCB7B653D247 /* Pods-PhoneBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.release.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.release.xcconfig"; sourceTree = "<group>"; };
 		220FD3062526193B005F178C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2216D31924D990490007255D /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		2218601A24F4070F00E159A1 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -127,9 +128,8 @@
 		22EC88412503A8B0009E079A /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
 		22EC884525040C40009E079A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkService.swift; sourceTree = "<group>"; };
-		7F28C6C578F800F96DBC195C /* Pods-PhoneBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.debug.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.debug.xcconfig"; sourceTree = "<group>"; };
-		A1CFA912FFA34FE7D430251F /* libPods-PhoneBook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhoneBook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DDB33D15659097FFBD27584B /* Pods-PhoneBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.release.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.release.xcconfig"; sourceTree = "<group>"; };
+		3DD017642DC2E3463A4342F7 /* libPods-PhoneBook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhoneBook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E96B51D785BC994193FCBC8B /* Pods-PhoneBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneBook.debug.xcconfig"; path = "Target Support Files/Pods-PhoneBook/Pods-PhoneBook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,21 +137,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB1C4C3770CD811D299775E2 /* libPods-PhoneBook.a in Frameworks */,
+				899F051EF91974BEE1BFD5C8 /* libPods-PhoneBook.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0BF068A04333E1B56302E1EB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A1CFA912FFA34FE7D430251F /* libPods-PhoneBook.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2216D31B24D990500007255D /* RecentModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,7 +216,7 @@
 				2234FE8024D3081100759AE9 /* PhoneBook */,
 				2234FE7F24D3081100759AE9 /* Products */,
 				A20C6E77413E0E699E84A2C4 /* Pods */,
-				0BF068A04333E1B56302E1EB /* Frameworks */,
+				E73F86E5D2D28D27C3EAA89A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -365,10 +357,18 @@
 		A20C6E77413E0E699E84A2C4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				7F28C6C578F800F96DBC195C /* Pods-PhoneBook.debug.xcconfig */,
-				DDB33D15659097FFBD27584B /* Pods-PhoneBook.release.xcconfig */,
+				E96B51D785BC994193FCBC8B /* Pods-PhoneBook.debug.xcconfig */,
+				20CF9E025932CCB7B653D247 /* Pods-PhoneBook.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E73F86E5D2D28D27C3EAA89A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DD017642DC2E3463A4342F7 /* libPods-PhoneBook.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,11 +378,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2234FE9224D3081200759AE9 /* Build configuration list for PBXNativeTarget "PhoneBook" */;
 			buildPhases = (
-				C8B47770C2B88FF0A9CAFD46 /* [CP] Check Pods Manifest.lock */,
+				8B03F0C06212C81FB6EEADE6 /* [CP] Check Pods Manifest.lock */,
 				2234FE7A24D3081100759AE9 /* Sources */,
 				2234FE7B24D3081100759AE9 /* Frameworks */,
 				2234FE7C24D3081100759AE9 /* Resources */,
-				C16333CA04110D8B3A0E1FC7 /* [CP] Copy Pods Resources */,
+				019BD5CB9DE64078B566B77F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -450,7 +450,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C16333CA04110D8B3A0E1FC7 /* [CP] Copy Pods Resources */ = {
+		019BD5CB9DE64078B566B77F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -467,7 +467,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PhoneBook/Pods-PhoneBook-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C8B47770C2B88FF0A9CAFD46 /* [CP] Check Pods Manifest.lock */ = {
+		8B03F0C06212C81FB6EEADE6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -695,7 +695,7 @@
 		};
 		2234FE9324D3081200759AE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F28C6C578F800F96DBC195C /* Pods-PhoneBook.debug.xcconfig */;
+			baseConfigurationReference = E96B51D785BC994193FCBC8B /* Pods-PhoneBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -715,7 +715,7 @@
 		};
 		2234FE9424D3081200759AE9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DDB33D15659097FFBD27584B /* Pods-PhoneBook.release.xcconfig */;
+			baseConfigurationReference = 20CF9E025932CCB7B653D247 /* Pods-PhoneBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

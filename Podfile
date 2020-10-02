@@ -2,9 +2,11 @@
 # platform :ios, '9.0'
 
 target 'PhoneBook' do
+	use_modular_headers!
+	pod 'FirebaseFirestoreSwift', :modular_headers => true
 	pod 'Firebase/Auth'
-	pod 'Firebase/Firestore'
+	pod 'Firebase/Firestore', :modular_headers => true
 	pod 'FBSDKLoginKit'
-  # Pods for PhoneBook
-
+	pod 'BoringSSL-GRPC', :modular_headers => false
+	pod 'gRPC-Core', :modular_headers => false
 end

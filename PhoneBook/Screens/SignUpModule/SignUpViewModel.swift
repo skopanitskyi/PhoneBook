@@ -84,12 +84,33 @@ class SignUpViewModel: SignUpViewModelProtocol {
     ///   - password: User password
     ///   - profile:  Stored user data
     private func signUp(email: String, password: String, profile: Profile) {
-        FirebaseService().signUp(email: email, password: password, model: profile) { [weak self] result in
-            switch result {
-            case .success:
-                self?.signUpCoordinator.userDidSignUp(model: profile)
-            case .failure(let error):
-                self?.error?(error.errorDescription)
+        FirebaseService().signUp(email: email, password: password) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.fetchContact(profile: profile)
+                case .failure(let error):
+                    self?.error?(error.errorDescription)
+                }
+            }
+        }
+    }
+    
+    private func fetchContact(profile: Profile) {
+        ContactsService().fetchFromMocks { [weak self] contacts in
+            self?.saveUserData(profile: profile, contacts: contacts)
+        }
+    }
+    
+    private func saveUserData(profile: Profile, contacts: [Contact]) {
+        FirebaseService().saveNewUser(profile: profile, contacts: contacts) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.signUpCoordinator.userDidSignUp(model: profile)
+                case .failure(let error):
+                    self?.error?(error.errorDescription)
+                }
             }
         }
     }

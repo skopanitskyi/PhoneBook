@@ -86,7 +86,7 @@ class RecentViewModel: RecentViewModelProtocol {
     
     /// Download recent contacts data from firebase
     public func downloadData() {
-        firebaseService.userSavedData(data: .recent) { [weak self] result in
+        firebaseService.getData(for: .recent) { [weak self] result in
             switch result {
             case .success(let contacts):
                 self?.contacts = contacts

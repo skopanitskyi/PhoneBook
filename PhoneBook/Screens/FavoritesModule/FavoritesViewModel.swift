@@ -52,7 +52,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     /// Get favorites contacts from firebase
     public func fetchFavoritesContacts() {
-        firebaseService.userSavedData(data: .favorites) { [weak self] result in
+        firebaseService.getData(for: .favorites) { [weak self] result in
             switch result {
             case.success(let contacts):
                 self?.favoritesContacts = contacts
