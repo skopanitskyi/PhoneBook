@@ -20,14 +20,18 @@ class SignUpViewModel: SignUpViewModelProtocol {
     /// Coordinator
     private let signUpCoordinator: SignUpCoordinator
     
+    /// Service manager
+    private let serviceManager: ServiceManager
+    
     /// Used to show error on screen
     public var error: ((String?) -> Void)?
     
     // MARK: - Class constructor
     
     /// Sign up view model class constructor
-    init(signUpCoordinator: SignUpCoordinator) {
+    init(signUpCoordinator: SignUpCoordinator, serviceManager: ServiceManager) {
         self.signUpCoordinator = signUpCoordinator
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
@@ -84,7 +88,8 @@ class SignUpViewModel: SignUpViewModelProtocol {
     ///   - password: User password
     ///   - profile:  Stored user data
     private func signUp(email: String, password: String, profile: Profile) {
-        FirebaseService().signUp(email: email, password: password) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.signUp(email: email, password: password) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -96,14 +101,22 @@ class SignUpViewModel: SignUpViewModelProtocol {
         }
     }
     
+    /// Requests contact data from the device internal storage. If they are received, then they are stored in the firestore
+    /// - Parameter profile: Store user data
     private func fetchContact(profile: Profile) {
-        ContactsService().fetchFromMocks { [weak self] contacts in
+        let contactService = serviceManager.getService(type: ContactsService.self)
+        contactService?.fetchFromMocks { [weak self] contacts in
             self?.saveUserData(profile: profile, contacts: contacts)
         }
     }
     
+    /// Stores user data in a database
+    /// - Parameters:
+    ///   - profile: User data
+    ///   - contacts: Contacts data
     private func saveUserData(profile: Profile, contacts: [Contact]) {
-        FirebaseService().saveNewUser(profile: profile, contacts: contacts) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.saveNewUser(profile: profile, contacts: contacts) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:

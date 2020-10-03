@@ -18,8 +18,8 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     /// Favorites view controller
     private var favoritesViewController: FavoritesViewController?
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Navigation controller
     public let navigationController: UINavigationController
@@ -30,9 +30,9 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     // MARK: - Class constructor
     
     /// Favorites coordinator class constructor
-    init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: TabBarCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Favorites.Title".localized, image: UIImage(named: "favorites"), tag: 2)
         navigationController.tabBarItem = tabBarItem
@@ -42,14 +42,17 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     
     /// Creates a favorites screen and displays it
     public func start() {
-        favoritesViewController = ScreensFactory.makeFavoritesScreen(coordinator: self, firebaseService: firebaseService)
+        favoritesViewController = ScreensFactory.makeFavoritesScreen(coordinator: self, serviceManager: serviceManager)
         navigationController.pushViewController(favoritesViewController!, animated: true)
     }
     
     /// Creates a details contact coordinator and transfers contact data to him
     /// - Parameter contact: The contact, data of which will be displayed
     public func showDetailsContact(contact: Contact) {
-        let detailsCoordinator = DetailsContactCoordinator(coordinator: self, navigationController: navigationController, contact: contact, firebaseService: firebaseService)
+        let detailsCoordinator = DetailsContactCoordinator(coordinator: self,
+                                                           navigationController: navigationController,
+                                                           contact: contact,
+                                                           serviceManager: serviceManager)
         detailsCoordinator.start()
     }
     
@@ -62,7 +65,7 @@ class FavoritesCoordinator: TabBarItemCoordinator {
     /// Creates add contact coordinator
     public func showAddContactController() {
         let addContactCoordinator = AddContactCoordinator(coordinator: self,
-                                                          firebaseService: firebaseService,
+                                                          serviceManager: serviceManager,
                                                           navigationController: navigationController)
         addContactCoordinator.start()
     }

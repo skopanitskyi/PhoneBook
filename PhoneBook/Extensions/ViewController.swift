@@ -46,6 +46,7 @@ extension UIViewController {
             }
             alertController.addAction(buttonRight)
         }
+        alertController.pruneNegativeWidthConstraints()
         present(alertController, animated: true, completion: nil)
     }
     

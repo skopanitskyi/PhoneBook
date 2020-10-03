@@ -15,7 +15,7 @@ enum DeeplinkScreens: String {
     case profile = "profile"
 }
 
-class DeeplinkService {
+class DeeplinkService: Service {
     
     // MARK: - Class instances
     

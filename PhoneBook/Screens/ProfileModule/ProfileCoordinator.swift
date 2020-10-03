@@ -15,8 +15,8 @@ class ProfileCoordinator: TabBarItemCoordinator {
     /// Model
     private let model: Profile?
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Coordinator
     private weak var coordinator: TabBarCoordinator?
@@ -30,9 +30,9 @@ class ProfileCoordinator: TabBarItemCoordinator {
     // MARK: - Class constructor
     
     /// Profile coordinator class constructor
-    init(model: Profile?, firebaseService: FirebaseService, coordinator: TabBarCoordinator) {
+    init(model: Profile?, serviceManager: ServiceManager, coordinator: TabBarCoordinator) {
         self.model = model
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
         self.coordinator = coordinator
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Profile.Title".localized, image: UIImage(named: "profile"), tag: 3)
@@ -43,7 +43,7 @@ class ProfileCoordinator: TabBarItemCoordinator {
     
     /// Creates a profile screen and displays it
     public func start() {
-        guard let profileViewController = ScreensFactory.makeProfileScreen(firebaseService: firebaseService,
+        guard let profileViewController = ScreensFactory.makeProfileScreen(serviceManager: serviceManager,
                                                                            coordinator: self,
                                                                            model: model) else { return }
         navigationController.pushViewController(profileViewController, animated: true)

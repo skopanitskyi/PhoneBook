@@ -25,17 +25,17 @@ class DetailsContactCoordinator: Coordinator {
     /// Navigation controller
     private let navigationController: UINavigationController
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     // MARK: - Class constructor
     
     /// Details contact coordinator class constructor
-    init(coordinator: UpdateDataFromDetailsContact, navigationController: UINavigationController, contact: Contact, firebaseService: FirebaseService) {
+    init(coordinator: UpdateDataFromDetailsContact, navigationController: UINavigationController, contact: Contact, serviceManager: ServiceManager) {
         self.coordinator = coordinator
         self.navigationController = navigationController
         self.contact = contact
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
@@ -43,8 +43,9 @@ class DetailsContactCoordinator: Coordinator {
    /// Creates a details contact screen and displays it
    public func start() {
         guard let detailsViewController = ScreensFactory.makeDetailsContactScreen(coordinator: self,
-                                                                            contact: contact,
-                                                                            firebaseService: firebaseService) else { return }
+                                                                                  contact: contact,
+                                                                                  serviceManager: serviceManager)
+                                                                                  else { return }
         navigationController.present(detailsViewController, animated: true, completion: nil)
     }
     

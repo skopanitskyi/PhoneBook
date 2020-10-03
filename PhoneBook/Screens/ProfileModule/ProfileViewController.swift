@@ -39,10 +39,10 @@ class ProfileViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showError()
         localizable()
         setPointOnMap()
         setUserData()
-        showError()
         updateUserData()
     }
     

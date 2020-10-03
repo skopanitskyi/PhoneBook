@@ -30,8 +30,8 @@ class TabBarCoordinator: Coordinator {
     /// Window
     private var window: UIWindow
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Tab bar controller
     private let tabBarController: UITabBarController
@@ -45,24 +45,24 @@ class TabBarCoordinator: Coordinator {
     // MARK: - Class constructor
     
     /// TabBarCoordinator class constructor
-    init(window: UIWindow, firebaseService: FirebaseService, appCoordinator: AppCoordinator, userModel: Profile?) {
+    init(window: UIWindow, serviceManager: ServiceManager, appCoordinator: AppCoordinator, userModel: Profile?) {
         self.userModel = userModel
         self.window = window
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
         self.appCoordinator = appCoordinator
         tabBarController = UITabBarController()
         
         
-        let contactCoordinator = ContactsCoordinator(coordinator: self, firebaseService: firebaseService)
+        let contactCoordinator = ContactsCoordinator(coordinator: self, serviceManager: serviceManager)
         contactCoordinator.start()
         
-        let recentCoordinator = RecentCoordinator(coordinator: self, firebaseService: firebaseService)
+        let recentCoordinator = RecentCoordinator(coordinator: self, serviceManager: serviceManager)
         recentCoordinator.start()
         
-        let favoritesCoordinator = FavoritesCoordinator(coordinator: self, firebaseService: firebaseService)
+        let favoritesCoordinator = FavoritesCoordinator(coordinator: self, serviceManager: serviceManager)
         favoritesCoordinator.start()
         
-        let profileCoordinator = ProfileCoordinator(model: userModel, firebaseService: firebaseService, coordinator: self)
+        let profileCoordinator = ProfileCoordinator(model: userModel, serviceManager: serviceManager, coordinator: self)
         profileCoordinator.start()
         
         tabBarController.viewControllers = [contactCoordinator.navigationController,

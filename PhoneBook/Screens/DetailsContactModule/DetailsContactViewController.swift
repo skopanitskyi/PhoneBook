@@ -53,6 +53,7 @@ class DetailsContactViewController: UITableViewController {
         super.viewDidLoad()
         localization()
         setInformation()
+        showError()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,6 +99,13 @@ class DetailsContactViewController: UITableViewController {
         changeFavoriteStatusImage()
     }
     
+    /// Displays an error if it appears
+    private func showError() {
+        viewModel?.error = { [weak self] message in
+            self?.showError(message: message)
+        }
+    }
+    
     /// Change image for favorite status
     private func changeFavoriteStatusImage() {
         if isFavorite! {
@@ -131,9 +139,7 @@ class DetailsContactViewController: UITableViewController {
     private func checkAutorization() {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedAlways:
-            mapView.showsUserLocation = true
-            locationManager.startUpdatingLocation()
-            showUserLocation()
+            break
         case .authorizedWhenInUse:
             mapView.showsUserLocation = true
             locationManager.startUpdatingLocation()
@@ -212,7 +218,7 @@ extension DetailsContactViewController: MKMapViewDelegate {
         guard let coordinate = locationManager.location?.coordinate else { return }
         
         viewModel?.getRouteToContact(userCoordinate: coordinate) { [weak self] (route, anotation) in
-            guard let self = self, let route = route, let anotation = anotation else { return }
+            guard let self = self else { return }
             self.mapView.removeOverlays(self.mapView.overlays)
             self.mapView.addAnnotation(anotation)
             self.mapView.addOverlay(route.polyline)

@@ -50,9 +50,13 @@
 		228E4EA724F40982003B4432 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E4EA624F40982003B4432 /* ProfileCoordinator.swift */; };
 		229EACD125222FDB00B57F64 /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EACD025222FDB00B57F64 /* MapService.swift */; };
 		22A0123825067DFF00396E63 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A0123725067DFF00396E63 /* Profile.storyboard */; };
-		22A0123D250685D000396E63 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A0123C250685D000396E63 /* AuthResult.swift */; };
+		22A0123D250685D000396E63 /* FirebaseResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A0123C250685D000396E63 /* FirebaseResults.swift */; };
 		22A012402506866100396E63 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A0123F2506866100396E63 /* AuthError.swift */; };
 		22CD0BE02522725600746169 /* Contacts.json in Resources */ = {isa = PBXBuildFile; fileRef = 22CD0BDF2522721F00746169 /* Contacts.json */; };
+		22D0AAE225289C750008989C /* CoordinatesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D0AAE125289C750008989C /* CoordinatesError.swift */; };
+		22D0AAE62528A96C0008989C /* MapResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D0AAE52528A96C0008989C /* MapResults.swift */; };
+		22D0AAE92528BACA0008989C /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D0AAE82528BACA0008989C /* ServiceManager.swift */; };
+		22E906B325288AE000CEED6B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E906B225288ADF00CEED6B /* User.swift */; };
 		22EC883225026415009E079A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC883125026415009E079A /* LoginViewModel.swift */; };
 		22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EC8834250284A1009E079A /* SignUpViewController.swift */; };
 		22EC883725029698009E079A /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EC883625029698009E079A /* Login.storyboard */; };
@@ -115,9 +119,13 @@
 		228E4EC024F41B56003B4432 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/serhii/Desktop/PhoneBook/PhoneBook/Info.plist; sourceTree = "<absolute>"; };
 		229EACD025222FDB00B57F64 /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		22A0123725067DFF00396E63 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
-		22A0123C250685D000396E63 /* AuthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResult.swift; sourceTree = "<group>"; };
+		22A0123C250685D000396E63 /* FirebaseResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResults.swift; sourceTree = "<group>"; };
 		22A0123F2506866100396E63 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		22CD0BDF2522721F00746169 /* Contacts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contacts.json; sourceTree = "<group>"; };
+		22D0AAE125289C750008989C /* CoordinatesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesError.swift; sourceTree = "<group>"; };
+		22D0AAE52528A96C0008989C /* MapResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapResults.swift; sourceTree = "<group>"; };
+		22D0AAE82528BACA0008989C /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		22E906B225288ADF00CEED6B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		22EC883125026415009E079A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		22EC8834250284A1009E079A /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		22EC883625029698009E079A /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -233,6 +241,7 @@
 			children = (
 				2234FE8124D3081100759AE9 /* AppDelegate.swift */,
 				2234FE8324D3081100759AE9 /* SceneDelegate.swift */,
+				22E906B525288AE900CEED6B /* Models */,
 				225269A32517B168009BF6EC /* Factory */,
 				22A0123E250685DC00396E63 /* Helpers */,
 				22228C9824DED0CB00C3293B /* Extensions */,
@@ -267,6 +276,7 @@
 				22FFB9C924FCEF11002E4625 /* DeeplinkService.swift */,
 				227ACBC12505314900739484 /* FirebaseService.swift */,
 				229EACD025222FDB00B57F64 /* MapService.swift */,
+				22D0AAE82528BACA0008989C /* ServiceManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -317,8 +327,10 @@
 		22A0123E250685DC00396E63 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				22A0123C250685D000396E63 /* AuthResult.swift */,
+				22A0123C250685D000396E63 /* FirebaseResults.swift */,
 				22A0123F2506866100396E63 /* AuthError.swift */,
+				22D0AAE125289C750008989C /* CoordinatesError.swift */,
+				22D0AAE52528A96C0008989C /* MapResults.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -329,6 +341,14 @@
 				22CD0BDF2522721F00746169 /* Contacts.json */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		22E906B525288AE900CEED6B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22E906B225288ADF00CEED6B /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		22EC8833250265BE009E079A /* LogInModule */ = {
@@ -497,7 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2234FEC024D4935000759AE9 /* Contact.swift in Sources */,
-				22A0123D250685D000396E63 /* AuthResult.swift in Sources */,
+				22A0123D250685D000396E63 /* FirebaseResults.swift in Sources */,
 				22228C9F24E0655900C3293B /* AlertController.swift in Sources */,
 				22EC883E25039B04009E079A /* RegistrationCoordinator.swift in Sources */,
 				22EC883C25039AED009E079A /* AuthenticationCoordinator.swift in Sources */,
@@ -507,11 +527,14 @@
 				2234FEC824D702A500759AE9 /* ContactsService.swift in Sources */,
 				22420BD525238B1D00A43E36 /* Profile.swift in Sources */,
 				228E4E9E24F408E0003B4432 /* FavoritesCoordinator.swift in Sources */,
+				22D0AAE92528BACA0008989C /* ServiceManager.swift in Sources */,
 				22EC8835250284A1009E079A /* SignUpViewController.swift in Sources */,
 				223C63A1251E3AE900011A4B /* AddContactTableViewCell.swift in Sources */,
 				22228C9524DEBDDE00C3293B /* RecentCoordinator.swift in Sources */,
 				225269AF2518FAF8009BF6EC /* DetailsContactCoordinator.swift in Sources */,
+				22D0AAE62528A96C0008989C /* MapResults.swift in Sources */,
 				22228C9324DEB69F00C3293B /* ContactCoordinator.swift in Sources */,
+				22D0AAE225289C750008989C /* CoordinatesError.swift in Sources */,
 				22EC883225026415009E079A /* LoginViewModel.swift in Sources */,
 				223C639B251E299900011A4B /* AddContactViewModel.swift in Sources */,
 				227ACBC22505314900739484 /* FirebaseService.swift in Sources */,
@@ -519,6 +542,7 @@
 				2234FEC324D58CD000759AE9 /* ContactsViewModel.swift in Sources */,
 				229EACD125222FDB00B57F64 /* MapService.swift in Sources */,
 				22228C9C24DEDBA800C3293B /* RecentViewModel.swift in Sources */,
+				22E906B325288AE000CEED6B /* User.swift in Sources */,
 				2218601B24F4070F00E159A1 /* FavoritesViewController.swift in Sources */,
 				22EC88422503A8B0009E079A /* SignUpCoordinator.swift in Sources */,
 				2234FE8624D3081100759AE9 /* ContactsViewController.swift in Sources */,

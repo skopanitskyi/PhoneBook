@@ -9,8 +9,8 @@
 import Foundation
 
 protocol FavoritesViewModelProtocol {
-    var updateView: (() -> Void)? { get set }
     var error: ((String?) -> Void)? { get set }
+    var updateView: (() -> Void)? { get set }
     func fetchFavoritesContacts()
     func numberOfRowsInSection() -> Int
     func remove(at index: Int)
@@ -37,22 +37,23 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     /// Coordinator
     private let coordinator: FavoritesCoordinator
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     // MARK: - Class constructor
     
     /// Favorites view model class constructor
-    init(coordinator: FavoritesCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: FavoritesCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
     
     /// Get favorites contacts from firebase
     public func fetchFavoritesContacts() {
-        firebaseService.getData(for: .favorites) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.getData(for: .favorites) { [weak self] result in
             switch result {
             case.success(let contacts):
                 self?.favoritesContacts = contacts
@@ -71,11 +72,19 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     /// Remove contact from favorites at the specified index
     /// - Parameter index: The index by which the contact will be deleted
     public func remove(at index: Int) {
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
         let contact = favoritesContacts[index]
         contact.isFavorite = false
-        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
         coordinator.updateContactData(contact: contact)
         favoritesContacts.remove(at: index)
+        firebaseService?.updateContact(name: contact.fullName, favorite: contact.isFavorite) { [weak self] result in
+            switch result {
+            case .success:
+                print("Data updated")
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
+        }
     }
     
     /// Moves a contact to a new index
@@ -109,14 +118,13 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     
     /// Update favorites contacts in firebase
     private func updateFavoritesContactsInFirebase() {
-        firebaseService.updateAllContacts(for: .favorites, contacts: favoritesContacts) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.updateAllContacts(for: .favorites, contacts: favoritesContacts) { [weak self] result in
             switch result {
             case .success:
                 print("Data saved")
             case .failure(let error):
-                if let title = error.errorDescription {
-                    self?.error?(title)
-                }
+                self?.error?(error.errorDescription)
             }
         }
     }

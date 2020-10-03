@@ -1,142 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "65AE1B47-663B-4922-9248-FFE44A713255"
+   uuid = "F2CAD4A1-B724-4746-99D9-99A34F7BF196"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "566D36F6-136D-4295-9300-B5D740129788"
+            uuid = "A2509241-307E-4D08-8DCD-470B574E1995"
             shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "85DE38B9-3297-4160-A438-60282F38ECEB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/Services/FirebaseService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "setUserDataInStorage(user:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8BEE1884-6FAB-4B75-8767-6E719CCC5325"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "97AFD8C2-4EFA-4B47-A9FE-F22429B63041"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/Services/FirebaseService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "signUp(email:password:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E2D67BAF-BDC5-4ECF-A3E3-A8BD7711486D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/Services/FirebaseService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "logInWithFacebook(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "22F54AAF-0F1C-4242-B00C-1CEEB13D7997"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PhoneBook/Services/FirebaseService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "logInWith(credential:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "44D7A646-2F75-4E67-8D69-5B888B17E681"
-            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "loginWithFacebook()"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "fetchContact(isNewUser:name:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "27DAE0D8-56C7-47AA-AF3C-AECCA3BF5763"
-            shouldBeEnabled = "Yes"
+            uuid = "11216FF4-985B-4C42-BAC5-1A6630E1E68B"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "fetchContact(isNewUser:name:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "11216FF4-985B-4C42-BAC5-1A6630E1E68B - 46274d62f4d098b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PhoneBook.LoginViewModel.(fetchContact in _ADFF305B6A2149B5B719D3676694E6CA)(isNewUser: Swift.Optional&lt;Swift.Bool&gt;, name: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "489">
+               </Location>
+               <Location
+                  uuid = "11216FF4-985B-4C42-BAC5-1A6630E1E68B - 7db66e799c873d88"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;PhoneBook.Contact&gt;) -&gt; () in PhoneBook.LoginViewModel.(fetchContact in _ADFF305B6A2149B5B719D3676694E6CA)(isNewUser: Swift.Optional&lt;Swift.Bool&gt;, name: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "115">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "013A2C73-E634-44BC-BE75-D8189706B8D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "saveUserData(profile:contacts:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "013A2C73-E634-44BC-BE75-D8189706B8D6 - fcea267dabc6fe47"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PhoneBook.LoginViewModel.(saveUserData in _ADFF305B6A2149B5B719D3676694E6CA)(profile: PhoneBook.Profile, contacts: Swift.Array&lt;PhoneBook.Contact&gt;) -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "57">
+               </Location>
+               <Location
+                  uuid = "013A2C73-E634-44BC-BE75-D8189706B8D6 - 2140bd9afb1a2a9c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PhoneBook.AuthResult) -&gt; () in PhoneBook.LoginViewModel.(saveUserData in _ADFF305B6A2149B5B719D3676694E6CA)(profile: PhoneBook.Profile, contacts: Swift.Array&lt;PhoneBook.Contact&gt;) -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "157">
+               </Location>
+               <Location
+                  uuid = "013A2C73-E634-44BC-BE75-D8189706B8D6 - ac240163171a1e94"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (PhoneBook.AuthResult) -&gt; () in PhoneBook.LoginViewModel.(saveUserData in _ADFF305B6A2149B5B719D3676694E6CA)(profile: PhoneBook.Profile, contacts: Swift.Array&lt;PhoneBook.Contact&gt;) -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "226">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B3FE6C1-B69A-4827-9009-3F3DBE45A043"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "loginWithFacebook()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "27DAE0D8-56C7-47AA-AF3C-AECCA3BF5763 - 20f282811a1f0218"
+                  uuid = "1B3FE6C1-B69A-4827-9009-3F3DBE45A043 - a69ee0bff42aaba4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (PhoneBook.FacebookAuth) -&gt; () in PhoneBook.LoginViewModel.loginWithFacebook() -&gt; ()"
+                  symbolName = "closure #1 (PhoneBook.FacebookAuth) -&gt; () in PhoneBook.LoginViewModel.loginWithFacebook() -&gt; ()"
                   moduleName = "PhoneBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
@@ -147,11 +162,11 @@
                   offsetFromSymbolStart = "221">
                </Location>
                <Location
-                  uuid = "27DAE0D8-56C7-47AA-AF3C-AECCA3BF5763 - 20f282811a1f0218"
+                  uuid = "1B3FE6C1-B69A-4827-9009-3F3DBE45A043 - a69ee0bff42aaba4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (PhoneBook.FacebookAuth) -&gt; () in PhoneBook.LoginViewModel.loginWithFacebook() -&gt; ()"
+                  symbolName = "closure #1 (PhoneBook.FacebookAuth) -&gt; () in PhoneBook.LoginViewModel.loginWithFacebook() -&gt; ()"
                   moduleName = "PhoneBook"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/LogInModule/LoginViewModel.swift"
@@ -167,16 +182,96 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "18226078-569F-494B-9BA8-3582DC78BF85"
-            shouldBeEnabled = "Yes"
+            uuid = "3258EE10-FC5A-41DC-999D-2E6283CF0C35"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PhoneBook/Services/FirebaseService.swift"
+            filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "logInWithFacebook(completion:)"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "fetchContact(isNewUser:name:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "334B2FA1-955A-4D19-A9F8-D4C3B764BB31"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhoneBook/Screens/LogInModule/LoginViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "fetchContact(isNewUser:name:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5C0EC7AF-088A-4351-877A-03E751B98A0E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhoneBook/Screens/ProfileModule/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "showError()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5C0EC7AF-088A-4351-877A-03E751B98A0E - a5a2bd1b16237fba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PhoneBook.ProfileViewController.(showError in _CFBAF0B6972A4ABDD7FB42AA724F6081)() -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/ProfileModule/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "5C0EC7AF-088A-4351-877A-03E751B98A0E - 2a8ba2027a42d4bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in PhoneBook.ProfileViewController.(showError in _CFBAF0B6972A4ABDD7FB42AA724F6081)() -&gt; ()"
+                  moduleName = "PhoneBook"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/serhii/Desktop/PhoneBook/PhoneBook/Screens/ProfileModule/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47CFFE5F-F546-4E18-8A5C-173D22C73FAF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhoneBook/Screens/ProfileModule/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "showError()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

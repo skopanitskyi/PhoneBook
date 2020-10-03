@@ -88,3 +88,8 @@
 
 // Login
 "Login.PasswordOrEmailInvalid" = "Email or password entered incorrectly";
+
+// Coordinates errors
+"CoordinatesError.FailedToGetCoordinates" = "Failed to get coordinates from specified address";
+"CoordinatesError.FailedToGetRoute" = "Failed to build a route to the contact";
+

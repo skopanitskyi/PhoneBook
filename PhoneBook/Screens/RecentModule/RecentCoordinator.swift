@@ -19,8 +19,8 @@ class RecentCoordinator: TabBarItemCoordinator {
     /// Coordinator
     private let coordinator: TabBarCoordinator
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Recent view controller
     private var recentViewController: RecentViewController?
@@ -34,9 +34,9 @@ class RecentCoordinator: TabBarItemCoordinator {
     // MARK: - Class constructor
     
     /// Recent coordinator class constructor
-    init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: TabBarCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Recent.Title".localized, image: UIImage(named: "recent"), tag: 1)
         navigationController.tabBarItem = tabBarItem
@@ -46,7 +46,7 @@ class RecentCoordinator: TabBarItemCoordinator {
     
     /// Creates a recent screen and displays it
     public func start() {
-        recentViewController = ScreensFactory.makeRecentScreen(coordinator: self, firebaseService: firebaseService)
+        recentViewController = ScreensFactory.makeRecentScreen(coordinator: self, serviceManager: serviceManager)
         navigationController.pushViewController(recentViewController!, animated: true)
     }
     
@@ -56,7 +56,7 @@ class RecentCoordinator: TabBarItemCoordinator {
         let detailsCoordinator = DetailsContactCoordinator(coordinator: self,
                                                            navigationController: navigationController,
                                                            contact: contact,
-                                                           firebaseService: firebaseService)
+                                                           serviceManager: serviceManager)
         detailsCoordinator.start()
     }
 }

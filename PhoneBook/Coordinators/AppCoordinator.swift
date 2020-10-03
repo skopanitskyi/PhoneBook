@@ -20,7 +20,7 @@ class AppCoordinator: Coordinator {
     private let window: UIWindow
     
     /// Firebase service
-    private let firebaseService: FirebaseService
+    private let serviceManager: ServiceManager
     
     /// Tab bar coordinator
     private var tabBarCoordinator: TabBarCoordinator?
@@ -28,29 +28,46 @@ class AppCoordinator: Coordinator {
     /// Authentication coordinator
     private var authenticationCoordinator: AuthenticationCoordinator?
     
-    /// Deeplink service
-    private var deeplinkService: DeeplinkService?
-    
     // MARK: - Class constructor
     
     /// App coordinator class constructor
     init(window: UIWindow) {
         self.window = window
-        firebaseService = FirebaseService()
+        serviceManager = ServiceManager()
+        startService()
     }
     
     // MARK: - Class methods
     
     /// Creates an authentication coordinator that displays the authentication screen
     public func start() {
-        authenticationCoordinator = AuthenticationCoordinator(window: window, appCoordinator: self)
+        authenticationCoordinator = AuthenticationCoordinator(serviceManager: serviceManager,
+                                                              window: window,
+                                                              appCoordinator: self)
         authenticationCoordinator?.start()
-        deeplinkService = DeeplinkService(appCoordinator: self)
+    }
+    
+    /// Initializes services required for initial work
+    private func startService() {
+        serviceManager.addService(service: FirebaseService())
+        serviceManager.addService(service: DeeplinkService(appCoordinator: self))
+        serviceManager.addService(service: ContactsService())
+    }
+    
+    /// Initializes all services
+    private func startAllService() {
+        serviceManager.addService(service: MapService())
+    }
+    
+    /// Removes services that are not needed
+    private func deleteService() {
+        serviceManager.deleteService(type: MapService.self)
     }
     
     /// Displays screen that was selected using deeplink
     /// - Parameter name: Screen name
     public func showScreen(_ name: String) {
+        let deeplinkService = serviceManager.getService(type: DeeplinkService.self)
         deeplinkService?.showScreen(name, isAuthorized: tabBarCoordinator != nil)
     }
     
@@ -63,18 +80,20 @@ class AppCoordinator: Coordinator {
     /// - Parameter model: Stores user data
     public func startApp(model: Profile?) {
         tabBarCoordinator = TabBarCoordinator(window: window,
-                                              firebaseService: firebaseService,
+                                              serviceManager: serviceManager,
                                               appCoordinator: self,
                                               userModel: model)
         tabBarCoordinator?.start()
+        let deeplinkService = serviceManager.getService(type: DeeplinkService.self)
         deeplinkService?.openSavedLink()
-
+        startAllService()
         authenticationCoordinator = nil
     }
     
     /// Exits the main menu and displays the login screen
     public func logout() {
         start()
+        deleteService()
         tabBarCoordinator = nil
     }
 }

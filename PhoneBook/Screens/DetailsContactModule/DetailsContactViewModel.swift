@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 
 protocol DetailsContactViewModelProtocol {
+    var error: ((String?) -> Void)? { get set }
     func updateFavoriteStatus()
     func closeDetailsContact()
     func getContactName() -> String
@@ -18,12 +19,15 @@ protocol DetailsContactViewModelProtocol {
     func getContactStreet() -> String
     func getFavoriteStatus() -> Bool
     func getRouteToContact(userCoordinate: CLLocationCoordinate2D,
-                           completion: @escaping ((MKRoute?, MKPointAnnotation?) -> Void))
+                           completion: @escaping ((MKRoute, MKPointAnnotation) -> Void))
 }
 
 class DetailContactViewModel: DetailsContactViewModelProtocol {
     
     // MARK: - Class instances
+    
+    /// Used to show error on screen
+    public var error: ((String?) -> Void)?
     
     /// Coordinator
     private let coordinator: DetailsContactCoordinator
@@ -31,8 +35,8 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     /// Contact
     private var contact: Contact
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Return contact full address
     private var address: String {
@@ -42,10 +46,10 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     // MARK: - Class constructor
     
     /// Detail contact view model class constructor
-    init(coordinator: DetailsContactCoordinator, contact: Contact, firebaseService: FirebaseService) {
+    init(coordinator: DetailsContactCoordinator, contact: Contact, serviceManager: ServiceManager) {
         self.coordinator = coordinator
         self.contact = contact
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
@@ -53,8 +57,16 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     /// Update favorite status in firebase and another controllers
     public func updateFavoriteStatus() {
         contact.isFavorite = !contact.isFavorite
-        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
         coordinator.updateRecentData(contact: contact)
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.updateContact(name: contact.fullName, favorite: contact.isFavorite) { [weak self] result in
+            switch result {
+            case .success:
+                print("Data updated")
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
+        }
     }
     
     /// Tells the coordinator to close the details contact screen
@@ -92,12 +104,32 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
     ///   - userCoordinate: User current coordinates
     ///   - completion: Contains route and annotation
     public func getRouteToContact(userCoordinate: CLLocationCoordinate2D,
-                                  completion: @escaping ((MKRoute?, MKPointAnnotation?) -> Void)) {
+                                  completion: @escaping ((MKRoute, MKPointAnnotation) -> Void)) {
         
-        MapService().getRoute(userCoordinate: userCoordinate,
-                                  address: address,
-                                  name: contact.fullName) { (direction, anotation) in
-            completion(direction, anotation)
+        let mapService = serviceManager.getService(type: MapService.self)
+        mapService?.getCoordinates(with: address) { [weak self] result in
+            switch result {
+            case .success(let coordinate):
+                self?.calculateRoute(userCoordinate: userCoordinate, contactCoordinate: coordinate) { completion($0, $1) }
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
+        }
+    }
+    
+    private func calculateRoute(userCoordinate: CLLocationCoordinate2D,
+                                contactCoordinate: CLLocationCoordinate2D,
+                                completion: @escaping ((MKRoute, MKPointAnnotation) -> Void)) {
+        
+        let mapService = serviceManager.getService(type: MapService.self)
+        mapService?.getRoute(userCoordinate: userCoordinate, contactCoordinate: contactCoordinate) { [unowned self] result in
+            switch result {
+            case .success(let route):
+                let anotation = MapService().getAnotation(coordinate: contactCoordinate, name: self.contact.fullName)
+                completion(route, anotation)
+            case .failure(let error):
+                self.error?(error.errorDescription)
+            }
         }
     }
 }

@@ -18,20 +18,25 @@ class SignUpCoordinator: Coordinator {
     /// Coordinator
     private let registrationCoordinator: RegistrationCoordinator
     
+    /// Service manager
+    private let serviceManager: ServiceManager
+    
     // MARK: - Class constructor
     
     /// Sign up coordinator class constructor
-    init(navigationController: UINavigationController, registrationCoordinator: RegistrationCoordinator) {
+    init(navigationController: UINavigationController, registrationCoordinator: RegistrationCoordinator, serviceManager: ServiceManager) {
         self.navigationController = navigationController
         self.registrationCoordinator = registrationCoordinator
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
     
     /// Creates a sign up screen and displays it
     public func start() {
-        guard let signUpController = ScreensFactory.makeSignUpScreen(coordinator: self) else { return }
-        navigationController.pushViewController(signUpController, animated: true)
+        if let signUpController = ScreensFactory.makeSignUpScreen(coordinator: self, serviceManager: serviceManager) {
+            navigationController.pushViewController(signUpController, animated: true)
+        }
     }
     
     /// Tells the coordinator that the user is sign up

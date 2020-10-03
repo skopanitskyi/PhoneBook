@@ -35,13 +35,14 @@ class ProfileViewModel: ProfileViewModelProtocol {
     /// Coordinator
     private let coordinator: ProfileCoordinator
     
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     // MARK: - Class constructor
     
     /// Profile view model class constructor
-    init(firebaseService: FirebaseService, coordinator: ProfileCoordinator, profile: Profile?) {
-        self.firebaseService = firebaseService
+    init(serviceManager: ServiceManager, coordinator: ProfileCoordinator, profile: Profile?) {
+        self.serviceManager = serviceManager
         self.profile = profile
         self.coordinator = coordinator
         checkProfileData()
@@ -51,7 +52,8 @@ class ProfileViewModel: ProfileViewModelProtocol {
     
     /// Tells coordinator that user is logout
     public func logout() {
-        firebaseService.signOut { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.signOut { [weak self] result in
             switch result {
             case .success:
                 self?.coordinator.logout()
@@ -63,10 +65,17 @@ class ProfileViewModel: ProfileViewModelProtocol {
     
     /// Checks if user data is available. If they are not there, they are downloaded from the firebase.
     private func checkProfileData() {
+        
         if profile == nil {
-            FirebaseService().getUserData { [weak self] profile in
-                self?.profile = profile
-                self?.updateData?()
+            let firebaseService = serviceManager.getService(type: FirebaseService.self)
+            firebaseService?.getUserData { [weak self] result in
+                switch result {
+                case .success(let profile):
+                    self?.profile = profile
+                    self?.updateData?()
+                case .failure(let error):
+                    self?.error?(error.errorDescription)
+                }
             }
         }
     }
@@ -75,12 +84,21 @@ class ProfileViewModel: ProfileViewModelProtocol {
     /// - Parameter completion: User address in coordinates
     public func getCoordinates(completion: @escaping ((CLLocationCoordinate2D?) -> Void)) {
         
-        guard let city = profile?.city, let street = profile?.street else { return }
+        guard let city = profile?.city, let street = profile?.street else {
+            error?("CoordinatesError.FailedToGetCoordinates".localized)
+            return
+        }
         
         let address = "\(city), \(street)"
+        let mapService = serviceManager.getService(type: MapService.self)
         
-        MapService().getCoordinates(with: address) { coordinates in
-            completion(coordinates)
+        mapService?.getCoordinates(with: address) { [weak self] result in
+            switch result {
+            case .success(let coordinates):
+                completion(coordinates)
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
         }
     }
     

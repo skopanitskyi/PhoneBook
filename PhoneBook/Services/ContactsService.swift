@@ -9,7 +9,7 @@
 import Foundation
 import Contacts
 
-class ContactsService {
+class ContactsService: Service {
     
     // MARK: - Class instances
     

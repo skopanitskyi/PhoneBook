@@ -20,29 +20,29 @@ struct ScreenIdentifier {
 
 /// Screens factory protocol
 protocol ScreensFactoryProtocol {
-    static func makeSignUpScreen(coordinator: SignUpCoordinator) -> SignUpViewController?
+    static func makeSignUpScreen(coordinator: SignUpCoordinator, serviceManager: ServiceManager) -> SignUpViewController?
     
-    static func makeLoginScreen(coordinator: LoginCoordinator) -> LoginViewController?
+    static func makeLoginScreen(serviceManager: ServiceManager, coordinator: LoginCoordinator) -> LoginViewController?
     
-    static func makeProfileScreen(firebaseService: FirebaseService,
+    static func makeProfileScreen(serviceManager: ServiceManager,
                                   coordinator: ProfileCoordinator,
                                   model: Profile?) -> ProfileViewController?
     
     static func makeFavoritesScreen(coordinator: FavoritesCoordinator,
-                                    firebaseService: FirebaseService) -> FavoritesViewController?
+                                    serviceManager: ServiceManager) -> FavoritesViewController?
     
     static func makeContactsScreen(coordinator: ContactsCoordinator,
-                                   firebaseService: FirebaseService) -> ContactsViewController
+                                   serviceManager: ServiceManager) -> ContactsViewController
     
     static func makeRecentScreen(coordinator: RecentCoordinator,
-                                 firebaseService: FirebaseService) -> RecentViewController
+                                 serviceManager: ServiceManager) -> RecentViewController
     
     static func makeDetailsContactScreen(coordinator: DetailsContactCoordinator,
                                          contact: Contact,
-                                         firebaseService: FirebaseService) -> DetailsContactViewController?
+                                         serviceManager: ServiceManager) -> DetailsContactViewController?
     
     static func makeAddContactScreen(coordinator: AddContactCoordinator,
-                                     firebaseService: FirebaseService) -> AddContactViewController?
+                                     serviceManager: ServiceManager) -> AddContactViewController?
 }
 
 /// Creates view objects
@@ -51,18 +51,22 @@ class ScreensFactory: ScreensFactoryProtocol {
 
     /// Creates an object of the SignUpViewController class
     /// - Parameter coordinator: An object of the SignUpCoordinator class, which is responsible for the logic of displaying screens
-    public static func makeSignUpScreen(coordinator: SignUpCoordinator) -> SignUpViewController? {
+    public static func makeSignUpScreen(coordinator: SignUpCoordinator,
+                                        serviceManager: ServiceManager) -> SignUpViewController? {
+        
         let signUpController = createScreen(identifier: ScreenIdentifier.signUp, type: SignUpViewController.self)
-        let signUpViewModel = SignUpViewModel(signUpCoordinator: coordinator)
+        let signUpViewModel = SignUpViewModel(signUpCoordinator: coordinator, serviceManager: serviceManager)
         signUpController?.viewModel = signUpViewModel
         return signUpController
     }
     
     /// Creates an object of the LoginViewController class
-    /// - Parameter coordinator:An object of the LoginCoordinator class, which is responsible for the logic of displaying screens
-    public static func makeLoginScreen(coordinator: LoginCoordinator) -> LoginViewController? {
+    /// - Parameters:
+    ///   - coordinator:An object of the LoginCoordinator class, which is responsible for the logic of displaying screens
+    ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
+    public static func makeLoginScreen(serviceManager: ServiceManager, coordinator: LoginCoordinator) -> LoginViewController? {
         let loginController = createScreen(identifier: ScreenIdentifier.login, type: LoginViewController.self)
-        let loginViewModel = LoginViewModel(loginCoordinator: coordinator)
+        let loginViewModel = LoginViewModel(serviceManager: serviceManager, loginCoordinator: coordinator)
         loginController?.viewModel = loginViewModel
         return loginController
     }
@@ -71,13 +75,12 @@ class ScreensFactory: ScreensFactoryProtocol {
     /// - Parameters:
     ///   - coordinator: An object of the ProfileCoordinator class, which is responsible for the logic of displaying screens
     ///   - model: Contains user data such as: full name, city, street.
-    public static func makeProfileScreen(firebaseService: FirebaseService,
+    public static func makeProfileScreen(serviceManager: ServiceManager,
                                          coordinator: ProfileCoordinator,
                                          model: Profile?) -> ProfileViewController? {
         
-        let profileViewController = createScreen(identifier: ScreenIdentifier.profile,
-                                                 type: ProfileViewController.self)
-        let profileViewModel = ProfileViewModel(firebaseService: firebaseService, coordinator: coordinator, profile: model)
+        let profileViewController = createScreen(identifier: ScreenIdentifier.profile, type: ProfileViewController.self)
+        let profileViewModel = ProfileViewModel(serviceManager: serviceManager, coordinator: coordinator, profile: model)
         profileViewController?.viewModel = profileViewModel
         return profileViewController
     }
@@ -87,12 +90,12 @@ class ScreensFactory: ScreensFactoryProtocol {
     ///   - coordinator: An object of the FavoritesCoordinator class, which is responsible for the logic of displaying screens
     ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
     public static func makeFavoritesScreen(coordinator: FavoritesCoordinator,
-                                           firebaseService: FirebaseService) -> FavoritesViewController? {
-        let favoritesViewController = createScreen(identifier: ScreenIdentifier.favorites,
-                                                   type: FavoritesViewController.self)
-        let favoritesViewModel = FavoritesViewModel(coordinator: coordinator, firebaseService: firebaseService)
-        favoritesViewController?.viewModel = favoritesViewModel
-        return favoritesViewController
+                                           serviceManager: ServiceManager) -> FavoritesViewController? {
+        
+        let favoritesController = createScreen(identifier: ScreenIdentifier.favorites, type: FavoritesViewController.self)
+        let favoritesViewModel = FavoritesViewModel(coordinator: coordinator, serviceManager: serviceManager)
+        favoritesController?.viewModel = favoritesViewModel
+        return favoritesController
     }
     
     /// Creates an object of the ContactsViewController class
@@ -100,9 +103,10 @@ class ScreensFactory: ScreensFactoryProtocol {
     ///   - coordinator: An object of the ContactsCoordinator class, which is responsible for the logic of displaying screens
     ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
     public static func makeContactsScreen(coordinator: ContactsCoordinator,
-                                          firebaseService: FirebaseService) -> ContactsViewController {
+                                          serviceManager: ServiceManager) -> ContactsViewController {
+        
         let contactsViewController = ContactsViewController()
-        let viewModel = ContactsViewModel(firebaseService: firebaseService, coordinator: coordinator)
+        let viewModel = ContactsViewModel(serviceManager: serviceManager, coordinator: coordinator)
         contactsViewController.viewModel = viewModel
         return contactsViewController
     }
@@ -112,9 +116,10 @@ class ScreensFactory: ScreensFactoryProtocol {
     ///   - coordinator: An object of the RecentCoordinator class, which is responsible for the logic of displaying screens
     ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
     public static func makeRecentScreen(coordinator: RecentCoordinator,
-                                        firebaseService: FirebaseService) -> RecentViewController {
+                                        serviceManager: ServiceManager) -> RecentViewController {
+        
         let recentViewController = RecentViewController()
-        let viewModel = RecentViewModel(coordinator: coordinator, firebaseService: firebaseService)
+        let viewModel = RecentViewModel(coordinator: coordinator, serviceManager: serviceManager)
         recentViewController.viewModel = viewModel
         return recentViewController
     }
@@ -126,15 +131,14 @@ class ScreensFactory: ScreensFactoryProtocol {
     ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
     public static func makeDetailsContactScreen(coordinator: DetailsContactCoordinator,
                                                 contact: Contact,
-                                                firebaseService: FirebaseService) -> DetailsContactViewController? {
+                                                serviceManager: ServiceManager) -> DetailsContactViewController? {
         
-        let detailsViewController = createScreen(identifier: ScreenIdentifier.details,
-                                                 type: DetailsContactViewController.self)
+        let detailsController = createScreen(identifier: ScreenIdentifier.details, type: DetailsContactViewController.self)
         let viewModel = DetailContactViewModel(coordinator: coordinator,
                                                contact: contact,
-                                               firebaseService: firebaseService)
-        detailsViewController?.viewModel = viewModel
-        return detailsViewController
+                                               serviceManager: serviceManager)
+        detailsController?.viewModel = viewModel
+        return detailsController
     }
     
     /// Creates an object of the AddContactViewController class
@@ -142,10 +146,10 @@ class ScreensFactory: ScreensFactoryProtocol {
     ///   - coordinator: An object of the AddContactCoordinator class, which is responsible for the logic of displaying screens
     ///   - firebaseService: Helps login/logout and save and retrieve data from firebase
     public static func makeAddContactScreen(coordinator: AddContactCoordinator,
-                                            firebaseService: FirebaseService) -> AddContactViewController? {
+                                            serviceManager: ServiceManager) -> AddContactViewController? {
         
         let addContact = createScreen(identifier: ScreenIdentifier.add, type: AddContactViewController.self)
-        let viewModel = AddContactViewModel(coordinator: coordinator, firebaseService: firebaseService)
+        let viewModel = AddContactViewModel(coordinator: coordinator, serviceManager: serviceManager)
         addContact?.viewModel = viewModel
         return addContact
     }

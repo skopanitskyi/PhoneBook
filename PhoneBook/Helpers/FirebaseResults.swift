@@ -14,11 +14,19 @@ enum AuthResult {
     case failure(AuthError)
 }
 
+/// Profile data retrieval result
+enum ProfileResult {
+    case success(Profile)
+    case failure(AuthError)
+}
+
+/// Facebook authorization result
 enum FacebookAuth {
     case success(Bool?, String?)
     case failure(AuthError)
 }
 
+/// Contacts data retrieval result
 enum ContactsData {
     case success([Contact])
     case failure(AuthError)

@@ -11,41 +11,20 @@ import Firebase
 import FirebaseFirestoreSwift
 import FBSDKLoginKit
 
+typealias AuthResults = ((AuthResult) -> Void)
+typealias AuthFacebook = ((FacebookAuth) -> Void)
+typealias ProfileResults = ((ProfileResult) -> Void)
+typealias UserInformation = ((UserData) -> Void)
+typealias ContactsInformation = ((ContactsData) -> Void)
+
 enum SavedContacts: String {
     case contacts = "contacts"
     case recent = "recent"
     case favorites = "favorites"
 }
 
-class User: Codable {
-    public let name: String
-    public let city: String?
-    public let street: String?
-    public var contacts: [Contact]
-    public var recent: [Contact]
-    public var favorites: [Contact]
-    
-    init(name: String, city: String?, street: String?, contacts: [Contact], recent: [Contact], favorites: [Contact]) {
-        self.name = name
-        self.city = city
-        self.street = street
-        self.contacts = contacts
-        self.recent = recent
-        self.favorites = favorites
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case city
-        case street
-        case contacts
-        case recent
-        case favorites
-    }
-}
+class FirebaseService: Service {
 
-class FirebaseService {
-    
     // MARK: - Class instances
     
     /// Auth object for authentication
@@ -64,16 +43,14 @@ class FirebaseService {
     
     // MARK: - Class methods
     
-    /// Sign up the user and save his data in the database
+    /// Sign up the user
     /// - Parameters:
     ///   - email: Entered email
     ///   - password: Entered password
     ///   - model: Store user data
     ///   - completion: Return the sign up result
-    public func signUp(email: String, password: String, completion: @escaping (AuthResult) -> Void) {
-        
+    public func signUp(email: String, password: String, completion: @escaping AuthResults) {
         auth.createUser(withEmail: email, password: password) { (result, error) in
-            
             if let _ = error {
                 completion(.failure(.failedToCreateUser))
                 return
@@ -86,8 +63,8 @@ class FirebaseService {
     /// - Parameters:
     ///   - email: User email
     ///   - password: User password
-    ///   - completion: Return the log in result
-    public func logIn(email: String, password: String, completion: @escaping (AuthResult) -> Void) {
+    ///   - completion: Return the login result
+    public func logIn(email: String, password: String, completion: @escaping AuthResults) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if let _ = error {
                 completion(.failure(.failedToLogin))
@@ -98,11 +75,10 @@ class FirebaseService {
     }
     
     /// Log in with facebook
-    /// - Parameter completion: Return the log in result and user data
-    public func logInWithFacebook(completion: @escaping (FacebookAuth) -> Void) {
+    /// - Parameter completion: Return the login result and user data
+    public func logInWithFacebook(completion: @escaping AuthFacebook) {
         
         loginManager.logIn(permissions: [.publicProfile, .email], viewController: nil) { [weak self] result in
-            
             switch result {
             case .failed:
                 completion(.failure(.failedToLogin))
@@ -110,18 +86,16 @@ class FirebaseService {
                 completion(.failure(.cancelled))
             case .success(_ , _, let token):
                 let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
-                self?.logInWith(credential: credential) { result in
-                    completion(result)
-                }
+                self?.logInWith(credential: credential) { completion($0) }
             }
         }
     }
     
-    /// Log in to firebase using facebook credential. Also saves user data if logged in for the first time
+    /// Log in to firebase using facebook credential
     /// - Parameters:
     ///   - credential: Authentication credential
     ///   - completion: Return the log in result and user data
-    private func logInWith(credential: AuthCredential, completion: @escaping ((FacebookAuth) -> Void)) {
+    private func logInWith(credential: AuthCredential, completion: @escaping AuthFacebook) {
         
         auth.signIn(with: credential) { (result, error) in
             if let _ = error {
@@ -129,32 +103,39 @@ class FirebaseService {
                 return
             }
             let isNewUser = result?.additionalUserInfo?.isNewUser
-            let name = result?.additionalUserInfo?.username
+            let name = result?.user.displayName
             completion(.success(isNewUser, name))
         }
     }
     
-    public func saveNewUser(profile: Profile, contacts: [Contact], completion: @escaping ((AuthResult) -> Void)) {
+    /// Saves new user data to firestore
+    /// - Parameters:
+    ///   - profile: User data
+    ///   - contacts: User contacts from device storage
+    ///   - completion: Return save result
+    public func saveNewUser(profile: Profile, contacts: [Contact], completion: @escaping AuthResults) {
         let user = createUserModel(contacts: contacts, profile: profile)
-        setUserDataInStorage(user: user) { result in
-            completion(result)
-        }
+        setUserDataInStorage(user: user) { completion($0) }
     }
     
+    /// Creates a user model from input data
+    /// - Parameters:
+    ///   - contacts: User contacts from device storage
+    ///   - profile: User data
     private func createUserModel(contacts: [Contact], profile: Profile) -> User {
         return User(name: profile.name,
                     city: profile.city,
                     street: profile.street,
                     contacts: contacts,
                     recent: [],
-                    favorites: contacts.filter{ $0.isFavorite })
+                    favorites: contacts.filter { $0.isFavorite })
     }
     
     /// Return user data saved in firestore
     /// - Parameters:
     ///   - data: Data which will be download
     ///   - completion: Return contacts data
-    public func getData(for contacts: SavedContacts, completion: @escaping (ContactsData) -> Void) {
+    public func getData(for contacts: SavedContacts, completion: @escaping ContactsInformation) {
         
         getUserDataFromStorage { [unowned self] result in
             switch result {
@@ -167,6 +148,10 @@ class FirebaseService {
         }
     }
     
+    /// Return selected contacts
+    /// - Parameters:
+    ///   - contacts: Contact details to be returned
+    ///   - user: Contains contact data
     private func getSelectedContacts(contacts: SavedContacts, user: User) -> [Contact] {
         switch contacts {
         case .contacts:
@@ -180,7 +165,7 @@ class FirebaseService {
     
     /// Sign out user from firebase
     /// - Parameter completion: Sign out results
-    public func signOut(completion: (AuthResult) -> Void) {
+    public func signOut(completion: AuthResults) {
         do {
             try auth.signOut()
             completion(.success)
@@ -194,21 +179,25 @@ class FirebaseService {
     ///   - data: Data which will be update
     ///   - contacts: New contact data
     ///   - completion: Return update result
-    public func updateAllContacts(for data: SavedContacts, contacts: [Contact], completion: @escaping ((AuthResult) -> Void)) {
-        // FIXME: -
+    public func updateAllContacts(for data: SavedContacts, contacts: [Contact], completion: @escaping AuthResults) {
         
         getUserDataFromStorage { [weak self] user in
             switch user {
             case .success(let user):
-                self?.setNewData(for: data, user: user, contacts: contacts)
-            // FIXME: - completion error
+                self?.setNewData(for: data, user: user, contacts: contacts) { completion($0) }
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
     
-    private func setNewData(for data: SavedContacts, user: User,contacts: [Contact]) {
+    /// Adds new contact details to the specified array
+    /// - Parameters:
+    ///   - data: Data to be updated
+    ///   - user: Current user model
+    ///   - contacts: New contacts data
+    ///   - completion: Return save result
+    private func setNewData(for data: SavedContacts, user: User, contacts: [Contact], completion: @escaping AuthResults) {
         switch data {
         case .contacts:
             user.contacts = contacts
@@ -217,30 +206,34 @@ class FirebaseService {
         case .recent:
             user.recent = contacts
         }
-        
-        setUserDataInStorage(user: user) { result in
-            // FIXME: - completion error
-        }
+        setUserDataInStorage(user: user) { completion($0) }
     }
     
     /// Update contact data in all arrays in firebase
     /// - Parameters:
     ///   - name: Contact name, data whom will be update
     ///   - favorite: Favorite status of the contact
-    public func updateContact(name: String, favorite: Bool) {
+    public func updateContact(name: String, favorite: Bool, completion: @escaping AuthResults) {
         getUserDataFromStorage { [weak self] result in
             switch result {
             case .success(let user):
-                self?.updateDataInArrays(user: user, name: name, favorite: favorite)
+                self?.updateDataInArrays(user: user, name: name, favorite: favorite) { completion($0) }
             case .failure(let error):
-                break
+                completion(.failure(error))
             }
         }
     }
     
-    private func updateDataInArrays(user: User, name: String, favorite: Bool) {
+    /// Updates user data in all arrays
+    /// - Parameters:
+    ///   - user: Current user model
+    ///   - name: Contact name
+    ///   - favorite: Is contact favorite
+    ///   - completion: Return save result
+    private func updateDataInArrays(user: User, name: String, favorite: Bool, completion: @escaping AuthResults) {
         user.contacts.filter { $0.fullName == name }.first?.isFavorite = favorite
         user.recent.filter { $0.fullName == name }.forEach { $0.isFavorite = favorite }
+        
         if !favorite {
             guard let index = user.favorites.firstIndex(where: { $0.fullName == name }) else { return }
             user.favorites.remove(at: index)
@@ -248,27 +241,28 @@ class FirebaseService {
             guard let contact = user.contacts.filter ({ $0.fullName == name}).first else { return }
             user.favorites.append(contact)
         }
-        setUserDataInStorage(user: user) { result in
-            // FIXME: - result
-        }
+        setUserDataInStorage(user: user) { completion($0) }
     }
     
     /// Download user data from firestore
     /// - Parameter completion: Return user data
-    public func getUserData(completion: @escaping ((Profile?) -> Void)) {
+    public func getUserData(completion: @escaping ProfileResults) {
         getUserDataFromStorage { result in
             switch result {
             case .success(let user):
                 let profile = Profile(name: user.name, city: user.city, street: user.street)
-                completion(profile)
+                completion(.success(profile))
             case .failure(let error):
-                completion(nil)
+                completion(.failure(error))
             }
         }
     }
     
-    
-    private func setUserDataInStorage(user: User, completion: @escaping ((AuthResult) -> Void)) {
+    /// Saves and updates user data in firestore
+    /// - Parameters:
+    ///   - user: User data model
+    ///   - completion: Return save result
+    private func setUserDataInStorage(user: User, completion: @escaping AuthResults) {
         do {
             if let uid = uid {
                 try firestore.document(uid).setData(from: user)
@@ -279,7 +273,9 @@ class FirebaseService {
         }
     }
     
-    private func getUserDataFromStorage(completion: @escaping ((UserData) -> Void)) {
+    /// Returns the data of the current user from the database
+    /// - Parameter completion: Returns the data or the error that occurred
+    private func getUserDataFromStorage(completion: @escaping UserInformation) {
         
         guard let uid = uid else { return }
         

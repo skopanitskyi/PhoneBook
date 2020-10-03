@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class MapService {
+class MapService: Service {
     
     // MARK: - Class methods
     
@@ -18,17 +18,16 @@ class MapService {
     /// - Parameters:
     ///   - address: Address of the contact
     ///   - completion: Return coordinate
-    public func getCoordinates(with address: String, completion: @escaping ((CLLocationCoordinate2D?) -> Void)) {
+    public func getCoordinates(with address: String, completion: @escaping ((CoordinateResult) -> Void)) {
         
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(address) { (placemark, error) in
-            if let error = error {
-                completion(nil)
-                print(error.localizedDescription)
+            guard let coordinates = placemark?.first?.location?.coordinate else {
+                completion(.failure(.failedToGetCoordinates))
                 return
             }
-            completion(placemark?.first?.location?.coordinate)
+            completion(.success(coordinates))
         }
     }
     
@@ -39,36 +38,28 @@ class MapService {
     ///   - name: Contact name
     ///   - completion: Return route and point annotation
     public func getRoute(userCoordinate: CLLocationCoordinate2D,
-                             address: String,
-                             name: String,
-                             completion: @escaping ((MKRoute?, MKPointAnnotation?) -> Void)) {
+                         contactCoordinate: CLLocationCoordinate2D,
+                         completion: @escaping ((RouteResult) -> Void)) {
         
-        getCoordinates(with: address) { contactCoordinate in
-            guard let contactCoordinate = contactCoordinate else { return }
-            
-            let request = self.getRequest(startCoordinate: userCoordinate,
-                                           endCoordinate: contactCoordinate,
-                                           transport: .automobile)
-            
-            self.calculateRoute(request: request) { route in
-                let anotation = self.getAnotation(coordinate: contactCoordinate, name: name)
-                completion(route, anotation)
-            }
-        }
+        let request = getRequest(startCoordinate: userCoordinate,
+                                 endCoordinate: contactCoordinate,
+                                 transport: .automobile)
+        
+        calculateRoute(request: request) { completion($0) }
     }
     
     /// Calculate a route from user to contact
     /// - Parameters:
     ///   - request: Request for the calculate the route
     ///   - completion: Return the route
-    private func calculateRoute(request: MKDirections.Request, completion: @escaping ((MKRoute?) -> Void)) {
+    private func calculateRoute(request: MKDirections.Request, completion: @escaping ((RouteResult) -> Void)) {
         let direction = MKDirections(request: request)
         direction.calculate { (result, error) in
-            guard let result = result else {
-                completion(nil)
+            guard let route = result?.routes.first else {
+                completion(.failure(.failedToGetRoute))
                 return
             }
-            completion(result.routes.first)
+            completion(.success(route))
         }
     }
     
@@ -93,7 +84,7 @@ class MapService {
     /// - Parameters:
     ///   - coordinate: Contact coordinate
     ///   - name: Contact name
-    private func getAnotation(coordinate: CLLocationCoordinate2D, name: String) -> MKPointAnnotation {
+    public func getAnotation(coordinate: CLLocationCoordinate2D, name: String) -> MKPointAnnotation {
         let anotation = MKPointAnnotation()
         anotation.coordinate = coordinate
         anotation.title = name

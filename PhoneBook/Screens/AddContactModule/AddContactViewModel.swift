@@ -31,8 +31,8 @@ class AddContactViewModel: AddContactViewModelProtocol {
     /// Coordinator
     private let coordinator: AddContactCoordinator
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Store unfavorite contacts
     private var contacts = [Contact]()
@@ -40,16 +40,17 @@ class AddContactViewModel: AddContactViewModelProtocol {
     // MARK: - Class constructor
     
     /// Add contact view model
-    init(coordinator: AddContactCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: AddContactCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
     
     /// Get contact data from firebase
     public func fetchContacts() {
-        firebaseService.getData(for: .contacts) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.getData(for: .contacts) { [weak self] result in
             switch result {
             case .success(let contacts):
                 let unfavorites = contacts.filter { !$0.isFavorite }
@@ -81,11 +82,27 @@ class AddContactViewModel: AddContactViewModelProtocol {
     /// - Parameter name: Contact name
     public func deleteCell(at name: String) -> Int? {
         if let index = contacts.firstIndex(where: {$0.fullName == name }) {
-            contacts[index].isFavorite = true
-            coordinator.updateRecentData(contact: contacts[index])
+            let contact = contacts[index]
+            contact.isFavorite = true
+            coordinator.updateRecentData(contact: contact)
+            updateContactInFirebase(contact: contact)
             contacts.remove(at: index)
             return index
         }
         return nil
+    }
+    
+    /// Update contact data in firebase
+    /// - Parameter contact: New contact data
+    private func updateContactInFirebase(contact: Contact) {
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.updateContact(name: contact.fullName, favorite: contact.isFavorite) { [weak self] result in
+            switch result {
+            case .success:
+                print("Data updated")
+            case .failure(let error):
+                self?.error?(error.errorDescription)
+            }
+        }
     }
 }

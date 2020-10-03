@@ -12,6 +12,9 @@ class LoginCoordinator: Coordinator {
     
     // MARK: - Class instances
     
+    /// Service manager
+    private let serviceManager: ServiceManager
+    
     /// Navigation controller
     private weak var navigationController: UINavigationController?
     
@@ -21,7 +24,10 @@ class LoginCoordinator: Coordinator {
     // MARK: - Class constructor
     
     /// Login coordinator class constructor
-    init(navigationController: UINavigationController, authenticationCoordinator: AuthenticationCoordinator) {
+    init(serviceManager: ServiceManager,
+         navigationController: UINavigationController,
+         authenticationCoordinator: AuthenticationCoordinator) {
+        self.serviceManager = serviceManager
         self.navigationController = navigationController
         self.authenticationCoordinator = authenticationCoordinator
     }
@@ -30,7 +36,8 @@ class LoginCoordinator: Coordinator {
     
     /// Creates a login screen and displays it
     public func start() {
-        guard let loginController = ScreensFactory.makeLoginScreen(coordinator: self) else { return }
+        guard let loginController = ScreensFactory.makeLoginScreen(serviceManager: serviceManager,
+                                                                   coordinator: self) else { return }
         navigationController?.setViewControllers([loginController], animated: false)
     }
     

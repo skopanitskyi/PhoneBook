@@ -22,8 +22,8 @@ class ContactsCoordinator: TabBarItemCoordinator {
     /// Tab bar coordinator
     private let coordinator: TabBarCoordinator
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Navigation controller
     public let navigationController: UINavigationController
@@ -34,12 +34,12 @@ class ContactsCoordinator: TabBarItemCoordinator {
     // MARK: - Class constructor
     
     /// Contacts coordinator class constructor
-    init(coordinator: TabBarCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: TabBarCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
+        self.serviceManager = serviceManager
         navigationController = UINavigationController()
         tabBarItem = UITabBarItem(title: "Contacts.Title".localized, image: UIImage(named: "contacts"), tag: 0)
         navigationController.tabBarItem = tabBarItem
-        self.firebaseService = firebaseService
     }
     
     // MARK: Class methods
@@ -47,7 +47,7 @@ class ContactsCoordinator: TabBarItemCoordinator {
     /// Creates a contacts screen and displays it
     public func start() {
         contactsViewController = ScreensFactory.makeContactsScreen(coordinator: self,
-                                                                   firebaseService: firebaseService)
+                                                                   serviceManager: serviceManager)
         navigationController.pushViewController(contactsViewController!, animated: true)
     }
     

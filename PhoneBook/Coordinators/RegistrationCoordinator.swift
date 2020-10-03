@@ -18,12 +18,16 @@ class RegistrationCoordinator: Coordinator {
     /// Authentication coordinator
     private weak var authenticationCoordinator: AuthenticationCoordinator?
     
+    /// Service manager
+    private let serviceManager: ServiceManager
+    
     // MARK: - Class constructor
     
     /// Registration coordinator class constructor
-    init(navigationController: UINavigationController, authenticationCoordinator: AuthenticationCoordinator) {
+    init(navigationController: UINavigationController, authenticationCoordinator: AuthenticationCoordinator, serviceManager: ServiceManager) {
         self.navigationController = navigationController
         self.authenticationCoordinator = authenticationCoordinator
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
@@ -31,7 +35,9 @@ class RegistrationCoordinator: Coordinator {
     /// Creates a sign up coordinator that displays a sign up screen
     public func start() {
         guard let navigationController = navigationController else { return }
-        let signUpCoordinator = SignUpCoordinator(navigationController: navigationController, registrationCoordinator: self)
+        let signUpCoordinator = SignUpCoordinator(navigationController: navigationController,
+                                                  registrationCoordinator: self,
+                                                  serviceManager: serviceManager)
         signUpCoordinator.start()
     }
     

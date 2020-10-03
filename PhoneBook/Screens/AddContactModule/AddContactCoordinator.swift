@@ -15,8 +15,8 @@ class AddContactCoordinator: Coordinator {
     /// Coordinator
     private let coordinator: FavoritesCoordinator
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Navigation controller
     private let navigationController: UINavigationController
@@ -24,9 +24,9 @@ class AddContactCoordinator: Coordinator {
     // MARK: - Class constructor
     
     /// Add contact coordinator class constructor
-    init(coordinator: FavoritesCoordinator, firebaseService: FirebaseService, navigationController: UINavigationController) {
+    init(coordinator: FavoritesCoordinator, serviceManager: ServiceManager, navigationController: UINavigationController) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
         self.navigationController = navigationController
     }
     
@@ -35,7 +35,7 @@ class AddContactCoordinator: Coordinator {
     /// Creates an add contact screen and displays it
     public func start() {
         guard let addContact = ScreensFactory.makeAddContactScreen(coordinator: self,
-                                                                   firebaseService: firebaseService) else { return }
+                                                                   serviceManager: serviceManager) else { return }
         navigationController.present(addContact, animated: true, completion: nil)
     }
     
@@ -50,6 +50,5 @@ class AddContactCoordinator: Coordinator {
 extension AddContactCoordinator: UpdateDataFromDetailsContact {
     func updateRecentData(contact: Contact) {
         coordinator.updateRecentData(contact: contact)
-        firebaseService.updateContact(name: contact.fullName, favorite: contact.isFavorite)
     }
 }

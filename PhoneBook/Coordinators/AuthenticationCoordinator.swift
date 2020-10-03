@@ -12,6 +12,9 @@ class AuthenticationCoordinator: Coordinator {
     
     // MARK: - Class instances
     
+    /// Service manager
+    private let serviceManager: ServiceManager
+    
     /// Winidow
     private let window: UIWindow
     
@@ -24,7 +27,8 @@ class AuthenticationCoordinator: Coordinator {
     // MARK: - Class constructor
     
     /// AuthenticationCoordinator class constructor
-    init(window: UIWindow, appCoordinator: AppCoordinator) {
+    init(serviceManager: ServiceManager, window: UIWindow, appCoordinator: AppCoordinator) {
+        self.serviceManager = serviceManager
         self.window = window
         self.appCoordinator = appCoordinator
         navigationController = UINavigationController()
@@ -34,7 +38,8 @@ class AuthenticationCoordinator: Coordinator {
     
     /// Creates a login coordinator that displays a login screen
     public func start() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController,
+        let loginCoordinator = LoginCoordinator(serviceManager: serviceManager,
+                                                navigationController: navigationController,
                                                 authenticationCoordinator: self)
         loginCoordinator.start()
         window.rootViewController = navigationController
@@ -43,7 +48,9 @@ class AuthenticationCoordinator: Coordinator {
     
     /// Creates a registration coordinator
     public func signUp() {
-        let registrationCoordinator = RegistrationCoordinator(navigationController: navigationController, authenticationCoordinator: self)
+        let registrationCoordinator = RegistrationCoordinator(navigationController: navigationController,
+                                                              authenticationCoordinator: self,
+                                                              serviceManager: serviceManager)
         registrationCoordinator.start()
     }
     

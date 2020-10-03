@@ -35,8 +35,8 @@ class RecentViewModel: RecentViewModelProtocol {
     /// Stores recent contacts
     private var contacts = [Contact]()
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Coordinator
     private let coordinator: RecentCoordinator
@@ -44,9 +44,9 @@ class RecentViewModel: RecentViewModelProtocol {
     // MARK: - Class constructor
     
     /// Recent view model class constructor
-    init(coordinator: RecentCoordinator, firebaseService: FirebaseService) {
+    init(coordinator: RecentCoordinator, serviceManager: ServiceManager) {
         self.coordinator = coordinator
-        self.firebaseService = firebaseService
+        self.serviceManager = serviceManager
     }
     
     // MARK: - Class methods
@@ -86,7 +86,8 @@ class RecentViewModel: RecentViewModelProtocol {
     
     /// Download recent contacts data from firebase
     public func downloadData() {
-        firebaseService.getData(for: .recent) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.getData(for: .recent) { [weak self] result in
             switch result {
             case .success(let contacts):
                 self?.contacts = contacts
@@ -99,7 +100,8 @@ class RecentViewModel: RecentViewModelProtocol {
     
     /// Update contact recent data in firebase
     public func updateDataInFirebase() {
-        firebaseService.updateAllContacts(for: .recent, contacts: contacts) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.updateAllContacts(for: .recent, contacts: contacts) { [weak self] result in
             switch result {
             case.success:
                 print("Data saved")

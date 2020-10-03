@@ -45,16 +45,16 @@ class ContactsViewModel: ContactsViewModelProtocol {
     /// Stores sorted contacts
     private var filteredContacts = [[Contact]]()
     
-    /// Firebase service
-    private let firebaseService: FirebaseService
+    /// Service manager
+    private let serviceManager: ServiceManager
     
     /// Coordinator
     private let coordinator: ContactsCoordinator
     
     // MARK: - Class constructor
     
-    init(firebaseService: FirebaseService, coordinator: ContactsCoordinator) {
-        self.firebaseService = firebaseService
+    init(serviceManager: ServiceManager, coordinator: ContactsCoordinator) {
+        self.serviceManager = serviceManager
         self.coordinator = coordinator
     }
     
@@ -62,7 +62,8 @@ class ContactsViewModel: ContactsViewModelProtocol {
     
     /// Requests saved contact data from firebase
     public func fetchContactsData() {
-        firebaseService.getData(for: .contacts) { [weak self] result in
+        let firebaseService = serviceManager.getService(type: FirebaseService.self)
+        firebaseService?.getData(for: .contacts) { [weak self] result in
             switch result {
             case .success(let contacts):
                 self?.createTwoDimensional(array: contacts)

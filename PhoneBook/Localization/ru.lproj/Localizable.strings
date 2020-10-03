@@ -86,3 +86,7 @@
 
 // Login
 "Login.PasswordOrEmailInvalid" = "Электронная почта или пароль введены неверно";
+
+// Coordinates errors
+"CoordinatesError.FailedToGetCoordinates" = "Не удалось получить координаты из указанного адреса";
+"CoordinatesError.FailedToGetRoute" = "Не удалось построить маршрут к контакту";
