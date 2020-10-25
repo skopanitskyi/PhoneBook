@@ -163,8 +163,8 @@ class DetailsContactViewController: UITableViewController {
                                             longitudinalMeters: distance)
             mapView.setRegion(region, animated: true)
         } else {
-            showAlert(title: "DetailsProfile.AlertTitile.FailedToShowLocation".localized,
-                      message: nil,
+            showAlert(title: "Common.Error".localized,
+                      message: "DetailsProfile.AlertTitile.FailedToShowLocation".localized,
                       leftButton: "DetailsProfile.LeftButton.FailedToShowLocation".localized,
                       rightButton: nil,
                       cancel: false,

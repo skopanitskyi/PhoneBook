@@ -43,6 +43,11 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
         return "\(contact.city), \(contact.street)"
     }
     
+    /// Return contact full name
+    private var name: String {
+        return contact.fullName
+    }
+    
     // MARK: - Class constructor
     
     /// Detail contact view model class constructor
@@ -121,11 +126,11 @@ class DetailContactViewModel: DetailsContactViewModelProtocol {
                                 contactCoordinate: CLLocationCoordinate2D,
                                 completion: @escaping ((MKRoute, MKPointAnnotation) -> Void)) {
         
-        let mapService = serviceManager.getService(type: MapService.self)
-        mapService?.getRoute(userCoordinate: userCoordinate, contactCoordinate: contactCoordinate) { [unowned self] result in
+        guard let mapService = serviceManager.getService(type: MapService.self) else { return }
+        mapService.getRoute(userCoordinate: userCoordinate, contactCoordinate: contactCoordinate) { [unowned self] result in
             switch result {
             case .success(let route):
-                let anotation = MapService().getAnotation(coordinate: contactCoordinate, name: self.contact.fullName)
+                let anotation = mapService.getAnotation(coordinate: contactCoordinate, name: self.name)
                 completion(route, anotation)
             case .failure(let error):
                 self.error?(error.errorDescription)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>776193660236-5pq2bqcola8b3oltnp7d2i9u5q2gjip2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.776193660236-5pq2bqcola8b3oltnp7d2i9u5q2gjip2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAZLHKI2TRe-vqm0_PRxd39EBsoZrT4608</string>
+	<key>GCM_SENDER_ID</key>
+	<string>776193660236</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>serhii-kopanitskyi.PhoneBook</string>
+	<key>PROJECT_ID</key>
+	<string>phonebook-faa20</string>
+	<key>STORAGE_BUCKET</key>
+	<string>phonebook-faa20.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:776193660236:ios:13c3264d0969036a45ebe9</string>
+	<key>DATABASE_URL</key>
+	<string>https://phonebook-faa20.firebaseio.com</string>
+</dict>
+</plist>
